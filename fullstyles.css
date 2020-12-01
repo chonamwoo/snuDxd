@@ -1,0 +1,79 @@
+body {
+    text-align: center;
+    line-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+    color: rgb(37, 37, 37);
+}
+
+.box {
+    text-align: left;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    margin-bottom: 30px; 
+}
+
+.box p {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.choices {
+    margin: 20px;
+    
+}
+
+label {
+    font-size: 20px;
+}
+
+.youtube {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.youtube:hover {
+    width: 25px;
+    height: 25px;
+}
+
+.buttons {
+    margin-top: 20px;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    /* color: white; */
+    transition-duration: 0.4s;
+    font-family: sans-serif;
+}
+
+.buttons:hover {
+    background-color: rgb(128, 128, 128, 0.5);
+  }
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+h1 {
+    border: 2px solid black;
+    /* color: white; */
+    /* background-color: black; */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#home {
+    float: left;
+    margin-right: 10px;
+}
+
+h1:hover {
+    background-color: rgb(128, 128, 128, 0.5);
+}
