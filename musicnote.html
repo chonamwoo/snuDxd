@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<div id="musicnote">
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg class = "hello" version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="1500.000000pt" height="700.000000pt" viewBox="0 0 278.000000 181.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+<g transform="translate(0.000000,181.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+<path d="M1267 1563 c-4 -3 -7 -223 -7 -488 l0 -482 -46 15 c-38 12 -55 13
+-98 3 -115 -26 -218 -117 -231 -205 -24 -157 190 -190 343 -52 73 67 72 57 72
+492 l0 388 36 -35 c59 -56 123 -144 156 -214 28 -61 30 -73 26 -148 -3 -47
+-15 -113 -28 -155 -18 -53 -21 -75 -13 -83 22 -22 42 1 65 73 18 58 23 96 23
+188 0 111 -1 117 -36 190 -19 41 -59 113 -89 160 -77 123 -117 212 -130 291
+-11 64 -24 82 -43 62z"/>
+<ellipse id="discover_songs" onclick="go_to_songs_page()" onmouseover="ellipse_over(evt)" onmouseout="ellipse_out(evt)" cx="1100" cy="430" rx="240" ry="200" stroke="none" stroke-width="8"/>
+<circle id="go_music_test" onclick="go_to_test_page()" onmouseover="circle_over(evt)" onmouseout="circle_out(evt)" cx="1600" cy="400" r="70" fill="red" stroke="none" stroke-width="8"/>
+</g>
+</svg>
+</div>
+</body>
+
+<script>
+var tooltip = d3.select("#musicnote")
+  .append("div")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .text("Please click me to discover the music!");
+
+var tooltip2 = d3.select("#musicnote")
+    .append("div")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .text("Please click me to go over music propensity test!");
+    // 너는 어떤 성향의 음악을 좋아하니? What is your favorite type of music?
+
+function go_to_songs_page() {
+    location.href="https://www.google.com/"
+}
+
+function go_to_test_page() {
+    location.href="https://www.google.com/"
+}
+
+function ellipse_over(evt) {
+    var ellipse = evt.target;
+    var currentStroke = ellipse.getAttribute("stroke");
+    if (currentStroke == "none")
+        ellipse.setAttribute("stroke", "blue");
+}
+
+function ellipse_out(evt) {
+    var ellipse = evt.target;
+    var currentStroke = ellipse.getAttribute("stroke");
+    if (currentStroke != "none")
+        ellipse.setAttribute("stroke", "none");
+}
+
+function circle_over(evt) {
+    var circle = evt.target;
+    var currentStroke = circle.getAttribute("stroke");
+    if (currentStroke == "none")
+        circle.setAttribute("stroke", "blue");
+}
+
+function circle_out(evt) {
+    var circle = evt.target;
+    var currentStroke = circle.getAttribute("stroke");
+    if (currentStroke != "none")
+        circle.setAttribute("stroke", "none");
+}
+
+
+d3.select("#discover_songs")
+  .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+  .on("mousemove", function(){return tooltip.style("top", (event.pageY-100)+"px").style("left",(event.pageX-400)+"px");})
+  .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+d3.select("#go_music_test")
+  .on("mouseover", function(){return tooltip2.style("visibility", "visible");})
+  .on("mousemove", function(){return tooltip2.style("top", (event.pageY-50)+"px").style("left",(event.pageX+100)+"px");})
+  .on("mouseout", function(){return tooltip2.style("visibility", "hidden");});
+
+
+
+</script>
+</html>
