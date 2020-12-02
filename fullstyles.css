@@ -2,26 +2,32 @@ body {
     text-align: center;
     line-height: 100vh;
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Roboto Slab', serif;
     color: rgb(37, 37, 37);
+}
+
+.total-container {
+    height: 60%;
+    width: 30%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .box {
     text-align: left;
-    display: inline-block;
     line-height: normal;
-    vertical-align: middle;
-    margin-bottom: 30px; 
+    border: 2px solid black;
+    border-radius: 8px;
+    padding:30px;
 }
 
 .box p {
-    font-weight: bold;
-    font-size: 30px;
+    font-size: 25px;
 }
+
 
 .choices {
     margin: 20px;
-    
 }
 
 label {
@@ -49,7 +55,10 @@ label {
     text-decoration: none;
     /* color: white; */
     transition-duration: 0.4s;
-    font-family: sans-serif;
+    font-family: 'Roboto Slab', serif;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .buttons:hover {
@@ -61,12 +70,8 @@ a {
     color: black;
 }
 
-h1 {
-    border: 2px solid black;
-    /* color: white; */
-    /* background-color: black; */
-    padding: 10px;
-    border-radius: 8px;
+.results {
+    text-align: center;
 }
 
 #home {
@@ -74,6 +79,7 @@ h1 {
     margin-right: 10px;
 }
 
-h1:hover {
-    background-color: rgb(128, 128, 128, 0.5);
+.footer {
+    margin-top: 70px;
+    line-height: normal;
 }
