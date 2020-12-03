@@ -182,7 +182,8 @@
         console.log(clusterresult);
 
         document.getElementById("mainbox").style = "padding: 0; width: 50%; margin-left: auto; margin-right: auto;"
-        document.getElementById("mainbox").innerHTML = "<a class = 'results' href = '#'><p class = 'resulttext'>View Results</p></a>";
+        document.getElementById("mainbox").innerHTML = "<a class = 'results' href = './bubbleRadar/bubble+radar_chart.html'><p class = 'resulttext'>View Results</p></a>";
+        localStorage.setItem("backgroundstyle", "background: linear-gradient(to right, rgba(254, 177, 68, " + val0 + "), rgba(253, 253, 151, " + val1 + "), rgba(158, 224, 158, " + val2 + "), rgba(158, 193, 207, " + val3 + "), rgba(204, 153, 201, " + val4 + "));");
         })
     }
 

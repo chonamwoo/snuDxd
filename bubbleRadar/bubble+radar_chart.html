@@ -23,6 +23,7 @@
 				fill: #242424;
 				text-align: center;
 				cursor: default;
+				/* background: linear-gradient(to right, rgba(254, 177, 68, 0.5), rgba(253, 253, 151,0.5), rgba(158, 224, 158, 0.5), rgba(158, 193, 207, 0.5),  rgba(204, 153, 201, 0.5)); */
 			}
 			
 			div.left {
@@ -4038,6 +4039,9 @@
 		
         <!-- <script src="radarChart.js"></script>	 -->
         <script>
+			// get background from Question.html
+			document.body.style = localStorage.getItem("backgroundstyle");
+			
             function RadarChart(id, data, options) {
 	var cfg = {
 	 w: 600,				//Width of the circle
