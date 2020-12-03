@@ -8,6 +8,9 @@
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 
+		<!--DataTable bootstrap -->
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"/>
+		
 		<!-- D3.js -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 		
@@ -50,6 +53,19 @@
 			.bubbles:hover {
 			  stroke: black;
 			}
+			
+			table.dataTable thead .sorting:after,
+			table.dataTable thead .sorting:before,
+			table.dataTable thead .sorting_asc:after,
+			table.dataTable thead .sorting_asc:before,
+			table.dataTable thead .sorting_asc_disabled:after,
+			table.dataTable thead .sorting_asc_disabled:before,
+			table.dataTable thead .sorting_desc:after,
+			table.dataTable thead .sorting_desc:before,
+			table.dataTable thead .sorting_desc_disabled:after,
+			table.dataTable thead .sorting_desc_disabled:before {
+			bottom: .5em;
+			}
 		</style>
 	
 	</head>
@@ -57,7 +73,3969 @@
 
 		<div id="my_dataviz" class="left"></div>
 		<div class="radarChart right"></div>
-
+		
+		<table id="example" class="display" style="width:100%">
+			<thead>
+				<tr>
+					<th>Artists</th>
+					<th>Song Name</th>
+					<th>Year</th>
+					<th>Peak Position</th>
+					<th>Weeks On Chart</th>
+					<th>Cluster</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr height="19" style="height:14.5pt">
+			  <td height="19" width="171" style="height:14.5pt;width:129pt">Lady Gaga, Bradley
+			  Cooper</td>
+			  <td width="116" style="width:87pt">Shallow</td>
+			  <td align="right" width="64" style="width:48pt">2019</td>
+			  <td align="right" width="64" style="width:48pt">1</td>
+			  <td align="right" width="64" style="width:48pt">39</td>
+			  <td align="right" width="64" style="width:48pt">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>7 Rings</td>
+			  <td align="right">2019</td>
+			  <td align="right">1</td>
+			  <td align="right">23</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jonas Brothers</td>
+			  <td>Sucker</td>
+			  <td align="right">2019</td>
+			  <td align="right">1</td>
+			  <td align="right">17</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>Girls Like You</td>
+			  <td align="right">2018</td>
+			  <td align="right">1</td>
+			  <td align="right">52</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Travis Scott</td>
+			  <td>Sicko Mode</td>
+			  <td align="right">2018</td>
+			  <td align="right">1</td>
+			  <td align="right">47</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">XXXTENTACION</td>
+			  <td>Sad!</td>
+			  <td align="right">2018</td>
+			  <td align="right">1</td>
+			  <td align="right">38</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>Thank U, Next</td>
+			  <td align="right">2018</td>
+			  <td align="right">1</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Childish Gambino</td>
+			  <td>This Is America</td>
+			  <td align="right">2018</td>
+			  <td align="right">1</td>
+			  <td align="right">17</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ed Sheeran</td>
+			  <td>Shape Of You</td>
+			  <td align="right">2017</td>
+			  <td align="right">1</td>
+			  <td align="right">59</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Cardi B</td>
+			  <td>Bodak Yellow</td>
+			  <td align="right">2017</td>
+			  <td align="right">1</td>
+			  <td align="right">35</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Weeknd</td>
+			  <td>Starboy</td>
+			  <td align="right">2017</td>
+			  <td align="right">1</td>
+			  <td align="right">30</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sia</td>
+			  <td>Cheap Thrills</td>
+			  <td align="right">2016</td>
+			  <td align="right">1</td>
+			  <td align="right">52</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Bieber</td>
+			  <td>Love Yourself</td>
+			  <td align="right">2016</td>
+			  <td align="right">1</td>
+			  <td align="right">41</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>One Dance</td>
+			  <td align="right">2016</td>
+			  <td align="right">1</td>
+			  <td align="right">36</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Zayn</td>
+			  <td>Pillowtalk</td>
+			  <td align="right">2016</td>
+			  <td align="right">1</td>
+			  <td align="right">24</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Bieber</td>
+			  <td>What Do You Mea<span style="display:none">n?</span></td>
+			  <td align="right">2015</td>
+			  <td align="right">1</td>
+			  <td align="right">31</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Adele</td>
+			  <td>Hello</td>
+			  <td align="right">2015</td>
+			  <td align="right">1</td>
+			  <td align="right">26</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taylor Swift</td>
+			  <td>Bad Blood</td>
+			  <td align="right">2015</td>
+			  <td align="right">1</td>
+			  <td align="right">25</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">John Legend</td>
+			  <td>All Of Me</td>
+			  <td align="right">2014</td>
+			  <td align="right">1</td>
+			  <td align="right">59</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Katy Perry</td>
+			  <td>Dark Horse</td>
+			  <td align="right">2014</td>
+			  <td align="right">1</td>
+			  <td align="right">57</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Meghan Trainor</td>
+			  <td>All About That Bas<span style="display:none">s</span></td>
+			  <td align="right">2014</td>
+			  <td align="right">1</td>
+			  <td align="right">47</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">MAGIC!</td>
+			  <td>Rude</td>
+			  <td align="right">2014</td>
+			  <td align="right">1</td>
+			  <td align="right">41</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Iggy Azalea</td>
+			  <td>Fancy</td>
+			  <td align="right">2014</td>
+			  <td align="right">1</td>
+			  <td align="right">39</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Robin Thicke</td>
+			  <td>Blurred Lines</td>
+			  <td align="right">2013</td>
+			  <td align="right">1</td>
+			  <td align="right">48</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lorde</td>
+			  <td>Royals</td>
+			  <td align="right">2013</td>
+			  <td align="right">1</td>
+			  <td align="right">44</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Katy Perry</td>
+			  <td>Roar</td>
+			  <td align="right">2013</td>
+			  <td align="right">1</td>
+			  <td align="right">35</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Miley Cyrus</td>
+			  <td>Wrecking Ball</td>
+			  <td align="right">2013</td>
+			  <td align="right">1</td>
+			  <td align="right">32</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>The Monster</td>
+			  <td align="right">2013</td>
+			  <td align="right">1</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Gotye</td>
+			  <td>Somebody That I U<span style="display:none">sed To Know</span></td>
+			  <td align="right">2012</td>
+			  <td align="right">1</td>
+			  <td align="right">59</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bruno Mars</td>
+			  <td>Locked Out Of Hea<span style="display:none">ven</span></td>
+			  <td align="right">2012</td>
+			  <td align="right">1</td>
+			  <td align="right">36</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Flo Rida</td>
+			  <td>Whistle</td>
+			  <td align="right">2012</td>
+			  <td align="right">1</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Diamonds</td>
+			  <td align="right">2012</td>
+			  <td align="right">1</td>
+			  <td align="right">26</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Adele</td>
+			  <td>Rolling In The Dee<span style="display:none">p</span></td>
+			  <td align="right">2011</td>
+			  <td align="right">1</td>
+			  <td align="right">65</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Adele</td>
+			  <td>Someone Like You</td>
+			  <td align="right">2011</td>
+			  <td align="right">1</td>
+			  <td align="right">39</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bruno Mars</td>
+			  <td>Grenade</td>
+			  <td align="right">2011</td>
+			  <td align="right">1</td>
+			  <td align="right">36</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Wiz Khalifa</td>
+			  <td>Black And Yellow</td>
+			  <td align="right">2011</td>
+			  <td align="right">1</td>
+			  <td align="right">25</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>Born This Way</td>
+			  <td align="right">2011</td>
+			  <td align="right">1</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bruno Mars</td>
+			  <td>Just The Way You <span style="display:none">Are</span></td>
+			  <td align="right">2010</td>
+			  <td align="right">1</td>
+			  <td align="right">48</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>Love The Way You <span style="display:none">Lie</span></td>
+			  <td align="right">2010</td>
+			  <td align="right">1</td>
+			  <td align="right">29</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>Not Afraid</td>
+			  <td align="right">2010</td>
+			  <td align="right">1</td>
+			  <td align="right">25</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>Poker Face</td>
+			  <td align="right">2009</td>
+			  <td align="right">1</td>
+			  <td align="right">40</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Owl City</td>
+			  <td>Fireflies</td>
+			  <td align="right">2009</td>
+			  <td align="right">1</td>
+			  <td align="right">31</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kelly Clarkson</td>
+			  <td>My Life Would Suc<span style="display:none">k Without You</span></td>
+			  <td align="right">2009</td>
+			  <td align="right">1</td>
+			  <td align="right">24</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Coldplay</td>
+			  <td>Viva La Vida</td>
+			  <td align="right">2008</td>
+			  <td align="right">1</td>
+			  <td align="right">51</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Disturbia</td>
+			  <td align="right">2008</td>
+			  <td align="right">1</td>
+			  <td align="right">37</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>Lollipop</td>
+			  <td align="right">2008</td>
+			  <td align="right">1</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Take A Bow</td>
+			  <td align="right">2008</td>
+			  <td align="right">1</td>
+			  <td align="right">27</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alicia Keys</td>
+			  <td>No One</td>
+			  <td align="right">2007</td>
+			  <td align="right">1</td>
+			  <td align="right">39</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Plain White T's</td>
+			  <td>Hey There Delilah</td>
+			  <td align="right">2007</td>
+			  <td align="right">1</td>
+			  <td align="right">35</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kanye West</td>
+			  <td>Stronger</td>
+			  <td align="right">2007</td>
+			  <td align="right">1</td>
+			  <td align="right">27</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Timbaland</td>
+			  <td>Give It To Me</td>
+			  <td align="right">2007</td>
+			  <td align="right">1</td>
+			  <td align="right">26</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Avril Lavigne</td>
+			  <td>Girlfriend</td>
+			  <td align="right">2007</td>
+			  <td align="right">1</td>
+			  <td align="right">24</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">James Blunt</td>
+			  <td>You're Beautiful</td>
+			  <td align="right">2006</td>
+			  <td align="right">1</td>
+			  <td align="right">38</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chamillionaire</td>
+			  <td>Ridin'</td>
+			  <td align="right">2006</td>
+			  <td align="right">1</td>
+			  <td align="right">31</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sean Paul</td>
+			  <td>Temperature</td>
+			  <td align="right">2006</td>
+			  <td align="right">1</td>
+			  <td align="right">31</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>SOS</td>
+			  <td align="right">2006</td>
+			  <td align="right">1</td>
+			  <td align="right">28</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kanye West</td>
+			  <td>Gold Digger</td>
+			  <td align="right">2005</td>
+			  <td align="right">1</td>
+			  <td align="right">39</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">50 Cent</td>
+			  <td>Candy Shop</td>
+			  <td align="right">2005</td>
+			  <td align="right">1</td>
+			  <td align="right">23</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Mariah Carey</td>
+			  <td>Don't Forget Abou<span style="display:none">t Us</span></td>
+			  <td align="right">2005</td>
+			  <td align="right">1</td>
+			  <td align="right">21</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Mario</td>
+			  <td>Let Me Love You</td>
+			  <td align="right">2004</td>
+			  <td align="right">1</td>
+			  <td align="right">36</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">OutKast</td>
+			  <td>Hey Ya!</td>
+			  <td align="right">2004</td>
+			  <td align="right">1</td>
+			  <td align="right">32</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Snoop Dogg</td>
+			  <td>Drop It Like It's Hot</td>
+			  <td align="right">2004</td>
+			  <td align="right">1</td>
+			  <td align="right">30</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sean Paul</td>
+			  <td>Get Busy</td>
+			  <td align="right">2003</td>
+			  <td align="right">1</td>
+			  <td align="right">32</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">B2K, P. Diddy</td>
+			  <td>Bump, Bump, Bum<span style="display:none">p</span></td>
+			  <td align="right">2003</td>
+			  <td align="right">1</td>
+			  <td align="right">22</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nickelback</td>
+			  <td>How You Remind <span style="display:none">Me</span></td>
+			  <td align="right">2002</td>
+			  <td align="right">1</td>
+			  <td align="right">49</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ashanti</td>
+			  <td>Foolish</td>
+			  <td align="right">2002</td>
+			  <td align="right">1</td>
+			  <td align="right">32</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nelly</td>
+			  <td>Hot In Herre</td>
+			  <td align="right">2002</td>
+			  <td align="right">1</td>
+			  <td align="right">26</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alicia Keys</td>
+			  <td>Fallin'</td>
+			  <td align="right">2001</td>
+			  <td align="right">1</td>
+			  <td align="right">34</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Shaggy</td>
+			  <td>It Wasn't Me</td>
+			  <td align="right">2001</td>
+			  <td align="right">1</td>
+			  <td align="right">25</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Usher</td>
+			  <td>U Remind Me</td>
+			  <td align="right">2001</td>
+			  <td align="right">1</td>
+			  <td align="right">24</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Creed</td>
+			  <td>With Arms Wide O<span style="display:none">pen</span></td>
+			  <td align="right">2000</td>
+			  <td align="right">1</td>
+			  <td align="right">47</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Savage Garden</td>
+			  <td>I Knew I Loved You</td>
+			  <td align="right">2000</td>
+			  <td align="right">1</td>
+			  <td align="right">33</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Destiny's Child</td>
+			  <td>Say My Name</td>
+			  <td align="right">2000</td>
+			  <td align="right">1</td>
+			  <td align="right">32</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sisqo</td>
+			  <td>Incomplete</td>
+			  <td align="right">2000</td>
+			  <td align="right">1</td>
+			  <td align="right">26</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Christina Aguilera</td>
+			  <td>Genie In A Bottle</td>
+			  <td align="right">1999</td>
+			  <td align="right">1</td>
+			  <td align="right">25</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Enrique Iglesias</td>
+			  <td>Bailamos</td>
+			  <td align="right">1999</td>
+			  <td align="right">1</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Destiny's Child</td>
+			  <td>Bills, Bills, Bills</td>
+			  <td align="right">1999</td>
+			  <td align="right">1</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Marshmello, Bastille</td>
+			  <td>Happier</td>
+			  <td align="right">2019</td>
+			  <td align="right">2</td>
+			  <td align="right">45</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>Break Up With You<span style="display:none">r Girlfriend, I'm Bored</span></td>
+			  <td align="right">2019</td>
+			  <td align="right">2</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Billie Eilish</td>
+			  <td>Bad Guy</td>
+			  <td align="right">2019</td>
+			  <td align="right">2</td>
+			  <td align="right">13</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taylor Swift</td>
+			  <td>You Need To Calm <span style="display:none">Down</span></td>
+			  <td align="right">2019</td>
+			  <td align="right">2</td>
+			  <td align="right">2</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Juice WRLD</td>
+			  <td>Lucid Dreams</td>
+			  <td align="right">2018</td>
+			  <td align="right">2</td>
+			  <td align="right">46</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">twenty one pilots</td>
+			  <td>Stressed Out</td>
+			  <td align="right">2016</td>
+			  <td align="right">2</td>
+			  <td align="right">52</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lukas Graham</td>
+			  <td>7 Years</td>
+			  <td align="right">2016</td>
+			  <td align="right">2</td>
+			  <td align="right">36</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ed Sheeran</td>
+			  <td>Thinking Out Loud</td>
+			  <td align="right">2015</td>
+			  <td align="right">2</td>
+			  <td align="right">58</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fetty Wap</td>
+			  <td>Trap Queen</td>
+			  <td align="right">2015</td>
+			  <td align="right">2</td>
+			  <td align="right">52</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>Sugar</td>
+			  <td align="right">2015</td>
+			  <td align="right">2</td>
+			  <td align="right">42</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">OneRepublic</td>
+			  <td>Counting Stars</td>
+			  <td align="right">2014</td>
+			  <td align="right">2</td>
+			  <td align="right">68</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sam Smith</td>
+			  <td>Stay With Me</td>
+			  <td align="right">2014</td>
+			  <td align="right">2</td>
+			  <td align="right">54</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nicki Minaj</td>
+			  <td>Anaconda</td>
+			  <td align="right">2014</td>
+			  <td align="right">2</td>
+			  <td align="right">22</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Timberlake</td>
+			  <td>Mirrors</td>
+			  <td align="right">2013</td>
+			  <td align="right">2</td>
+			  <td align="right">42</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Miley Cyrus</td>
+			  <td>We Can't Stop</td>
+			  <td align="right">2013</td>
+			  <td align="right">2</td>
+			  <td align="right">26</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ellie Goulding</td>
+			  <td>Lights</td>
+			  <td align="right">2012</td>
+			  <td align="right">2</td>
+			  <td align="right">57</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>Payphone</td>
+			  <td align="right">2012</td>
+			  <td align="right">2</td>
+			  <td align="right">31</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Katy Perry</td>
+			  <td>Wide Awake</td>
+			  <td align="right">2012</td>
+			  <td align="right">2</td>
+			  <td align="right">26</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Bieber</td>
+			  <td>Boyfriend</td>
+			  <td align="right">2012</td>
+			  <td align="right">2</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taio Cruz</td>
+			  <td>Dynamite</td>
+			  <td align="right">2010</td>
+			  <td align="right">2</td>
+			  <td align="right">47</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>Bad Romance</td>
+			  <td align="right">2010</td>
+			  <td align="right">2</td>
+			  <td align="right">35</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Iyaz</td>
+			  <td>Replay</td>
+			  <td align="right">2010</td>
+			  <td align="right">2</td>
+			  <td align="right">34</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taylor Swift</td>
+			  <td>Today Was A Fairy<span style="display:none">tale</span></td>
+			  <td align="right">2010</td>
+			  <td align="right">2</td>
+			  <td align="right">18</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taylor Swift</td>
+			  <td>You Belong With <span style="display:none">Me</span></td>
+			  <td align="right">2009</td>
+			  <td align="right">2</td>
+			  <td align="right">50</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kanye West</td>
+			  <td>Heartless</td>
+			  <td align="right">2009</td>
+			  <td align="right">2</td>
+			  <td align="right">30</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Miley Cyrus</td>
+			  <td>Party In The U.S.A.</td>
+			  <td align="right">2009</td>
+			  <td align="right">2</td>
+			  <td align="right">28</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Best I Ever Had</td>
+			  <td align="right">2009</td>
+			  <td align="right">2</td>
+			  <td align="right">24</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chris Brown</td>
+			  <td>Forever</td>
+			  <td align="right">2008</td>
+			  <td align="right">2</td>
+			  <td align="right">33</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chris Brown</td>
+			  <td>With You</td>
+			  <td align="right">2008</td>
+			  <td align="right">2</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Timbaland</td>
+			  <td>Apologize</td>
+			  <td align="right">2007</td>
+			  <td align="right">2</td>
+			  <td align="right">47</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Gwen Stefani</td>
+			  <td>The Sweet Escape</td>
+			  <td align="right">2007</td>
+			  <td align="right">2</td>
+			  <td align="right">40</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fergie</td>
+			  <td>Fergalicious</td>
+			  <td align="right">2007</td>
+			  <td align="right">2</td>
+			  <td align="right">27</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fall Out Boy</td>
+			  <td>This Ain't A Scene, <span style="display:none">It's An Arms Race</span></td>
+			  <td align="right">2007</td>
+			  <td align="right">2</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Gnarls Barkley</td>
+			  <td>Crazy</td>
+			  <td align="right">2006</td>
+			  <td align="right">2</td>
+			  <td align="right">29</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Pussycat Dolls</td>
+			  <td>Don't Cha</td>
+			  <td align="right">2005</td>
+			  <td align="right">2</td>
+			  <td align="right">40</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Green Day</td>
+			  <td>Boulevard Of Brok<span style="display:none">en Dreams</span></td>
+			  <td align="right">2005</td>
+			  <td align="right">2</td>
+			  <td align="right">36</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Pon de Replay</td>
+			  <td align="right">2005</td>
+			  <td align="right">2</td>
+			  <td align="right">27</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Game</td>
+			  <td>Hate It Or Love It</td>
+			  <td align="right">2005</td>
+			  <td align="right">2</td>
+			  <td align="right">23</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Hoobastank</td>
+			  <td>The Reason</td>
+			  <td align="right">2004</td>
+			  <td align="right">2</td>
+			  <td align="right">38</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chingy</td>
+			  <td>One Call Away</td>
+			  <td align="right">2004</td>
+			  <td align="right">2</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">R. Kelly</td>
+			  <td>Ignition</td>
+			  <td align="right">2003</td>
+			  <td align="right">2</td>
+			  <td align="right">42</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chingy</td>
+			  <td>Right Thurr</td>
+			  <td align="right">2003</td>
+			  <td align="right">2</td>
+			  <td align="right">33</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Christina Aguilera</td>
+			  <td>Beautiful</td>
+			  <td align="right">2003</td>
+			  <td align="right">2</td>
+			  <td align="right">27</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Linkin Park</td>
+			  <td>In The End</td>
+			  <td align="right">2002</td>
+			  <td align="right">2</td>
+			  <td align="right">39</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>Without Me</td>
+			  <td align="right">2002</td>
+			  <td align="right">2</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eve</td>
+			  <td>Let Me Blow Ya Mi<span style="display:none">nd</span></td>
+			  <td align="right">2001</td>
+			  <td align="right">2</td>
+			  <td align="right">33</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Destiny's Child</td>
+			  <td>Survivor</td>
+			  <td align="right">2001</td>
+			  <td align="right">2</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Faith Hill</td>
+			  <td>Breathe</td>
+			  <td align="right">2000</td>
+			  <td align="right">2</td>
+			  <td align="right">53</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Marc Anthony</td>
+			  <td>You Sang To Me</td>
+			  <td align="right">2000</td>
+			  <td align="right">2</td>
+			  <td align="right">32</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Brian McKnight</td>
+			  <td>Back At One</td>
+			  <td align="right">1999</td>
+			  <td align="right">2</td>
+			  <td align="right">37</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jennifer Lopez</td>
+			  <td>If You Had My Lov<span style="display:none">e</span></td>
+			  <td align="right">1999</td>
+			  <td align="right">2</td>
+			  <td align="right">25</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Mariah Carey</td>
+			  <td>All I Want For Chri<span style="display:none">stmas Is You</span></td>
+			  <td align="right">2019</td>
+			  <td align="right">3</td>
+			  <td align="right">30</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Khalid</td>
+			  <td>Talk</td>
+			  <td align="right">2019</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Post Malone</td>
+			  <td>Better Now</td>
+			  <td align="right">2018</td>
+			  <td align="right">3</td>
+			  <td align="right">52</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bruno Mars, Cardi B</td>
+			  <td>Finesse</td>
+			  <td align="right">2018</td>
+			  <td align="right">3</td>
+			  <td align="right">23</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">6ix9ine</td>
+			  <td>FEFE</td>
+			  <td align="right">2018</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">French Montana</td>
+			  <td>Unforgettable</td>
+			  <td align="right">2017</td>
+			  <td align="right">3</td>
+			  <td align="right">42</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Chainsmokers, Coldplay</td>
+			  <td>Something Just Lik<span style="display:none">e This</span></td>
+			  <td align="right">2017</td>
+			  <td align="right">3</td>
+			  <td align="right">39</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Meghan Trainor</td>
+			  <td>No</td>
+			  <td align="right">2016</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">One Direction</td>
+			  <td>Drag Me Down</td>
+			  <td align="right">2015</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jessie J, Ariana Grande, Nick<span style="display:none">i Minaj</span></td>
+			  <td>Bang Bang</td>
+			  <td align="right">2014</td>
+			  <td align="right">3</td>
+			  <td align="right">31</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Iggy Azalea</td>
+			  <td>Black Widow</td>
+			  <td align="right">2014</td>
+			  <td align="right">3</td>
+			  <td align="right">30</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Imagine Dragons</td>
+			  <td>Radioactive</td>
+			  <td align="right">2013</td>
+			  <td align="right">3</td>
+			  <td align="right">87</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Stay</td>
+			  <td align="right">2013</td>
+			  <td align="right">3</td>
+			  <td align="right">32</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">will.i.am, Britney Spears</td>
+			  <td>Scream &amp; Shout</td>
+			  <td align="right">2013</td>
+			  <td align="right">3</td>
+			  <td align="right">24</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>Berzerk</td>
+			  <td align="right">2013</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Wanted</td>
+			  <td>Glad You Came</td>
+			  <td align="right">2012</td>
+			  <td align="right">3</td>
+			  <td align="right">37</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Whitney Houston</td>
+			  <td>I Will Always Love <span style="display:none">You</span></td>
+			  <td align="right">2012</td>
+			  <td align="right">3</td>
+			  <td align="right">29</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">One Direction</td>
+			  <td>Live While We're Y<span style="display:none">oung</span></td>
+			  <td align="right">2012</td>
+			  <td align="right">3</td>
+			  <td align="right">16</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Foster The People</td>
+			  <td>Pumped Up Kicks</td>
+			  <td align="right">2011</td>
+			  <td align="right">3</td>
+			  <td align="right">40</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jennifer Lopez</td>
+			  <td>On The Floor</td>
+			  <td align="right">2011</td>
+			  <td align="right">3</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>She Will</td>
+			  <td align="right">2011</td>
+			  <td align="right">3</td>
+			  <td align="right">21</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Train</td>
+			  <td>Hey, Soul Sister</td>
+			  <td align="right">2010</td>
+			  <td align="right">3</td>
+			  <td align="right">54</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>Telephone</td>
+			  <td align="right">2010</td>
+			  <td align="right">3</td>
+			  <td align="right">33</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Keri Hilson</td>
+			  <td>Knock You Down</td>
+			  <td align="right">2009</td>
+			  <td align="right">3</td>
+			  <td align="right">31</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kanye West</td>
+			  <td>Love Lockdown</td>
+			  <td align="right">2008</td>
+			  <td align="right">3</td>
+			  <td align="right">23</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Britney Spears</td>
+			  <td>Circus</td>
+			  <td align="right">2008</td>
+			  <td align="right">3</td>
+			  <td align="right">22</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">David Cook</td>
+			  <td>The Time Of My Lif<span style="display:none">e</span></td>
+			  <td align="right">2008</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Timbaland</td>
+			  <td>The Way I Are</td>
+			  <td align="right">2007</td>
+			  <td align="right">3</td>
+			  <td align="right">38</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Britney Spears</td>
+			  <td>Gimme More</td>
+			  <td align="right">2007</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Fray</td>
+			  <td>How To Save A Life</td>
+			  <td align="right">2006</td>
+			  <td align="right">3</td>
+			  <td align="right">58</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Hinder</td>
+			  <td>Lips Of An Angel</td>
+			  <td align="right">2006</td>
+			  <td align="right">3</td>
+			  <td align="right">33</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sean Paul</td>
+			  <td>Give It Up To Me</td>
+			  <td align="right">2006</td>
+			  <td align="right">3</td>
+			  <td align="right">22</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">50 Cent</td>
+			  <td>Disco Inferno</td>
+			  <td align="right">2005</td>
+			  <td align="right">3</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Destiny's Child</td>
+			  <td>Lose My Breath</td>
+			  <td align="right">2004</td>
+			  <td align="right">3</td>
+			  <td align="right">23</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alicia Keys</td>
+			  <td>You Don't Know M<span style="display:none">y Name</span></td>
+			  <td align="right">2004</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">50 Cent</td>
+			  <td>P.I.M.P.</td>
+			  <td align="right">2003</td>
+			  <td align="right">3</td>
+			  <td align="right">25</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Timberlake</td>
+			  <td>Cry Me A River</td>
+			  <td align="right">2003</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nelly</td>
+			  <td>Air Force Ones</td>
+			  <td align="right">2003</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">No Doubt</td>
+			  <td>Underneath It All</td>
+			  <td align="right">2002</td>
+			  <td align="right">3</td>
+			  <td align="right">30</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Usher</td>
+			  <td>U Don't Have To C<span style="display:none">all</span></td>
+			  <td align="right">2002</td>
+			  <td align="right">3</td>
+			  <td align="right">26</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Dido</td>
+			  <td>Thank You</td>
+			  <td align="right">2001</td>
+			  <td align="right">3</td>
+			  <td align="right">39</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Enrique Iglesias</td>
+			  <td>Hero</td>
+			  <td align="right">2001</td>
+			  <td align="right">3</td>
+			  <td align="right">34</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nelly</td>
+			  <td>Ride Wit Me</td>
+			  <td align="right">2001</td>
+			  <td align="right">3</td>
+			  <td align="right">29</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">3 Doors Down</td>
+			  <td>Kryptonite</td>
+			  <td align="right">2000</td>
+			  <td align="right">3</td>
+			  <td align="right">53</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sisqo</td>
+			  <td>Thong Song</td>
+			  <td align="right">2000</td>
+			  <td align="right">3</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Christina Aguilera</td>
+			  <td>I Turn To You</td>
+			  <td align="right">2000</td>
+			  <td align="right">3</td>
+			  <td align="right">22</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Marc Anthony</td>
+			  <td>I Need To Know</td>
+			  <td align="right">1999</td>
+			  <td align="right">3</td>
+			  <td align="right">40</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jessica Simpson</td>
+			  <td>I Wanna Love You <span style="display:none">Forever</span></td>
+			  <td align="right">1999</td>
+			  <td align="right">3</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">LFO</td>
+			  <td>Summer Girls</td>
+			  <td align="right">1999</td>
+			  <td align="right">3</td>
+			  <td align="right">17</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Panic! At The Disco</td>
+			  <td>High Hopes</td>
+			  <td align="right">2019</td>
+			  <td align="right">4</td>
+			  <td align="right">47</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">J. Cole</td>
+			  <td>Middle Child</td>
+			  <td align="right">2019</td>
+			  <td align="right">4</td>
+			  <td align="right">23</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Weeknd</td>
+			  <td>Call Out My Name</td>
+			  <td align="right">2018</td>
+			  <td align="right">4</td>
+			  <td align="right">18</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Imagine Dragons</td>
+			  <td>Believer</td>
+			  <td align="right">2017</td>
+			  <td align="right">4</td>
+			  <td align="right">52</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Imagine Dragons</td>
+			  <td>Thunder</td>
+			  <td align="right">2017</td>
+			  <td align="right">4</td>
+			  <td align="right">52</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>Million Reasons</td>
+			  <td align="right">2017</td>
+			  <td align="right">4</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Harry Styles</td>
+			  <td>Sign Of The Times</td>
+			  <td align="right">2017</td>
+			  <td align="right">4</td>
+			  <td align="right">13</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bruno Mars</td>
+			  <td>24K Magic</td>
+			  <td align="right">2016</td>
+			  <td align="right">4</td>
+			  <td align="right">41</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Flo Rida</td>
+			  <td>My House</td>
+			  <td align="right">2016</td>
+			  <td align="right">4</td>
+			  <td align="right">39</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">DJ Snake</td>
+			  <td>Let Me Love You</td>
+			  <td align="right">2016</td>
+			  <td align="right">4</td>
+			  <td align="right">33</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>Side To Side</td>
+			  <td align="right">2016</td>
+			  <td align="right">4</td>
+			  <td align="right">28</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">WALK THE MOON</td>
+			  <td>Shut Up And Danc<span style="display:none">e</span></td>
+			  <td align="right">2015</td>
+			  <td align="right">4</td>
+			  <td align="right">53</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Meghan Trainor</td>
+			  <td>Lips Are Movin</td>
+			  <td align="right">2015</td>
+			  <td align="right">4</td>
+			  <td align="right">29</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna, Kanye West, Paul <span style="display:none">McCartney</span></td>
+			  <td>FourFiveSeconds</td>
+			  <td align="right">2015</td>
+			  <td align="right">4</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">DJ Snake, Lil Jon</td>
+			  <td>Turn Down For W<span style="display:none">hat</span></td>
+			  <td align="right">2014</td>
+			  <td align="right">4</td>
+			  <td align="right">37</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">A Great Big World, Christina<span style="display:none"> Aguilera</span></td>
+			  <td>Say Something</td>
+			  <td align="right">2014</td>
+			  <td align="right">4</td>
+			  <td align="right">26</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>Break Free</td>
+			  <td align="right">2014</td>
+			  <td align="right">4</td>
+			  <td align="right">22</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Florida Georgia Line</td>
+			  <td>Cruise</td>
+			  <td align="right">2013</td>
+			  <td align="right">4</td>
+			  <td align="right">54</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Hold On, We're Go<span style="display:none">ing Home</span></td>
+			  <td align="right">2013</td>
+			  <td align="right">4</td>
+			  <td align="right">33</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">One Direction</td>
+			  <td>What Makes You B<span style="display:none">eautiful</span></td>
+			  <td align="right">2012</td>
+			  <td align="right">4</td>
+			  <td align="right">34</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bruno Mars</td>
+			  <td>The Lazy Song</td>
+			  <td align="right">2011</td>
+			  <td align="right">4</td>
+			  <td align="right">27</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bad Meets Evil</td>
+			  <td>Lighters</td>
+			  <td align="right">2011</td>
+			  <td align="right">4</td>
+			  <td align="right">22</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Dr. Dre</td>
+			  <td>I Need A Doctor</td>
+			  <td align="right">2011</td>
+			  <td align="right">4</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Enrique Iglesias</td>
+			  <td>I Like It</td>
+			  <td align="right">2010</td>
+			  <td align="right">4</td>
+			  <td align="right">38</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kings Of Leon</td>
+			  <td>Use Somebody</td>
+			  <td align="right">2009</td>
+			  <td align="right">4</td>
+			  <td align="right">57</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Miley Cyrus</td>
+			  <td>The Climb</td>
+			  <td align="right">2009</td>
+			  <td align="right">4</td>
+			  <td align="right">28</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jeremih</td>
+			  <td>Birthday Sex</td>
+			  <td align="right">2009</td>
+			  <td align="right">4</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sara Bareilles</td>
+			  <td>Love Song</td>
+			  <td align="right">2008</td>
+			  <td align="right">4</td>
+			  <td align="right">41</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Daughtry</td>
+			  <td>It's Not Over</td>
+			  <td align="right">2007</td>
+			  <td align="right">4</td>
+			  <td align="right">29</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Dixie Chicks</td>
+			  <td>Not Ready To Mak<span style="display:none">e Nice</span></td>
+			  <td align="right">2007</td>
+			  <td align="right">4</td>
+			  <td align="right">24</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Game</td>
+			  <td>How We Do</td>
+			  <td align="right">2005</td>
+			  <td align="right">4</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Akon</td>
+			  <td>Lonely</td>
+			  <td align="right">2005</td>
+			  <td align="right">4</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alicia Keys</td>
+			  <td>If I Ain't Got You</td>
+			  <td align="right">2004</td>
+			  <td align="right">4</td>
+			  <td align="right">40</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kevin Lyttle</td>
+			  <td>Turn Me On</td>
+			  <td align="right">2004</td>
+			  <td align="right">4</td>
+			  <td align="right">25</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nelly</td>
+			  <td>My Place</td>
+			  <td align="right">2004</td>
+			  <td align="right">4</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Avril Lavigne</td>
+			  <td>I'm With You</td>
+			  <td align="right">2003</td>
+			  <td align="right">4</td>
+			  <td align="right">27</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Creed</td>
+			  <td>My Sacrifice</td>
+			  <td align="right">2002</td>
+			  <td align="right">4</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>Cleanin' Out My Cl<span style="display:none">oset</span></td>
+			  <td align="right">2002</td>
+			  <td align="right">4</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lenny Kravitz</td>
+			  <td>Again</td>
+			  <td align="right">2001</td>
+			  <td align="right">4</td>
+			  <td align="right">32</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ginuwine</td>
+			  <td>Differences</td>
+			  <td align="right">2001</td>
+			  <td align="right">4</td>
+			  <td align="right">30</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Madonna</td>
+			  <td>Don't Tell Me</td>
+			  <td align="right">2001</td>
+			  <td align="right">4</td>
+			  <td align="right">21</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Joe</td>
+			  <td>I Wanna Know</td>
+			  <td align="right">2000</td>
+			  <td align="right">4</td>
+			  <td align="right">44</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Montell Jordan</td>
+			  <td>Get It On Tonite</td>
+			  <td align="right">2000</td>
+			  <td align="right">4</td>
+			  <td align="right">32</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">P!nk</td>
+			  <td>Most Girls</td>
+			  <td align="right">2000</td>
+			  <td align="right">4</td>
+			  <td align="right">27</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Smash Mouth</td>
+			  <td>All Star</td>
+			  <td align="right">1999</td>
+			  <td align="right">4</td>
+			  <td align="right">30</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Whitney Houston</td>
+			  <td>My Love Is Your Lo<span style="display:none">ve</span></td>
+			  <td align="right">1999</td>
+			  <td align="right">4</td>
+			  <td align="right">28</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Logic</td>
+			  <td>Homicide</td>
+			  <td align="right">2019</td>
+			  <td align="right">5</td>
+			  <td align="right">5</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Zedd, Maren Morris, Grey</td>
+			  <td>The Middle</td>
+			  <td align="right">2018</td>
+			  <td align="right">5</td>
+			  <td align="right">40</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Halsey</td>
+			  <td>Bad At Love</td>
+			  <td align="right">2018</td>
+			  <td align="right">5</td>
+			  <td align="right">33</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Charlie Puth</td>
+			  <td>Attention</td>
+			  <td align="right">2017</td>
+			  <td align="right">5</td>
+			  <td align="right">40</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Love On The Brain</td>
+			  <td align="right">2017</td>
+			  <td align="right">5</td>
+			  <td align="right">31</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">twenty one pilots</td>
+			  <td>Ride</td>
+			  <td align="right">2016</td>
+			  <td align="right">5</td>
+			  <td align="right">39</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alessia Cara</td>
+			  <td>Here</td>
+			  <td align="right">2016</td>
+			  <td align="right">5</td>
+			  <td align="right">34</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Selena Gomez</td>
+			  <td>Same Old Love</td>
+			  <td align="right">2016</td>
+			  <td align="right">5</td>
+			  <td align="right">28</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sam Smith</td>
+			  <td>I'm Not The Only O<span style="display:none">ne</span></td>
+			  <td align="right">2015</td>
+			  <td align="right">5</td>
+			  <td align="right">37</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jason Derulo</td>
+			  <td>Want To Want Me</td>
+			  <td align="right">2015</td>
+			  <td align="right">5</td>
+			  <td align="right">35</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taylor Swift</td>
+			  <td>Wildest Dreams</td>
+			  <td align="right">2015</td>
+			  <td align="right">5</td>
+			  <td align="right">27</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Selena Gomez</td>
+			  <td>Good For You</td>
+			  <td align="right">2015</td>
+			  <td align="right">5</td>
+			  <td align="right">26</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bastille</td>
+			  <td>Pompeii</td>
+			  <td align="right">2014</td>
+			  <td align="right">5</td>
+			  <td align="right">53</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Passenger</td>
+			  <td>Let Her Go</td>
+			  <td align="right">2014</td>
+			  <td align="right">5</td>
+			  <td align="right">43</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Bieber</td>
+			  <td>Beauty And A Beat</td>
+			  <td align="right">2013</td>
+			  <td align="right">5</td>
+			  <td align="right">24</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bruno Mars</td>
+			  <td>Treasure</td>
+			  <td align="right">2013</td>
+			  <td align="right">5</td>
+			  <td align="right">23</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nicki Minaj</td>
+			  <td>Starships</td>
+			  <td align="right">2012</td>
+			  <td align="right">5</td>
+			  <td align="right">31</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Where Have You B<span style="display:none">een</span></td>
+			  <td align="right">2012</td>
+			  <td align="right">5</td>
+			  <td align="right">26</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>How To Love</td>
+			  <td align="right">2011</td>
+			  <td align="right">5</td>
+			  <td align="right">24</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jason Derulo</td>
+			  <td>In My Head</td>
+			  <td align="right">2010</td>
+			  <td align="right">5</td>
+			  <td align="right">34</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>Alejandro</td>
+			  <td align="right">2010</td>
+			  <td align="right">5</td>
+			  <td align="right">23</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Bieber</td>
+			  <td>Baby</td>
+			  <td align="right">2010</td>
+			  <td align="right">5</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>LoveGame</td>
+			  <td align="right">2009</td>
+			  <td align="right">5</td>
+			  <td align="right">22</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sean Kingston</td>
+			  <td>Fire Burning</td>
+			  <td align="right">2009</td>
+			  <td align="right">5</td>
+			  <td align="right">21</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kardinal Offishall</td>
+			  <td>Dangerous</td>
+			  <td align="right">2008</td>
+			  <td align="right">5</td>
+			  <td align="right">27</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jonas Brothers</td>
+			  <td>Burnin' Up</td>
+			  <td align="right">2008</td>
+			  <td align="right">5</td>
+			  <td align="right">16</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Colbie Caillat</td>
+			  <td>Bubbly</td>
+			  <td align="right">2007</td>
+			  <td align="right">5</td>
+			  <td align="right">47</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Daughtry</td>
+			  <td>Home</td>
+			  <td align="right">2007</td>
+			  <td align="right">5</td>
+			  <td align="right">37</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fergie</td>
+			  <td>Clumsy</td>
+			  <td align="right">2007</td>
+			  <td align="right">5</td>
+			  <td align="right">25</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">J. Holiday</td>
+			  <td>Bed</td>
+			  <td align="right">2007</td>
+			  <td align="right">5</td>
+			  <td align="right">23</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Snow Patrol</td>
+			  <td>Chasing Cars</td>
+			  <td align="right">2006</td>
+			  <td align="right">5</td>
+			  <td align="right">45</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Natasha Bedingfield</td>
+			  <td>Unwritten</td>
+			  <td align="right">2006</td>
+			  <td align="right">5</td>
+			  <td align="right">42</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lifehouse</td>
+			  <td>You And Me</td>
+			  <td align="right">2005</td>
+			  <td align="right">5</td>
+			  <td align="right">62</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Pussycat Dolls</td>
+			  <td>Stickwitu</td>
+			  <td align="right">2005</td>
+			  <td align="right">5</td>
+			  <td align="right">26</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>This Love</td>
+			  <td align="right">2004</td>
+			  <td align="right">5</td>
+			  <td align="right">43</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>She Will Be Loved</td>
+			  <td align="right">2004</td>
+			  <td align="right">5</td>
+			  <td align="right">41</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Christina Milian</td>
+			  <td>Dip It Low</td>
+			  <td align="right">2004</td>
+			  <td align="right">5</td>
+			  <td align="right">30</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Evanescence</td>
+			  <td>Bring Me To Life</td>
+			  <td align="right">2003</td>
+			  <td align="right">5</td>
+			  <td align="right">32</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Timberlake</td>
+			  <td>Rock Your Body</td>
+			  <td align="right">2003</td>
+			  <td align="right">5</td>
+			  <td align="right">22</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Vanessa Carlton</td>
+			  <td>A Thousand Miles</td>
+			  <td align="right">2002</td>
+			  <td align="right">5</td>
+			  <td align="right">41</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jimmy Eat World</td>
+			  <td>The Middle</td>
+			  <td align="right">2002</td>
+			  <td align="right">5</td>
+			  <td align="right">33</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">No Doubt</td>
+			  <td>Hey Baby</td>
+			  <td align="right">2002</td>
+			  <td align="right">5</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Train</td>
+			  <td>Drops Of Jupiter</td>
+			  <td align="right">2001</td>
+			  <td align="right">5</td>
+			  <td align="right">53</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Staind</td>
+			  <td>It's Been Awhile</td>
+			  <td align="right">2001</td>
+			  <td align="right">5</td>
+			  <td align="right">46</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">matchbox twenty</td>
+			  <td>If You're Gone</td>
+			  <td align="right">2001</td>
+			  <td align="right">5</td>
+			  <td align="right">42</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Uncle Kracker</td>
+			  <td>Follow Me</td>
+			  <td align="right">2001</td>
+			  <td align="right">5</td>
+			  <td align="right">33</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Macy Gray</td>
+			  <td>I Try</td>
+			  <td align="right">2000</td>
+			  <td align="right">5</td>
+			  <td align="right">27</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ruff Endz</td>
+			  <td>No More</td>
+			  <td align="right">2000</td>
+			  <td align="right">5</td>
+			  <td align="right">26</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ricky Martin</td>
+			  <td>Livin' La Vida Loca</td>
+			  <td align="right">1999</td>
+			  <td align="right">5</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Camila Cabello</td>
+			  <td>Never Be The Sam<span style="display:none">e</span></td>
+			  <td align="right">2018</td>
+			  <td align="right">6</td>
+			  <td align="right">37</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Baby, Drake</td>
+			  <td>Yes Indeed</td>
+			  <td align="right">2018</td>
+			  <td align="right">6</td>
+			  <td align="right">29</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sheck Wes</td>
+			  <td>Mo Bamba</td>
+			  <td align="right">2018</td>
+			  <td align="right">6</td>
+			  <td align="right">28</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">J. Cole</td>
+			  <td>ATM</td>
+			  <td align="right">2018</td>
+			  <td align="right">6</td>
+			  <td align="right">5</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sam Hunt</td>
+			  <td>Body Like A Back R<span style="display:none">oad</span></td>
+			  <td align="right">2017</td>
+			  <td align="right">6</td>
+			  <td align="right">41</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Shawn Mendes</td>
+			  <td>There's Nothing H<span style="display:none">oldin' Me Back</span></td>
+			  <td align="right">2017</td>
+			  <td align="right">6</td>
+			  <td align="right">34</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Big Sean</td>
+			  <td>Bounce Back</td>
+			  <td align="right">2017</td>
+			  <td align="right">6</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kodak Black</td>
+			  <td>Tunnel Vision</td>
+			  <td align="right">2017</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Shawn Mendes</td>
+			  <td>Treat You Better</td>
+			  <td align="right">2016</td>
+			  <td align="right">6</td>
+			  <td align="right">39</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Summer Sixteen</td>
+			  <td align="right">2016</td>
+			  <td align="right">6</td>
+			  <td align="right">14</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taylor Swift</td>
+			  <td>Style</td>
+			  <td align="right">2015</td>
+			  <td align="right">6</td>
+			  <td align="right">32</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rachel Platten</td>
+			  <td>Fight Song</td>
+			  <td align="right">2015</td>
+			  <td align="right">6</td>
+			  <td align="right">31</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lorde</td>
+			  <td>Team</td>
+			  <td align="right">2014</td>
+			  <td align="right">6</td>
+			  <td align="right">38</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jeremih</td>
+			  <td>Don't Tell 'Em</td>
+			  <td align="right">2014</td>
+			  <td align="right">6</td>
+			  <td align="right">31</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>Maps</td>
+			  <td align="right">2014</td>
+			  <td align="right">6</td>
+			  <td align="right">22</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Selena Gomez</td>
+			  <td>The Heart Wants <span style="display:none">What It Wants</span></td>
+			  <td align="right">2014</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Imagine Dragons</td>
+			  <td>Demons</td>
+			  <td align="right">2013</td>
+			  <td align="right">6</td>
+			  <td align="right">61</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">One Direction</td>
+			  <td>Story Of My Life</td>
+			  <td align="right">2013</td>
+			  <td align="right">6</td>
+			  <td align="right">32</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Started From The <span style="display:none">Bottom</span></td>
+			  <td align="right">2013</td>
+			  <td align="right">6</td>
+			  <td align="right">22</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Neon Trees</td>
+			  <td>Everybody Talks</td>
+			  <td align="right">2012</td>
+			  <td align="right">6</td>
+			  <td align="right">39</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Bieber</td>
+			  <td>As Long As You Lov<span style="display:none">e Me</span></td>
+			  <td align="right">2012</td>
+			  <td align="right">6</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Flo Rida</td>
+			  <td>I Cry</td>
+			  <td align="right">2012</td>
+			  <td align="right">6</td>
+			  <td align="right">21</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chris Brown</td>
+			  <td>Look At Me Now</td>
+			  <td align="right">2011</td>
+			  <td align="right">6</td>
+			  <td align="right">27</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Wiz Khalifa</td>
+			  <td>No Sleep</td>
+			  <td align="right">2011</td>
+			  <td align="right">6</td>
+			  <td align="right">15</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Mike Posner</td>
+			  <td>Cooler Than Me</td>
+			  <td align="right">2010</td>
+			  <td align="right">6</td>
+			  <td align="right">29</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>Right Above It</td>
+			  <td align="right">2010</td>
+			  <td align="right">6</td>
+			  <td align="right">24</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lady Gaga</td>
+			  <td>Paparazzi</td>
+			  <td align="right">2009</td>
+			  <td align="right">6</td>
+			  <td align="right">27</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Linkin Park</td>
+			  <td>New Divide</td>
+			  <td align="right">2009</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jason Mraz</td>
+			  <td>I'm Yours</td>
+			  <td align="right">2008</td>
+			  <td align="right">6</td>
+			  <td align="right">76</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>A Milli</td>
+			  <td align="right">2008</td>
+			  <td align="right">6</td>
+			  <td align="right">23</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Huey</td>
+			  <td>Pop, Lock &amp; Drop It</td>
+			  <td align="right">2007</td>
+			  <td align="right">6</td>
+			  <td align="right">23</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rich Boy</td>
+			  <td>Throw Some D's</td>
+			  <td align="right">2007</td>
+			  <td align="right">6</td>
+			  <td align="right">21</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rascal Flatts</td>
+			  <td>What Hurts The M<span style="display:none">ost</span></td>
+			  <td align="right">2006</td>
+			  <td align="right">6</td>
+			  <td align="right">51</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Red Hot Chili Peppers</td>
+			  <td>Dani California</td>
+			  <td align="right">2006</td>
+			  <td align="right">6</td>
+			  <td align="right">26</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Christina Aguilera</td>
+			  <td>Ain't No Other Ma<span style="display:none">n</span></td>
+			  <td align="right">2006</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Unfaithful</td>
+			  <td align="right">2006</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rob Thomas</td>
+			  <td>Lonely No More</td>
+			  <td align="right">2005</td>
+			  <td align="right">6</td>
+			  <td align="right">34</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sean Paul</td>
+			  <td>We Be Burnin'</td>
+			  <td align="right">2005</td>
+			  <td align="right">6</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Green Day</td>
+			  <td>Wake Me Up Whe<span style="display:none">n September Ends</span></td>
+			  <td align="right">2005</td>
+			  <td align="right">6</td>
+			  <td align="right">27</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">50 Cent</td>
+			  <td>Outta Control</td>
+			  <td align="right">2005</td>
+			  <td align="right">6</td>
+			  <td align="right">19</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kelly Clarkson</td>
+			  <td>Breakaway</td>
+			  <td align="right">2004</td>
+			  <td align="right">6</td>
+			  <td align="right">46</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jagged Edge</td>
+			  <td>Walked Outta Hea<span style="display:none">ven</span></td>
+			  <td align="right">2004</td>
+			  <td align="right">6</td>
+			  <td align="right">27</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Twista</td>
+			  <td>Overnight Celebrit<span style="display:none">y</span></td>
+			  <td align="right">2004</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">D12</td>
+			  <td>My Band</td>
+			  <td align="right">2004</td>
+			  <td align="right">6</td>
+			  <td align="right">18</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Snoop Dogg</td>
+			  <td>Beautiful</td>
+			  <td align="right">2003</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Creed</td>
+			  <td>One Last Breath</td>
+			  <td align="right">2002</td>
+			  <td align="right">6</td>
+			  <td align="right">34</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Michelle Branch</td>
+			  <td>All You Wanted</td>
+			  <td align="right">2002</td>
+			  <td align="right">6</td>
+			  <td align="right">28</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ja Rule</td>
+			  <td>Livin' It Up</td>
+			  <td align="right">2001</td>
+			  <td align="right">6</td>
+			  <td align="right">25</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Shakira</td>
+			  <td>Whenever, Where<span style="display:none">ver</span></td>
+			  <td align="right">2001</td>
+			  <td align="right">6</td>
+			  <td align="right">24</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Backstreet Boys</td>
+			  <td>Show Me The Mea<span style="display:none">ning Of Being Lonely</span></td>
+			  <td align="right">2000</td>
+			  <td align="right">6</td>
+			  <td align="right">24</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Erykah Badu</td>
+			  <td>Bag Lady</td>
+			  <td align="right">2000</td>
+			  <td align="right">6</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Backstreet Boys</td>
+			  <td>I Want It That Way</td>
+			  <td align="right">1999</td>
+			  <td align="right">6</td>
+			  <td align="right">31</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">DaBaby</td>
+			  <td>Suge</td>
+			  <td align="right">2019</td>
+			  <td align="right">7</td>
+			  <td align="right">13</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">5 Seconds Of Summer</td>
+			  <td>Youngblood</td>
+			  <td align="right">2018</td>
+			  <td align="right">7</td>
+			  <td align="right">48</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>Uproar</td>
+			  <td align="right">2018</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>I'm Upset</td>
+			  <td align="right">2018</td>
+			  <td align="right">7</td>
+			  <td align="right">16</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Uzi Vert</td>
+			  <td>XO TOUR Llif3</td>
+			  <td align="right">2017</td>
+			  <td align="right">7</td>
+			  <td align="right">34</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Zedd, Alessia Cara</td>
+			  <td>Stay</td>
+			  <td align="right">2017</td>
+			  <td align="right">7</td>
+			  <td align="right">31</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Needed Me</td>
+			  <td align="right">2016</td>
+			  <td align="right">7</td>
+			  <td align="right">45</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">J. Cole</td>
+			  <td>Deja Vu</td>
+			  <td align="right">2016</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nick Jonas</td>
+			  <td>Jealous</td>
+			  <td align="right">2015</td>
+			  <td align="right">7</td>
+			  <td align="right">32</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Calvin Harris</td>
+			  <td>Summer</td>
+			  <td align="right">2014</td>
+			  <td align="right">7</td>
+			  <td align="right">26</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>Daylight</td>
+			  <td align="right">2013</td>
+			  <td align="right">7</td>
+			  <td align="right">25</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>Rap God</td>
+			  <td align="right">2013</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alex Clare</td>
+			  <td>Too Close</td>
+			  <td align="right">2012</td>
+			  <td align="right">7</td>
+			  <td align="right">44</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Take Care</td>
+			  <td align="right">2012</td>
+			  <td align="right">7</td>
+			  <td align="right">34</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Tyga</td>
+			  <td>Rack City</td>
+			  <td align="right">2012</td>
+			  <td align="right">7</td>
+			  <td align="right">25</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Hot Chelle Rae</td>
+			  <td>Tonight Tonight</td>
+			  <td align="right">2011</td>
+			  <td align="right">7</td>
+			  <td align="right">30</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jason Aldean</td>
+			  <td>Dirt Road Anthem</td>
+			  <td align="right">2011</td>
+			  <td align="right">7</td>
+			  <td align="right">27</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Shinedown</td>
+			  <td>Second Chance</td>
+			  <td align="right">2009</td>
+			  <td align="right">7</td>
+			  <td align="right">41</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Fray</td>
+			  <td>You Found Me</td>
+			  <td align="right">2009</td>
+			  <td align="right">7</td>
+			  <td align="right">39</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Mariah Carey</td>
+			  <td>Obsessed</td>
+			  <td align="right">2009</td>
+			  <td align="right">7</td>
+			  <td align="right">21</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sean Kingston</td>
+			  <td>Take You There</td>
+			  <td align="right">2008</td>
+			  <td align="right">7</td>
+			  <td align="right">25</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Yael Naim</td>
+			  <td>New Soul</td>
+			  <td align="right">2008</td>
+			  <td align="right">7</td>
+			  <td align="right">19</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Christina Aguilera</td>
+			  <td>Keeps Gettin' Bette<span style="display:none">r</span></td>
+			  <td align="right">2008</td>
+			  <td align="right">7</td>
+			  <td align="right">18</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Hate That I Love Y<span style="display:none">ou</span></td>
+			  <td align="right">2007</td>
+			  <td align="right">7</td>
+			  <td align="right">26</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Linkin Park</td>
+			  <td>What I've Done</td>
+			  <td align="right">2007</td>
+			  <td align="right">7</td>
+			  <td align="right">23</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kanye West</td>
+			  <td>Good Life</td>
+			  <td align="right">2007</td>
+			  <td align="right">7</td>
+			  <td align="right">21</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rascal Flatts</td>
+			  <td>Life Is A Highway</td>
+			  <td align="right">2006</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jibbs</td>
+			  <td>Chain Hang Low</td>
+			  <td align="right">2006</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kelly Clarkson</td>
+			  <td>Because Of You</td>
+			  <td align="right">2005</td>
+			  <td align="right">7</td>
+			  <td align="right">37</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Will Smith</td>
+			  <td>Switch</td>
+			  <td align="right">2005</td>
+			  <td align="right">7</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Gwen Stefani</td>
+			  <td>Rich Girl</td>
+			  <td align="right">2005</td>
+			  <td align="right">7</td>
+			  <td align="right">27</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Madonna</td>
+			  <td>Hung Up</td>
+			  <td align="right">2005</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nickelback</td>
+			  <td>Someday</td>
+			  <td align="right">2004</td>
+			  <td align="right">7</td>
+			  <td align="right">50</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Evanescence</td>
+			  <td>My Immortal</td>
+			  <td align="right">2004</td>
+			  <td align="right">7</td>
+			  <td align="right">32</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kanye West</td>
+			  <td>All Falls Down</td>
+			  <td align="right">2004</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Baby Bash</td>
+			  <td>Suga Suga</td>
+			  <td align="right">2003</td>
+			  <td align="right">7</td>
+			  <td align="right">33</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Tyrese</td>
+			  <td>How You Gonna A<span style="display:none">ct Like That</span></td>
+			  <td align="right">2003</td>
+			  <td align="right">7</td>
+			  <td align="right">25</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ashanti</td>
+			  <td>Rain On Me</td>
+			  <td align="right">2003</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sean Paul</td>
+			  <td>Gimme The Light</td>
+			  <td align="right">2002</td>
+			  <td align="right">7</td>
+			  <td align="right">39</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kylie Minogue</td>
+			  <td>Can't Get You Out <span style="display:none">Of My Head</span></td>
+			  <td align="right">2002</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alicia Keys</td>
+			  <td>A Woman's Worth</td>
+			  <td align="right">2002</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Brandy</td>
+			  <td>What About Us?</td>
+			  <td align="right">2002</td>
+			  <td align="right">7</td>
+			  <td align="right">18</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Aerosmith</td>
+			  <td>Jaded</td>
+			  <td align="right">2001</td>
+			  <td align="right">7</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Creed</td>
+			  <td>Higher</td>
+			  <td align="right">2000</td>
+			  <td align="right">7</td>
+			  <td align="right">57</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">P!nk</td>
+			  <td>There You Go</td>
+			  <td align="right">2000</td>
+			  <td align="right">7</td>
+			  <td align="right">32</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sugar Ray</td>
+			  <td>Someday</td>
+			  <td align="right">1999</td>
+			  <td align="right">7</td>
+			  <td align="right">32</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Donell Jones</td>
+			  <td>U Know What's Up</td>
+			  <td align="right">1999</td>
+			  <td align="right">7</td>
+			  <td align="right">24</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Khalid</td>
+			  <td>Better</td>
+			  <td align="right">2019</td>
+			  <td align="right">8</td>
+			  <td align="right">41</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Bobby Helms</td>
+			  <td>Jingle Bell Rock</td>
+			  <td align="right">2019</td>
+			  <td align="right">8</td>
+			  <td align="right">25</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Blueface</td>
+			  <td>Thotiana</td>
+			  <td align="right">2019</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>God Is A Woman</td>
+			  <td align="right">2018</td>
+			  <td align="right">8</td>
+			  <td align="right">22</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Travis Scott</td>
+			  <td>Stargazing</td>
+			  <td align="right">2018</td>
+			  <td align="right">8</td>
+			  <td align="right">8</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Post Malone</td>
+			  <td>Congratulations</td>
+			  <td align="right">2017</td>
+			  <td align="right">8</td>
+			  <td align="right">50</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Alessia Cara</td>
+			  <td>Scars To Your Bea<span style="display:none">utiful</span></td>
+			  <td align="right">2017</td>
+			  <td align="right">8</td>
+			  <td align="right">43</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Passionfruit</td>
+			  <td align="right">2017</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Prince</td>
+			  <td>When Doves Cry</td>
+			  <td align="right">2016</td>
+			  <td align="right">8</td>
+			  <td align="right">23</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>Dangerous Woma<span style="display:none">n</span></td>
+			  <td align="right">2016</td>
+			  <td align="right">8</td>
+			  <td align="right">21</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kent Jones</td>
+			  <td>Don't Mind</td>
+			  <td align="right">2016</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sam Smith</td>
+			  <td>Lay Me Down</td>
+			  <td align="right">2015</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sia</td>
+			  <td>Chandelier</td>
+			  <td align="right">2014</td>
+			  <td align="right">8</td>
+			  <td align="right">46</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Timberlake</td>
+			  <td>Not A Bad Thing</td>
+			  <td align="right">2014</td>
+			  <td align="right">8</td>
+			  <td align="right">22</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Aloe Blacc</td>
+			  <td>The Man</td>
+			  <td align="right">2014</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Capital Cities</td>
+			  <td>Safe And Sound</td>
+			  <td align="right">2013</td>
+			  <td align="right">8</td>
+			  <td align="right">43</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Zedd</td>
+			  <td>Clarity</td>
+			  <td align="right">2013</td>
+			  <td align="right">8</td>
+			  <td align="right">33</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Owl City, Carly Rae Jepsen</td>
+			  <td>Good Time</td>
+			  <td align="right">2012</td>
+			  <td align="right">8</td>
+			  <td align="right">24</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Adele</td>
+			  <td>Skyfall</td>
+			  <td align="right">2012</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">OneRepublic</td>
+			  <td>Good Life</td>
+			  <td align="right">2011</td>
+			  <td align="right">8</td>
+			  <td align="right">35</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Justin Bieber</td>
+			  <td>Never Say Never</td>
+			  <td align="right">2011</td>
+			  <td align="right">8</td>
+			  <td align="right">19</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">La Roux</td>
+			  <td>Bulletproof</td>
+			  <td align="right">2010</td>
+			  <td align="right">8</td>
+			  <td align="right">27</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Miley Cyrus</td>
+			  <td>Can't Be Tamed</td>
+			  <td align="right">2010</td>
+			  <td align="right">8</td>
+			  <td align="right">10</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Forever</td>
+			  <td align="right">2009</td>
+			  <td align="right">8</td>
+			  <td align="right">24</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Pitbull</td>
+			  <td>Hotel Room Servic<span style="display:none">e</span></td>
+			  <td align="right">2009</td>
+			  <td align="right">8</td>
+			  <td align="right">23</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jonas Brothers</td>
+			  <td>Tonight</td>
+			  <td align="right">2008</td>
+			  <td align="right">8</td>
+			  <td align="right">4</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Carrie Underwood</td>
+			  <td>Before He Cheats</td>
+			  <td align="right">2007</td>
+			  <td align="right">8</td>
+			  <td align="right">64</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jordin Sparks</td>
+			  <td>Tattoo</td>
+			  <td align="right">2007</td>
+			  <td align="right">8</td>
+			  <td align="right">31</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fabolous</td>
+			  <td>Make Me Better</td>
+			  <td align="right">2007</td>
+			  <td align="right">8</td>
+			  <td align="right">21</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nickelback</td>
+			  <td>Far Away</td>
+			  <td align="right">2006</td>
+			  <td align="right">8</td>
+			  <td align="right">30</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Danity Kane</td>
+			  <td>Show Stopper</td>
+			  <td align="right">2006</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Usher</td>
+			  <td>Caught Up</td>
+			  <td align="right">2005</td>
+			  <td align="right">8</td>
+			  <td align="right">27</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Coldplay</td>
+			  <td>Speed Of Sound</td>
+			  <td align="right">2005</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lloyd Banks</td>
+			  <td>On Fire</td>
+			  <td align="right">2004</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ginuwine</td>
+			  <td>In Those Jeans</td>
+			  <td align="right">2003</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">DJ Sammy, Yanou</td>
+			  <td>Heaven</td>
+			  <td align="right">2002</td>
+			  <td align="right">8</td>
+			  <td align="right">27</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ashanti</td>
+			  <td>Happy</td>
+			  <td align="right">2002</td>
+			  <td align="right">8</td>
+			  <td align="right">23</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">P!nk</td>
+			  <td>Just Like A Pill</td>
+			  <td align="right">2002</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">City High</td>
+			  <td>What Would You <span style="display:none">Do?</span></td>
+			  <td align="right">2001</td>
+			  <td align="right">8</td>
+			  <td align="right">28</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ja Rule</td>
+			  <td>Put It On Me</td>
+			  <td align="right">2001</td>
+			  <td align="right">8</td>
+			  <td align="right">27</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Sonique</td>
+			  <td>It Feels So Good</td>
+			  <td align="right">2000</td>
+			  <td align="right">8</td>
+			  <td align="right">24</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jennifer Lopez</td>
+			  <td>Waiting For Tonigh<span style="display:none">t</span></td>
+			  <td align="right">1999</td>
+			  <td align="right">8</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Brenda Lee</td>
+			  <td>Rockin' Around Th<span style="display:none">e Christmas Tree</span></td>
+			  <td align="right">2019</td>
+			  <td align="right">9</td>
+			  <td align="right">27</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Portland</td>
+			  <td align="right">2017</td>
+			  <td align="right">9</td>
+			  <td align="right">16</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">DNCE</td>
+			  <td>Cake By The Ocean</td>
+			  <td align="right">2016</td>
+			  <td align="right">9</td>
+			  <td align="right">46</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Andy Grammer</td>
+			  <td>Honey, I'm Good.</td>
+			  <td align="right">2015</td>
+			  <td align="right">9</td>
+			  <td align="right">31</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Pitbull, Ne</td>
+			  <td>Time Of Our Lives</td>
+			  <td align="right">2015</td>
+			  <td align="right">9</td>
+			  <td align="right">27</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ed Sheeran</td>
+			  <td>Don't</td>
+			  <td align="right">2014</td>
+			  <td align="right">9</td>
+			  <td align="right">36</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Michael Jackson, Justin Tim<span style="display:none">berlake</span></td>
+			  <td>Love Never Felt So <span style="display:none">Good</span></td>
+			  <td align="right">2014</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ariana Grande</td>
+			  <td>The Way</td>
+			  <td align="right">2013</td>
+			  <td align="right">9</td>
+			  <td align="right">26</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">P!nk</td>
+			  <td>Try</td>
+			  <td align="right">2013</td>
+			  <td align="right">9</td>
+			  <td align="right">24</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>Love Me</td>
+			  <td align="right">2013</td>
+			  <td align="right">9</td>
+			  <td align="right">22</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Usher</td>
+			  <td>Scream</td>
+			  <td align="right">2012</td>
+			  <td align="right">9</td>
+			  <td align="right">21</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lupe Fiasco</td>
+			  <td>The Show Goes On</td>
+			  <td align="right">2011</td>
+			  <td align="right">9</td>
+			  <td align="right">33</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Drake</td>
+			  <td>Make Me Proud</td>
+			  <td align="right">2011</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jason Derulo</td>
+			  <td>Ridin' Solo</td>
+			  <td align="right">2010</td>
+			  <td align="right">9</td>
+			  <td align="right">28</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Wayne</td>
+			  <td>6 Foot 7 Foot</td>
+			  <td align="right">2010</td>
+			  <td align="right">9</td>
+			  <td align="right">21</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Katy Perry</td>
+			  <td>Waking Up In Vega<span style="display:none">s</span></td>
+			  <td align="right">2009</td>
+			  <td align="right">9</td>
+			  <td align="right">23</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna</td>
+			  <td>Russian Roulette</td>
+			  <td align="right">2009</td>
+			  <td align="right">9</td>
+			  <td align="right">14</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Eminem</td>
+			  <td>We Made You</td>
+			  <td align="right">2009</td>
+			  <td align="right">9</td>
+			  <td align="right">10</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Pussycat Dolls</td>
+			  <td>When I Grow Up</td>
+			  <td align="right">2008</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Demi Lovato, Joe Jonas</td>
+			  <td>This Is Me</td>
+			  <td align="right">2008</td>
+			  <td align="right">9</td>
+			  <td align="right">7</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">P!nk</td>
+			  <td>Who Knew</td>
+			  <td align="right">2007</td>
+			  <td align="right">9</td>
+			  <td align="right">36</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Rihanna, Sean Paul</td>
+			  <td>Break It Off</td>
+			  <td align="right">2007</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Amy Winehouse</td>
+			  <td>Rehab</td>
+			  <td align="right">2007</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fall Out Boy</td>
+			  <td>Dance, Dance</td>
+			  <td align="right">2006</td>
+			  <td align="right">9</td>
+			  <td align="right">31</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chingy</td>
+			  <td>Pullin' Me Back</td>
+			  <td align="right">2006</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ludacris</td>
+			  <td>Pimpin' All Over Th<span style="display:none">e World</span></td>
+			  <td align="right">2005</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ying Yang Twins</td>
+			  <td>Salt Shaker</td>
+			  <td align="right">2004</td>
+			  <td align="right">9</td>
+			  <td align="right">26</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">OutKast</td>
+			  <td>Roses</td>
+			  <td align="right">2004</td>
+			  <td align="right">9</td>
+			  <td align="right">21</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Britney Spears</td>
+			  <td>Toxic</td>
+			  <td align="right">2004</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Uncle Kracker</td>
+			  <td>Drift Away</td>
+			  <td align="right">2003</td>
+			  <td align="right">9</td>
+			  <td align="right">35</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">R. Kelly</td>
+			  <td>Step In The Name <span style="display:none">Of Love</span></td>
+			  <td align="right">2003</td>
+			  <td align="right">9</td>
+			  <td align="right">27</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kelly Clarkson</td>
+			  <td>Miss Independent</td>
+			  <td align="right">2003</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Shakira</td>
+			  <td>Underneath Your <span style="display:none">Clothes</span></td>
+			  <td align="right">2002</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Incubus</td>
+			  <td>Drive</td>
+			  <td align="right">2001</td>
+			  <td align="right">9</td>
+			  <td align="right">39</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Nelly Furtado</td>
+			  <td>I'm Like A Bird</td>
+			  <td align="right">2001</td>
+			  <td align="right">9</td>
+			  <td align="right">24</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jagged Edge</td>
+			  <td>Promise</td>
+			  <td align="right">2001</td>
+			  <td align="right">9</td>
+			  <td align="right">21</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Backstreet Boys</td>
+			  <td>Shape Of My Heart</td>
+			  <td align="right">2000</td>
+			  <td align="right">9</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Red Hot Chili Peppers</td>
+			  <td>Scar Tissue</td>
+			  <td align="right">1999</td>
+			  <td align="right">9</td>
+			  <td align="right">29</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Len</td>
+			  <td>Steal My Sunshine</td>
+			  <td align="right">1999</td>
+			  <td align="right">9</td>
+			  <td align="right">25</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ava Max</td>
+			  <td>Sweet But Psycho</td>
+			  <td align="right">2019</td>
+			  <td align="right">10</td>
+			  <td align="right">28</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Migos</td>
+			  <td>Walk It Talk It</td>
+			  <td align="right">2018</td>
+			  <td align="right">10</td>
+			  <td align="right">22</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Andy Williams</td>
+			  <td>It's The Most Won<span style="display:none">derful Time Of The Year</span></td>
+			  <td align="right">2018</td>
+			  <td align="right">10</td>
+			  <td align="right">10</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Liam Payne</td>
+			  <td>Strip That Down</td>
+			  <td align="right">2017</td>
+			  <td align="right">10</td>
+			  <td align="right">28</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Miley Cyrus</td>
+			  <td>Malibu</td>
+			  <td align="right">2017</td>
+			  <td align="right">10</td>
+			  <td align="right">15</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fall Out Boy</td>
+			  <td>Centuries</td>
+			  <td align="right">2015</td>
+			  <td align="right">10</td>
+			  <td align="right">34</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Ed Sheeran</td>
+			  <td>Photograph</td>
+			  <td align="right">2015</td>
+			  <td align="right">10</td>
+			  <td align="right">30</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">One Direction</td>
+			  <td>Perfect</td>
+			  <td align="right">2015</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Coldplay</td>
+			  <td>A Sky Full Of Stars</td>
+			  <td align="right">2014</td>
+			  <td align="right">10</td>
+			  <td align="right">26</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Paramore</td>
+			  <td>Ain't It Fun</td>
+			  <td align="right">2014</td>
+			  <td align="right">10</td>
+			  <td align="right">24</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Maroon 5</td>
+			  <td>Love Somebody</td>
+			  <td align="right">2013</td>
+			  <td align="right">10</td>
+			  <td align="right">21</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Demi Lovato</td>
+			  <td>Heart Attack</td>
+			  <td align="right">2013</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Train</td>
+			  <td>Drive By</td>
+			  <td align="right">2012</td>
+			  <td align="right">10</td>
+			  <td align="right">36</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chris Brown</td>
+			  <td>Don't Wake Me Up</td>
+			  <td align="right">2012</td>
+			  <td align="right">10</td>
+			  <td align="right">28</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Kelly Clarkson</td>
+			  <td>Mr. Know It All</td>
+			  <td align="right">2011</td>
+			  <td align="right">10</td>
+			  <td align="right">23</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">DJ Khaled</td>
+			  <td>I'm On One</td>
+			  <td align="right">2011</td>
+			  <td align="right">10</td>
+			  <td align="right">23</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Demi Lovato</td>
+			  <td>Skyscraper</td>
+			  <td align="right">2011</td>
+			  <td align="right">10</td>
+			  <td align="right">15</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Adam Lambert</td>
+			  <td>Whataya Want Fro<span style="display:none">m Me</span></td>
+			  <td align="right">2010</td>
+			  <td align="right">10</td>
+			  <td align="right">30</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jay Sean</td>
+			  <td>Do You Remember</td>
+			  <td align="right">2010</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Young Money</td>
+			  <td>Every Girl</td>
+			  <td align="right">2009</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Hannah Montana</td>
+			  <td>He Could Be The O<span style="display:none">ne</span></td>
+			  <td align="right">2009</td>
+			  <td align="right">10</td>
+			  <td align="right">5</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Metro Station</td>
+			  <td>Shake It</td>
+			  <td align="right">2008</td>
+			  <td align="right">10</td>
+			  <td align="right">30</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Jesse McCartney</td>
+			  <td>Leavin'</td>
+			  <td align="right">2008</td>
+			  <td align="right">10</td>
+			  <td align="right">24</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Taylor Swift</td>
+			  <td>Change</td>
+			  <td align="right">2008</td>
+			  <td align="right">10</td>
+			  <td align="right">3</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Lil Mama</td>
+			  <td>Lip Gloss</td>
+			  <td align="right">2007</td>
+			  <td align="right">10</td>
+			  <td align="right">11</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Panic! At The Disco</td>
+			  <td>I Write Sins Not Tr<span style="display:none">agedies</span></td>
+			  <td align="right">2006</td>
+			  <td align="right">10</td>
+			  <td align="right">37</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Chris Brown</td>
+			  <td>Say Goodbye</td>
+			  <td align="right">2006</td>
+			  <td align="right">10</td>
+			  <td align="right">23</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Field Mob</td>
+			  <td>So What</td>
+			  <td align="right">2006</td>
+			  <td align="right">10</td>
+			  <td align="right">21</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Weezer</td>
+			  <td>Beverly Hills</td>
+			  <td align="right">2005</td>
+			  <td align="right">10</td>
+			  <td align="right">43</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">The Killers</td>
+			  <td>Mr. Brightside</td>
+			  <td align="right">2005</td>
+			  <td align="right">10</td>
+			  <td align="right">38</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">No Doubt</td>
+			  <td>It's My Life</td>
+			  <td align="right">2004</td>
+			  <td align="right">10</td>
+			  <td align="right">28</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Fabolous</td>
+			  <td>Breathe</td>
+			  <td align="right">2004</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Monica</td>
+			  <td>So Gone</td>
+			  <td align="right">2003</td>
+			  <td align="right">10</td>
+			  <td align="right">22</td>
+			  <td align="right">2</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Craig David</td>
+			  <td>7 Days</td>
+			  <td align="right">2002</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Avril Lavigne</td>
+			  <td>Sk8er Boi</td>
+			  <td align="right">2002</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Enya</td>
+			  <td>Only Time</td>
+			  <td align="right">2001</td>
+			  <td align="right">10</td>
+			  <td align="right">32</td>
+			  <td align="right">3</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Tamia</td>
+			  <td>Stranger In My Ho<span style="display:none">use</span></td>
+			  <td align="right">2001</td>
+			  <td align="right">10</td>
+			  <td align="right">21</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Michael Jackson</td>
+			  <td>You Rock My Worl<span style="display:none">d</span></td>
+			  <td align="right">2001</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">4</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">Destiny's Child</td>
+			  <td>Emotion</td>
+			  <td align="right">2001</td>
+			  <td align="right">10</td>
+			  <td align="right">20</td>
+			  <td align="right">0</td>
+			 </tr>
+			 <tr height="19" style="height:14.5pt">
+			  <td height="19" style="height:14.5pt">LFO</td>
+			  <td>Girl On TV</td>
+			  <td align="right">1999</td>
+			  <td align="right">10</td>
+			  <td align="right">17</td>
+			  <td align="right">1</td>
+			 </tr>
+			 <!--[if supportMisalignedColumns]-->
+			 <tr height="0" style="display:none">
+			  <td width="171" style="width:129pt"></td>
+			  <td width="116" style="width:87pt"></td>
+			  <td width="64" style="width:48pt"></td>
+			  <td width="64" style="width:48pt"></td>
+			  <td width="64" style="width:48pt"></td>
+			  <td width="64" style="width:48pt"></td>
+			 </tr>
+			 <!--[endif]-->
+			</tbody>
+		</table>
+		
         <!-- <script src="radarChart.js"></script>	 -->
         <script>
             function RadarChart(id, data, options) {
@@ -535,11 +4513,11 @@
 			  /* Legends of bubbles START */
 			  // The scale you use for bubble size
 			  var size = d3.scaleSqrt()
-				.domain([0, 50])  // What's in the data, let's say it is percentage
-				.range([1, 15])  // Size in pixel
+				.domain([0, 100])  // What's in the data, let's say it is percentage
+				.range([1, 100])  // Size in pixel
 			  
 			  // Add legend: circles
-			  var valuesToShow = [5, 40, 90]
+			  var valuesToShow = [1, 2, 3]
 			  var xCircle = 590
 			  var xLabel = 620
 			  var yCircle = 330
@@ -560,10 +4538,10 @@
 				.data(valuesToShow)
 				.enter()
 				.append("line")
-				  .attr('x1', function(d){ return xCircle + size(d) } )
+				  .attr('x1', function(d){ return xCircle + size(d)*0 } )
 				  .attr('x2', xLabel)
-				  .attr('y1', function(d){ return yCircle - size(d) } )
-				  .attr('y2', function(d){ return yCircle - size(d) } )
+				  .attr('y1', function(d){ return yCircle - size(d)*2 } )
+				  .attr('y2', function(d){ return yCircle - size(d)*2 } )
 				  .attr('stroke', 'black')
 				  .style('stroke-dasharray', ('2,2'))
 			  
@@ -574,8 +4552,8 @@
 				.enter()
 				.append("text")
 				  .attr('x', xLabel)
-				  .attr('y', function(d){ return yCircle - size(d) } )
-				  .text( function(d){ return d+' Weeks on chart' } )
+				  .attr('y', function(d){ return yCircle - size(d)*2 } )
+				  .text( function(d){ return 60+15*(d-1)+' Weeks on chart' } )
 				  .style("font-size", 8)
 				  .attr('alignment-baseline', 'middle')
 			  /* Legends of bubbles END */
@@ -634,6 +4612,17 @@
 			  }, 5000);
 			  
 			  })
+		</script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+		<script>
+		  $(document).ready(function() {
+			$('#example').DataTable( {
+				"scrollY":        "200px",
+				"scrollCollapse": true,
+				"paging":         false
+			} );
+		} );
 		</script>
 	</body>
 </html>
