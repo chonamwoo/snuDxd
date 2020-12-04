@@ -80,6 +80,9 @@ return my;
                         {label: "Valence", csv_label: "valence", color: "blue", x: -850, y: -200}
                         ];
 
+    var sort_button_data = [{label: "Year", x: -850, y: 0},
+                            {label: "Selected Attribute", x: -850, y: 50}];
+
     var button = d3.button();
 
     var buttons = svg.selectAll(".button")
@@ -91,21 +94,38 @@ return my;
         .call(button)
         .on("mouseover", function() {
           d3.select(this)
-            .transition().duration(50)
             .style("fill", "skyblue");
             
         })
         .on("mouseout", function() {
           d3.select(this)
-            .transition().duration(50)
             .style("fill", "#eee");
         })
         
+    var sorting_buttons = svg.selectAll(".sort_button")
+        .data(sort_button_data)
+        .enter()
+        .append("g")
+        .attr("class", "sort_button")
+        .style("fill", "#ddd")
+        .call(button)
+        .on("mouseover", function() {
+          d3.select(this)
+            .style("fill", "skyblue");
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .style("fill", "#ddd");
+        })
 
 
-
-    // d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum.csv", function(data) {
+    // csv 파일 읽기
     d3.csv("https://raw.githubusercontent.com/datawhales/DataVisualization/master/1stranksongs.csv", function(data) {
+      // 기본적으로 음반 발행 년도로 sorting
+      data.sort((a,b) => {
+        return d3.descending(a['Year'], b['Year'])
+      });
+
       // Scales
       var x = d3.scaleBand()
           .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle
@@ -121,17 +141,33 @@ return my;
         .data(data)
         .enter()
         .append("path")
-          // .attr("class", "firstbars")
           .attr("fill", "#8597d0")
+          .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d['tempo']); })
+              .startAngle(function(d) { return x(d.Name); })
+              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
           .on('mouseover', function (d,i) {
-            d3.select(this)
-                .transition().duration(50)
-                .style("fill", "red");
-                
+            bars
+              .style("fill-opacity", 0.5);
 
-            const percentage = parseInt(100 * (d['tempo']))
+            d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120* d['tempo']); })
+                .startAngle(function(d) { return x(d.Name) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Name) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+            const percentage = parseInt(100 * d['tempo'])
             const title = d.Name
-            const artist = d['Artists'];
+            const artist = d['Artists']
+            const year = d['Year'];
 
             centerlabel
                 .style("visibility", null)
@@ -141,26 +177,31 @@ return my;
                 .select(".title")
                 .text("\"" + title + "\"");
             centerlabel
+                .select(".year")
+                .text("in " + year);
+            centerlabel
                 .select(".artist")
                 .text("by " + artist);
-
           })
           .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
             d3.select(this)
-                .transition().duration(50)
                 .style("fill", "#8597d0")
-                .style("stroke", null);
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d['tempo']); })
+                .startAngle(function(d) { return x(d.Name); })
+                .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
 
             centerlabel
                 .style("visibility", "hidden");
           })
-          .attr("d", d3.arc()     // imagine your doing a part of a donut plot
-              .innerRadius(innerRadius)
-              .outerRadius(function(d) { return y(100* d['tempo']); })
-              .startAngle(function(d) { return x(d.Name); })
-              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
-              .padAngle(0.01)
-              .padRadius(innerRadius))
+          
 
       // Add the labels
       var songlabels = svg.append("g")
@@ -169,86 +210,232 @@ return my;
           .enter()
           .append("g")
             .attr("text-anchor", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
-            .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d['tempo'])+10) + ",0)"; })
+            .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d['tempo'])+20) + ",0)"; })
           .append("text")
+          .attr("class", "songtitles")
             .text(function(d){return(d.Name)})
             .attr("transform", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
             .style("font-size", "11px")
             .attr("alignment-baseline", "middle")
 
-
+      //////////////////////////////////////////////
+      //////////// 버튼 클릭 시 변화 시작 ///////////////
+      //////////////////////////////////////////////
       buttons
         .on("click", function(button_d, button_i) {
           d3.select(this)
             .style("fill", "red");
 
           bars
-            .transition().duration(1500)
-            .style("fill", button_d.color)
-            .attr("d", d3.arc()
-            .innerRadius(innerRadius)
-              .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
-              .startAngle(function(d) { return x(d.Name); })
-              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
-              .padAngle(0.01)
-              .padRadius(innerRadius));
-
-
-          songlabels
-            .transition().duration(1500)
-            .attr("transform", function(d) { return "translate(" + (y(100 * d[button_d.csv_label])-150)+ ",0)"; })
-            
-          bars
             .on('mouseover', function (d,i) {
+              bars
+                .style("fill-opacity", 0.5);
+
               d3.select(this)
-                .transition().duration(50)
                 .style("fill", "red")
                 .style("fill-opacity", 1)
-                /////
                 .attr("d", d3.arc()
-              .innerRadius(innerRadius)
-              .outerRadius(function(d) { return y(120* d[button_d.csv_label]); })
-              .startAngle(function(d) { return x(d.Name) - 0.5 * x.bandwidth(); })
-              .endAngle(function(d) { return x(d.Name) + 1.5 * x.bandwidth(); })
-              .padAngle(0.01)
-              .padRadius(innerRadius));
-              /////
-            
-            const percentage = parseInt(100 * (d[button_d.csv_label]))
-            const title = d.Name
-            const artist = d['Artists'];
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120 * d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Name) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Name) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+              const percentage = parseInt(100 * d[button_d.csv_label])
+              const title = d.Name
+              const artist = d['Artists']
+              const year = d['Year'];
 
-            centerlabel
+              centerlabel
                 .style("visibility", null)
                 .select(".percentage")
                 .text(percentage + "%");
-            centerlabel
+              centerlabel
                 .select(".title")
                 .text("\"" + title + "\"");
-            centerlabel
+              centerlabel
+                .select(".year")
+                .text("in " + year);
+              centerlabel
                 .select(".artist")
-                .text("by " + artist);
-
+                  .text("by " + artist);
             })
+          
+          // bars mouseout
+          bars
           .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
             d3.select(this)
-                .transition().duration(50)
                 .style("fill", button_d.color)
-                .attr("d", d3.arc()
-            .innerRadius(innerRadius)
-              .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
-              .startAngle(function(d) { return x(d.Name); })
-              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
-              .padAngle(0.01)
-              .padRadius(innerRadius));
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Name); })
+                .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
 
             centerlabel
                 .style("visibility", "hidden");
           })
-        })
-
+          
+          // bars transition
+          bars
+            .transition().duration(1500)
+            .style("fill", button_d.color)
+            .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+              .startAngle(function(d) { return x(d.Name); })
+              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
         
-      
+          svg.selectAll(".songtitles").remove();
+          // songlabels.remove();
+
+          svg
+            .append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+              .attr("text-anchor", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+              .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d[button_d.csv_label]) + 10) + ",0)"; })
+            .append("text")
+            .attr("class", "songtitles")
+              .text(function(d){return(d.Name)})
+              .attr("transform", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+              .style("font-size", "11px")
+              .attr("alignment-baseline", "middle")
+          
+          ////////////////////////////////////
+          //////// sorting_buttons 시작 ///////
+          ////////////////////////////////////
+          sorting_buttons
+            .on("click", function(sorting_d, sorting_i) {
+              bars.exit().remove();
+              songlabels.exit().remove();
+              svg.selectAll(".songtitles").remove();
+
+              data.sort((a,b) => {
+                return d3.descending(a[button_d.csv_label], b[button_d.csv_label])
+              });
+
+              d3.select(this)
+                .style("fill", "red");
+
+              // data 업데이트 - sorting한 data로 chart 그리기
+          // Scales
+            x
+            .domain(data.map(function(d) { return d.Name; })); // The domain of the X axis is the list of states.
+            
+          bars
+            
+            .data(data)
+            .enter()
+            .append("path")
+            .on('mouseover', function (d,i) {
+              bars
+                .style("fill-opacity", 0.5);
+
+              d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120* d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Name) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Name) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+              const percentage = parseInt(100 * d[button_d.csv_label])
+              const title = d.Name
+              const artist = d['Artists']
+              const year = d['Year'];
+
+              centerlabel
+                .style("visibility", null)
+                .select(".percentage")
+                .text(percentage + "%");
+              centerlabel
+                .select(".title")
+                .text("\"" + title + "\"");
+              centerlabel
+                .select(".year")
+                .text("in " + year);
+              centerlabel
+                .select(".artist")
+                  .text("by " + artist);
+            })
+          
+          // bars mouseout
+          bars
+          .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
+            d3.select(this)
+                .style("fill", button_d.color)
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Name); })
+                .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
+
+            centerlabel
+                .style("visibility", "hidden");
+          })
+          
+          // bars transition
+          bars
+            .transition().duration(1500)
+            .style("fill", button_d.color)
+            .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+              .startAngle(function(d) { return x(d.Name); })
+              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
+
+
+          // Add the labels
+          svg
+            .append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+              .attr("text-anchor", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+              .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d[button_d.csv_label]) + 10) + ",0)"; })
+            .append("text")
+            .attr("class", "songtitles")
+              .text(function(d){return(d.Name)})
+              .attr("transform", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+              .style("font-size", "11px")
+              .attr("alignment-baseline", "middle")
+
+            })
+        
+          ////////////////////////////////////
+          //////// sorting_buttons 끝 ///////
+          ////////////////////////////////////
+
+        })
+        ///////////////////////////////////////////////
+        //////////// 버튼 클릭 시 변화 끝 /////////////////
+        //////////////////////////////////////////////
+        
+
       // center text
       const centerlabel = svg
         .append("text")
@@ -261,7 +448,7 @@ return my;
         .attr("class", "title")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("dy", "-2.1em")
+        .attr("dy", "-2.6em")
         .attr("font-size", "2em")
         .text("");
 
@@ -270,7 +457,16 @@ return my;
         .attr("class", "artist")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("dy", "-1.1em")
+        .attr("dy", "-1.6em")
+        .attr("font-size", "2em")
+        .text("");
+
+      centerlabel
+        .append("tspan")
+        .attr("class", "year")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", "-0.6em")
         .attr("font-size", "2em")
         .text("");
 
@@ -279,7 +475,7 @@ return my;
         .attr("class", "percentage")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("dy", "-0.1em")
+        .attr("dy", "+0.6em")
         .attr("font-size", "2em")
         .text("");
 
@@ -289,6 +485,8 @@ return my;
         .attr("y", 0)
         .attr("dy", "1.5em")
         .text("is the percentage of tempo");
-    });
+            
+      
+    })
     
     </script>
