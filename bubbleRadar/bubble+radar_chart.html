@@ -596,7 +596,9 @@
         <!-- <script src="radarChart.js"></script>	 -->
         <script>
 			// get background from Question.html
-			document.body.style = localStorage.getItem("backgroundstyle");
+			// document.body.style = localStorage.getItem("backgroundstyle");
+
+			
 			
 			var color_cluster0 = "#f48f01"
 			var color_cluster1 = "#faed00"
@@ -1194,7 +1196,14 @@
 				  hide_or_show_cluster('cluster_4')
 			  }, 5000);
 			  
+			
+			// Set initial page with question result
+			var initCluster = localStorage.getItem("clusterno");
+			// console.log(initCluster);
+			onchange_cluster("cluster_" + String(initCluster));
 			  })
+
+
 		</script>
 	</body>
 </html>
