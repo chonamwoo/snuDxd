@@ -10,45 +10,183 @@
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
 
+<style>
+body {
+  font-family: Univers, Arial, sans-serif;
+}
+
+.button rect {
+  stroke: #999faa; /* navy 40% */
+  stroke-width: 2px;
+}
+
+.button rect.pressed {
+  fill: #000f2b; /* navy 100% */
+}
+
+.button #gradient-start {
+  stop-color: #999faa; /* navy 40% */
+  stop-opacity: 1;
+}
+
+.button #gradient-stop {
+  stop-color: #4d576b; /* navy 70% */
+  stop-opacity: 1;
+}
+
+.button #gradient-start.active, .button #gradient-start.pressed {
+  stop-color: #4d576b; /* navy 70% */
+}
+
+.button #gradient-stop.active, .button #gradient-stop.pressed {
+  stop-color: #000f2b; /* navy 100% */
+}
+
+.button text {
+  font-size: 30px;
+  fill: #eee;
+  pointer-events: none;
+  text-anchor: middle;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+  
+  </style>
 <script>
-  d3.button = function() {
+d3.button = function() {
+
+var dispatch = d3.dispatch('press', 'release');
 
 var padding = 10,
-    radius = 3,
+    radius = 10,
     stdDeviation = 5,
     offsetX = 2,
     offsetY = 4;
 
 function my(selection) {
-    
-    selection.each(function(d, i) {
+  selection.each(function(d, i) {
     var g = d3.select(this)
-        .attr("id", "d3-button" + i)
-        .attr("transform", "translate(" + d.x + "," + d.y + ")");
+        .attr('id', 'd3-button' + i)
+        .attr('transform', 'translate(' + d.x + ',' + d.y + ')');
 
-    var text = g.append("text").text(d.label);
+    var text = g.append('text').text(d.label);
+    var defs = g.append('defs');
     var bbox = text.node().getBBox();
-    var rect = g.insert("rect", "text")
+    var rect = g.insert('rect', 'text')
         .attr("x", bbox.x - padding)
         .attr("y", bbox.y - padding)
         .attr("width", bbox.width + 2 * padding)
         .attr("height", bbox.height + 2 * padding)
-        .attr("rx", radius)
-        .attr("ry", radius)
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout)
-        .on("click", click)
-      
+        .attr('rx', radius)
+        .attr('ry', radius)
+        .on('mouseover', activate)
+        .on('mouseout', deactivate)
+        .on('click', toggle)
+
+     addShadow.call(g.node(), d, i);
+     addGradient.call(g.node(), d, i);
   });
-    
 }
 
-function mouseover() { d3.select(this.parentNode).select("rect").classed("active", true) }
-function mouseout() { d3.select(this.parentNode).select("rect").classed("active", false) }
-function click(d, i) { d.function(); }
+function addGradient(d, i) {
+  var defs = d3.select(this).select('defs');
+  var gradient = defs.append('linearGradient')
+      .attr('id', 'gradient' + i)
+      .attr('x1', '0%')
+      .attr('y1', '0%')
+      .attr('x2', '0%')
+      .attr('y2', '100%');
+
+  gradient.append('stop')
+      .attr('id', 'gradient-start')
+      .attr('offset', '0%')
+
+  gradient.append('stop')
+      .attr('id', 'gradient-stop')
+      .attr('offset', '100%')
+
+  d3.select(this).select('rect').attr('fill', 'url(#gradient' + i + ")" );
+}
+
+function addShadow(d, i) {
+  var defs = d3.select(this).select('defs');
+  var rect = d3.select(this).select('rect').attr('filter', 'url(#dropShadow' + i + ")" );
+  var shadow = defs.append('filter')
+      .attr('id', 'dropShadow' + i)
+      .attr('x', rect.attr('x'))
+      .attr('y', rect.attr('y'))
+      .attr('width', rect.attr('width') + offsetX)
+      .attr('height', rect.attr('height') + offsetY)
+
+  shadow.append('feGaussianBlur')
+      .attr('in', 'SourceAlpha')
+      .attr('stdDeviation', 2)
+
+  shadow.append('feOffset')
+      .attr('dx', offsetX)
+      .attr('dy', offsetY);
+
+  var merge = shadow.append('feMerge');
+
+  merge.append('feMergeNode');
+  merge.append('feMergeNode').attr('in', 'SourceGraphic');
+}
+
+function activate() {
+  var gradient = d3.select(this.parentNode).select('linearGradient')
+  d3.select(this.parentNode).select("rect").classed('active', true)
+  if (!gradient.node()) return;
+  gradient.select('#gradient-start').classed('active', true)
+  gradient.select('#gradient-stop').classed('active', true)
+}
+
+function deactivate() {
+  var gradient = d3.select(this.parentNode).select('linearGradient')
+  d3.select(this.parentNode).select("rect").classed('active', false)
+  if (!gradient.node()) return;
+  gradient.select('#gradient-start').classed('active', false);
+  gradient.select('#gradient-stop').classed('active', false);
+}
+
+function toggle(d, i) {
+  if (d3.select(this).classed('pressed')) {
+      release.call(this, d, i);
+      deactivate.call(this, d, i);
+  } else {
+      press.call(this, d, i);
+      activate.call(this, d, i);
+  }
+}
+
+function press(d, i) {
+  dispatch.call('press', this, d, i)
+  d3.select(this).classed('pressed', true);
+  var shadow = d3.select(this.parentNode).select('filter')
+  if (!shadow.node()) return;
+  shadow.select('feOffset').attr('dx', 0).attr('dy', 0);
+  shadow.select('feGaussianBlur').attr('stdDeviation', 0);
+}
+
+function release(d, i) {
+  dispatch.call('release', this, d, i)
+  my.clear.call(this, d, i);
+}
+
+my.clear = function(d, i) {
+  d3.select(this).classed('pressed', false);
+  var shadow = d3.select(this.parentNode).select('filter')
+  if (!shadow.node()) return;
+  shadow.select('feOffset').attr('dx', offsetX).attr('dy', offsetY);
+  shadow.select('feGaussianBlur').attr('stdDeviation', stdDeviation);
+}
+
+my.on = function() {
+  var value = dispatch.on.apply(dispatch, arguments);
+  return value === dispatch ? my : value;
+};
 
 return my;
-  
 }
 </script>
 
@@ -73,17 +211,31 @@ return my;
       .append("g")
         .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
     
-    var button_data = [{label: "Acousticness", csv_label: "acousticness", color: "purple", x: -850, y: -400},
-                        {label: "Danceability", csv_label: "danceability", color: "orange", x: -850, y: -350},
-                        {label: "Energy", csv_label: "energy", color: "skyblue", x: -850, y: -300},
-                        {label: "Tempo", csv_label: "tempo", color: "green", x: -850, y: -250},
-                        {label: "Valence", csv_label: "valence", color: "blue", x: -850, y: -200}
+    var button_data = [{label: "Acousticness", csv_label: "acousticness", color: "purple", x: -800, y: -400},
+                        {label: "Danceability", csv_label: "danceability", color: "orange", x: -800, y: -320},
+                        {label: "Energy", csv_label: "energy", color: "skyblue", x: -800, y: -240},
+                        {label: "Tempo", csv_label: "tempo", color: "#8597d0", x: -800, y: -160},
+                        {label: "Valence", csv_label: "valence", color: "blue", x: -800, y: -80}
                         ];
 
-    var sort_button_data = [{label: "Year", x: -850, y: 0},
-                            {label: "Selected Attribute", x: -850, y: 50}];
+    var sort_button_data = [{label: "Acousticness", csv_label: "acousticness", x: -600, y: -400},
+                        {label: "Danceability", csv_label: "danceability", x: -600, y: -320},
+                        {label: "Energy", csv_label: "energy", x: -600, y: -240},
+                        {label: "Tempo", csv_label: "tempo", x: -600, y: -160},
+                        {label: "Valence", csv_label: "valence", x: -600, y: -80},
+                        {label: "Year", csv_label: "Year", x: -600, y: 0}
+                        ];
+    
 
-    var button = d3.button();
+    var button = d3.button()
+        .on('press', function(d, i) { clearAll(); })
+      
+    function clearAll() {
+      buttons.selectAll('rect')
+          .each(function(d, i) { button.clear.call(this, d, i) });
+    }
+
+    var sort_button = d3.button();
 
     var buttons = svg.selectAll(".button")
         .data(button_data)
@@ -92,23 +244,15 @@ return my;
         .attr("class", "button")
         .style("fill", "#eee")
         .call(button)
-        .on("mouseover", function() {
-          d3.select(this)
-            .style("fill", "skyblue");
-            
-        })
-        .on("mouseout", function() {
-          d3.select(this)
-            .style("fill", "#eee");
-        })
         
+       
     var sorting_buttons = svg.selectAll(".sort_button")
         .data(sort_button_data)
         .enter()
         .append("g")
         .attr("class", "sort_button")
         .style("fill", "#ddd")
-        .call(button)
+        .call(sort_button)
         .on("mouseover", function() {
           d3.select(this)
             .style("fill", "skyblue");
@@ -210,13 +354,130 @@ return my;
           .enter()
           .append("g")
             .attr("text-anchor", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
-            .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d['tempo'])+20) + ",0)"; })
+            .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d['tempo'])+10) + ",0)"; })
           .append("text")
           .attr("class", "songtitles")
             .text(function(d){return(d.Name)})
             .attr("transform", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
             .style("font-size", "11px")
             .attr("alignment-baseline", "middle")
+
+
+            ////////////////////////////////////
+          //////// sorting_buttons 시작 ///////
+          ////////////////////////////////////
+
+          sorting_buttons
+            .on("click", function(sorting_d) {
+              bars.exit().remove();
+              songlabels.exit().remove();
+              svg.selectAll(".songtitles").remove();
+
+              data.sort((a,b) => {
+                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
+              });
+
+              d3.select(this)
+                .style("fill", "red");
+
+              // data 업데이트 - sorting한 data로 chart 그리기
+          // Scales
+            x
+            .domain(data.map(function(d) { return d.Name; })); // The domain of the X axis is the list of states.
+            
+          bars
+            
+            .data(data)
+            .enter()
+            .append("path")
+            .on('mouseover', function (d,i) {
+              bars
+                .style("fill-opacity", 0.5);
+
+              d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120* d['tempo']); })
+                .startAngle(function(d) { return x(d.Name) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Name) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+              const percentage = parseInt(100 * d['tempo'])
+              const title = d.Name
+              const artist = d['Artists']
+              const year = d['Year'];
+
+              centerlabel
+                .style("visibility", null)
+                .select(".percentage")
+                .text(percentage + "%");
+              centerlabel
+                .select(".title")
+                .text("\"" + title + "\"");
+              centerlabel
+                .select(".year")
+                .text("in " + year);
+              centerlabel
+                .select(".artist")
+                  .text("by " + artist);
+            })
+          
+          // bars mouseout
+          bars
+          .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
+            d3.select(this)
+                .style("fill", "#8597d0")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d['tempo']); })
+                .startAngle(function(d) { return x(d.Name); })
+                .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
+
+            centerlabel
+                .style("visibility", "hidden");
+          })
+          
+          // bars transition
+          bars
+            .transition().duration(1500)
+            .style("fill", "#8597d0")
+            .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d['tempo']); })
+              .startAngle(function(d) { return x(d.Name); })
+              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
+
+
+          // Add the labels
+          svg
+            .append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+              .attr("text-anchor", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+              .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d['tempo']) + 10) + ",0)"; })
+            .append("text")
+            .attr("class", "songtitles")
+              .text(function(d){return(d.Name)})
+              .attr("transform", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+              .style("font-size", "11px")
+              .attr("alignment-baseline", "middle")
+            })
+       /////////////////////////////////////////////
+      //////////// sorting 클릭 시 변화 끝 ///////////////
+      //////////////////////////////////////////////
 
       //////////////////////////////////////////////
       //////////// 버튼 클릭 시 변화 시작 ///////////////
@@ -316,14 +577,15 @@ return my;
           ////////////////////////////////////
           //////// sorting_buttons 시작 ///////
           ////////////////////////////////////
+
           sorting_buttons
-            .on("click", function(sorting_d, sorting_i) {
+            .on("click", function(sorting_d) {
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
 
               data.sort((a,b) => {
-                return d3.descending(a[button_d.csv_label], b[button_d.csv_label])
+                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
               });
 
               d3.select(this)
@@ -423,8 +685,11 @@ return my;
               .attr("transform", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
               .style("font-size", "11px")
               .attr("alignment-baseline", "middle")
-
             })
+              
+
+
+          
         
           ////////////////////////////////////
           //////// sorting_buttons 끝 ///////
@@ -490,3 +755,140 @@ return my;
     })
     
     </script>
+    <!-- <script>
+      /////////////////////////////////
+    /////// sorting buttons 시작 //////
+    /////////////////////////////////
+    var sorting_attributes = ["Year", "acousticness", "danceability", "energy", "tempo", "valence"]
+    
+    var dropdownButton_for_sort = d3.select("#my_dataviz")
+      .append("select")
+    
+    dropdownButton_for_sort
+      .selectAll('SortOptions')
+      .data(sorting_attributes)
+      .enter()
+      .append('option')
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; })
+    
+    dropdownButton_for_sort.on("change", function(d) {
+      var selectedSortOption = d3.select(this).property("value")
+    
+      // function to sort by selected sort option
+      ////////////////////////////////////
+          //////// sorting_buttons 시작 ///////
+          ////////////////////////////////////
+
+        
+            bars.exit().remove();
+            songlabels.exit().remove();
+            svg.selectAll(".songtitles").remove();
+
+              data.sort((a,b) => {
+                return d3.descending(a[selectedSortOption], b[selectedSortOption])
+              });
+
+              // data 업데이트 - sorting한 data로 chart 그리기
+          // Scales
+            x
+            .domain(data.map(function(d) { return d.Name; })); // The domain of the X axis is the list of states.
+            
+          bars
+            .data(data)
+            .enter()
+            .append("path")
+            .on('mouseover', function (d,i) {
+              bars
+                .style("fill-opacity", 0.5);
+
+              d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120* d[selectedSortOption]); })
+                .startAngle(function(d) { return x(d.Name) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Name) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+              const percentage = parseInt(100 * d[selectedSortOption])
+              const title = d.Name
+              const artist = d['Artists']
+              const year = d['Year'];
+
+              centerlabel
+                .style("visibility", null)
+                .select(".percentage")
+                .text(percentage + "%");
+              centerlabel
+                .select(".title")
+                .text("\"" + title + "\"");
+              centerlabel
+                .select(".year")
+                .text("in " + year);
+              centerlabel
+                .select(".artist")
+                  .text("by " + artist);
+            })
+          
+          // bars mouseout
+          bars
+          .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
+            d3.select(this)
+                .style("fill", "#8597d0")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d[selectedSortOption]); })
+                .startAngle(function(d) { return x(d.Name); })
+                .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
+
+            centerlabel
+                .style("visibility", "hidden");
+          })
+          
+          // bars transition
+          bars
+            .transition().duration(1500)
+            .style("fill", "#8597d0")
+            .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d[selectedSortOption]); })
+              .startAngle(function(d) { return x(d.Name); })
+              .endAngle(function(d) { return x(d.Name) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
+
+
+          // Add the labels
+          svg
+            .append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+              .attr("text-anchor", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+              .attr("transform", function(d) { return "rotate(" + ((x(d.Name) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d[selectedSortOption]) + 10) + ",0)"; })
+            .append("text")
+            .attr("class", "songtitles")
+              .text(function(d){return(d.Name)})
+              .attr("transform", function(d) { return (x(d.Name) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+              .style("font-size", "11px")
+              .attr("alignment-baseline", "middle")
+
+            
+    })
+          ////////////////////////////////////
+          //////// sorting_buttons 끝 ///////
+          ////////////////////////////////////
+    /////////////////////////////////
+    /////// sorting buttons 끝 //////
+    /////////////////////////////////
+    </script> -->
