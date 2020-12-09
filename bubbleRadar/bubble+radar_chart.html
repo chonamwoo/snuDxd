@@ -7,7 +7,7 @@
 		<!-- Google fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-
+	
 		<!--DataTable -->
 		<link rel="stylesheet" type="text/css" href="https://www.jqueryscript.net/demo/DataTables-Jquery-Table-Plugin/media/css/jquery.dataTables.css"/>
 		
@@ -16,7 +16,12 @@
 		
 		
 		<style>
+			* {
+				box-sizing: border-box;
+			}
 			body {
+				width: 1700px;
+				margin: 0;
 				font-family: 'Open Sans', sans-serif;
 				font-size: 11px;
 				font-weight: 300;
@@ -27,14 +32,49 @@
 			}
 			
 			div.left {
-				width: 60%;
+				width: 800px;
+				height: 540px;
 				float: left;
-				
+				/* border: 1px solid black;	 */
 			}
+
 			div.right {
-				width: 40%;
-				float: right;
+				width: 500px;
+				height: 540px;
+				float: left;
 				text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+				/* border: 1px solid black; */
+			}
+
+			#annotation {
+				padding-left: 20px;
+				padding-right: 20px;
+				width: 400px;
+				float: left;
+				height: 540px;
+				/* border: 1px solid black; */
+				/* background-color: #333333; */
+				line-height: 540px;
+			}
+			
+
+			#textbox {
+				display: inline-block;
+				vertical-align: middle;
+				line-height: normal;
+			}
+
+			.header {
+				font-style: italic;
+			}
+			#annotation h1 {
+				font-size: 30px;
+			}
+
+			#annotation p {
+				text-align: left;
+				font-size: 13px;
+				font-weight: 500;
 			}
 			
 			.legend {
@@ -72,11 +112,13 @@
 	
 	</head>
 	<body>
-
+		<div id = "annotation"></div>
 		<div id="my_dataviz" class="left"></div>
+		
 		<div class="radarChart right"></div>
 		
-		<table id="example" class="display" style="width:100%">
+		
+		<table id="example" class="display" style="width: 100%">
 			<thead>
 				<tr>
 					<th>Artists</th>
@@ -727,10 +769,24 @@
 			  }, 5000);
 			  
 			
+			let annotations = ["<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Karaoke Please</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p> <p>Characterized by anthems made for climaxes at stadium gigs like Radioactive by Imagine Dragons and How You Remind Me by Nickelback, this cluster has the highest tempo and energy value out of all clusters. It is the lowest in acousticness and thus, a lot of the songs contain electronic sound sources.</p><p>You can view your cluster’s songs in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. The bubble chart explanation. Click the circles on the right to view other cluster results.</p><p><b>Fun Fact</b>: A lot of songs in this cluster had iconic humming lines; Viva La Vida by Coldplay, Pompeii by Bastille, Just The Way You Are by Bruno Mars, … . Sing Alongs are highly recommended 😊</p></div>", 
+			"This is cluster 2",  
+			"This is cluster 3",  
+			"This is cluster 4",  
+			"This is cluster 5"];
+
+			function setAnnotation(clusterId) {
+				document.getElementById("annotation").innerHTML = annotations[clusterId];
+				onchange_cluster("cluster_" + String(clusterId));
+			}
+
+			
 			// Set initial page with question result
 			var initCluster = localStorage.getItem("clusterno");
 			// console.log(initCluster);
-			onchange_cluster("cluster_" + String(initCluster));
+			setAnnotation(initCluster);
+
+			
 			  })
 
 
