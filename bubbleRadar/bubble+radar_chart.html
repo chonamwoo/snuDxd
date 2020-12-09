@@ -21,7 +21,7 @@
 			}
 			body {
 				width: 1700px;
-				margin: 0;
+				/* margin: 0; */
 				font-family: 'Open Sans', sans-serif;
 				font-size: 11px;
 				font-weight: 300;
@@ -69,6 +69,7 @@
 			}
 			#annotation h1 {
 				font-size: 30px;
+				/* background-color: lightgoldenrodyellow; */
 			}
 
 			#annotation p {
@@ -77,6 +78,13 @@
 				font-weight: 500;
 			}
 			
+			.funfact {
+				padding:5px;
+				/* color: white; */
+				background-color: lightgoldenrodyellow;
+				border-radius: 8px;
+			}
+
 			.legend {
 				font-family: 'Raleway', sans-serif;
 				fill: #333333;
@@ -1170,15 +1178,15 @@
 			  
 			  // Handmade legend
 			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_0").attr("cx",620).attr("cy",100).attr("r", 6).style("fill", color_cluster0)
-			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_0").attr("x", 640).attr("y", 100).text("Cluster 0").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_0").attr("x", 640).attr("y", 100).text("Karaoke Please").style("font-size", "15px").attr("alignment-baseline","middle")
 			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_1").attr("cx",620).attr("cy",130).attr("r", 6).style("fill", color_cluster1)
-			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_1").attr("x", 640).attr("y", 130).text("Cluster 1").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_1").attr("x", 640).attr("y", 130).text("All About That BASS").style("font-size", "15px").attr("alignment-baseline","middle")
 			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_2").attr("cx",620).attr("cy",160).attr("r", 6).style("fill", color_cluster2)
-			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_2").attr("x", 640).attr("y", 160).text("Cluster 2").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_2").attr("x", 640).attr("y", 160).text("All About That Treble").style("font-size", "15px").attr("alignment-baseline","middle")
 			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_3").attr("cx",620).attr("cy",190).attr("r", 6).style("fill", color_cluster3)
-			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_3").attr("x", 640).attr("y", 190).text("Cluster 3").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_3").attr("x", 640).attr("y", 190).text("Acoustic Life").style("font-size", "15px").attr("alignment-baseline","middle")
 			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_4").attr("cx",620).attr("cy",220).attr("r", 6).style("fill", color_cluster4)
-			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_4").attr("x", 640).attr("y", 220).text("Cluster 4").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_4").attr("x", 640).attr("y", 220).text("Positive Vibes Only").style("font-size", "15px").attr("alignment-baseline","middle")
 
 			  /* cluster legend button */
 			  var cluster_btns = document.getElementsByClassName("cluster-btn")
@@ -1238,11 +1246,12 @@
 			  }, 5000);
 			  
 			
-			let annotations = ["<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Karaoke Please</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p> <p>Characterized by anthems made for climaxes at stadium gigs like Radioactive by Imagine Dragons and How You Remind Me by Nickelback, this cluster has the highest tempo and energy value out of all clusters. It is the lowest in acousticness and thus, a lot of the songs contain electronic sound sources.</p><p>You can view your cluster’s songs in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. The bubble chart explanation. Click the circles on the right to view other cluster results.</p><p><b>Fun Fact</b>: A lot of songs in this cluster had iconic humming lines; Viva La Vida by Coldplay, Pompeii by Bastille, Just The Way You Are by Bruno Mars, … . Sing Alongs are highly recommended 😊</p></div>", 
-			"This is cluster 2",  
-			"This is cluster 3",  
-			"This is cluster 4",  
-			"This is cluster 5"];
+			  let annotations = ["<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Karaoke Please</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p> <p>Characterized by anthems made for climaxes at stadium gigs like Radioactive by Imagine Dragons and How You Remind Me by Nickelback, this cluster has the highest tempo and energy value out of all clusters. It is the lowest in acousticness and thus, a lot of the songs contain electronic sound sources.</p><p>You can view your cluster’s songs in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. The bubble chart explanation. Click the circles on the right to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: A lot of songs in this cluster had iconic humming lines; ‘Viva La Vida’ by Coldplay, ‘Pompeii’ by Bastille, ‘Just The Way You Are’ by Bruno Mars, etc. Sing Alongs are highly recommended.</p></div>", 
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>All About That BASS</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>Resembling the shape of a butterfly, this cluster is relatively high in energy and has the lowest key value. Songs are in general very energetic and lacking in high pitch moments inside an octave. Bands with male vocals, like Nickelback and Kings of Leon, dominate this cluster, with a few female artists like Lady Gaga. </p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: Despacito, a song pretty hard to take seriously now, is in this cluster, has memes as its genre. Guess Spotify is all about the meme life.</p>",  
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>All About That Treble</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>If you prefer the sound of higher notes in an octave, you are in the right cluster. This cluster has highest key value, which means an abundance of high pitch moments inside an octave. Songs with high falsettos or emotional highs like ‘Say You Won’t Let Go’ by James Arthur and ‘Royals’ by Lorde made it to this cluster.</p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: Ed Sheeran’s no.1 hit ‘Shape of you’ is actually in cluster ‘All About That BASS’, which has the lowest key value, while his song ‘Perfect’, is here.</p>",  
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Acoustic Life</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>Electronic music took over the pop market these days, but there is always space for acoustics. This cluster is the highest in acousticness and has songs like ‘Take Me To Church’ by Hozier, ‘Love Yourself’ by Justin Bieber and ‘All of Me’ by John Legend.</p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: Many songs in this cluster were simple piano + vocals combinations. For example, 'Stay' by Rihanna and 'Lay Me Down' by Sam Smith<p>",  
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Positive Vibes Only</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>Songs here are overflowing with happy vibes. ‘High Hopes’ by Panic! At The Disco, ‘Cake By The Ocean’ by DNCE, etc. There is even a song named ‘Happier’ by Bastille. This characteristic was explained by the cluster having the highest valence value.</p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: The song ‘All About That Bass’ by Meghan Trainor, was in this cluster rather its eponymous cluster.</p>"];
+
 
 			function setAnnotation(clusterId) {
 				document.getElementById("annotation").innerHTML = annotations[clusterId];
