@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<!-- Function for radial charts -->
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+<div id="table_title" style = "position:absolute; left: 1420px; top:90px; background-color:blue; visibility: hidden">Top 10 Songs</div>
+<div id="my_table" style = "position:absolute; left:1420px; top:150px; background-color:yellow;"></div>
+<div id="my_table" style = "position:absolute; left:1420px; top:150px; background-color:yellow;"></div>
+<div id = "my_space"style = "position:absolute; left:1420px; top: 300px; background-color:black;"></div>
+<style>
+  #table_title {
+    font-size: 50px;
+  }
+</style>
+<style>
+body {
+  font-family: Univers, Arial, sans-serif;
+}
+
+.button rect {
+  stroke: #999faa; /* navy 40% */
+  stroke-width: 0.5px;
+}
+ 
+.button rect.pressed {
+  fill: #04139c; /* navy 100% */
+}
+
+.button #gradient-start {
+  stop-color: #7fc1ff; /* navy 40% */
+  stop-opacity: 1;
+}
+
+.button #gradient-stop {
+  stop-color: #001cb9; /* navy 70% */
+  stop-opacity: 1;
+}
+
+.button #gradient-start.active, .button #gradient-start.pressed {
+  stop-color: #4d576b; /* navy 70% */
+}
+
+.button #gradient-stop.active, .button #gradient-stop.pressed {
+  stop-color: #04139c; /* navy 100% */
+}
+
+.button text {
+  font-size: 14px;
+  fill: #eee;
+  pointer-events: none;
+  text-anchor: middle;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+  
+  </style>
+
+<script>
+d3.button = function() {
+
+var dispatch = d3.dispatch('press', 'release');
+
+var padding = 10,
+    radius = 10,
+    stdDeviation = 5,
+    offsetX = 2,
+    offsetY = 4;
+
+function my(selection) {
+  selection.each(function(d, i) {
+    var g = d3.select(this)
+        .attr('id', 'd3-button' + i)
+        .attr('transform', 'translate(' + d.x + ',' + d.y + ')');
+
+    var text = g.append('text').text(d.label);
+    var defs = g.append('defs');
+    var bbox = text.node().getBBox();
+    var rect = g.insert('rect', 'text')
+        .attr("x", bbox.x - padding)
+        .attr("y", bbox.y - padding)
+        .attr("width", bbox.width + 2 * padding)
+        .attr("height", bbox.height + 2 * padding)
+        .attr('rx', radius)
+        .attr('ry', radius)
+        .on('mouseover', activate)
+        .on('mouseout', deactivate)
+        .on('click', toggle)
+
+     addShadow.call(g.node(), d, i);
+     addGradient.call(g.node(), d, i);
+  });
+}
+
+function addGradient(d, i) {
+  var defs = d3.select(this).select('defs');
+  var gradient = defs.append('linearGradient')
+      .attr('id', 'gradient' + i)
+      .attr('x1', '0%')
+      .attr('y1', '0%')
+      .attr('x2', '0%')
+      .attr('y2', '100%');
+
+  gradient.append('stop')
+      .attr('id', 'gradient-start')
+      .attr('offset', '0%')
+
+  gradient.append('stop')
+      .attr('id', 'gradient-stop')
+      .attr('offset', '100%')
+
+  d3.select(this).select('rect').attr('fill', 'url(#gradient' + i + ")" );
+}
+
+function addShadow(d, i) {
+  var defs = d3.select(this).select('defs');
+  var rect = d3.select(this).select('rect').attr('filter', 'url(#dropShadow' + i + ")" );
+  var shadow = defs.append('filter')
+      .attr('id', 'dropShadow' + i)
+      .attr('x', rect.attr('x'))
+      .attr('y', rect.attr('y'))
+      .attr('width', rect.attr('width') + offsetX)
+      .attr('height', rect.attr('height') + offsetY)
+
+  shadow.append('feGaussianBlur')
+      .attr('in', 'SourceAlpha')
+      .attr('stdDeviation', 5)
+
+  shadow.append('feOffset')
+      .attr('dx', offsetX)
+      .attr('dy', offsetY);
+
+  var merge = shadow.append('feMerge');
+
+  merge.append('feMergeNode');
+  merge.append('feMergeNode').attr('in', 'SourceGraphic');
+}
+
+function activate() {
+  var gradient = d3.select(this.parentNode).select('linearGradient')
+  d3.select(this.parentNode).select("rect").classed('active', true)
+  if (!gradient.node()) return;
+  gradient.select('#gradient-start').classed('active', true)
+  gradient.select('#gradient-stop').classed('active', true)
+}
+
+function deactivate() {
+  var gradient = d3.select(this.parentNode).select('linearGradient')
+  d3.select(this.parentNode).select("rect").classed('active', false)
+  if (!gradient.node()) return;
+  gradient.select('#gradient-start').classed('active', false);
+  gradient.select('#gradient-stop').classed('active', false);
+}
+
+function toggle(d, i) {
+  if (d3.select(this).classed('pressed')) {
+      release.call(this, d, i);
+      deactivate.call(this, d, i);
+  } else {
+      press.call(this, d, i);
+      activate.call(this, d, i);
+  }
+}
+ 
+function press(d, i) {
+  dispatch.call('press', this, d, i)
+  d3.select(this).classed('pressed', true);
+  var shadow = d3.select(this.parentNode).select('filter')
+  if (!shadow.node()) return;
+  shadow.select('feOffset').attr('dx', 0).attr('dy', 0);
+  shadow.select('feGaussianBlur').attr('stdDeviation', 0);
+}
+
+function release(d, i) {
+  dispatch.call('release', this, d, i)
+  my.clear.call(this, d, i);
+}
+
+my.clear = function(d, i) {
+  d3.select(this).classed('pressed', false);
+  var shadow = d3.select(this.parentNode).select('filter')
+  if (!shadow.node()) return;
+  shadow.select('feOffset').attr('dx', offsetX).attr('dy', offsetY);
+  shadow.select('feGaussianBlur').attr('stdDeviation', stdDeviation);
+}
+
+my.on = function() {
+  var value = dispatch.on.apply(dispatch, arguments);
+  return value === dispatch ? my : value;
+};
+
+
+
+
+
+return my;
+}
+</script>
+
+<script>
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 0, right: 0, bottom: 0, left: 300},
+        width = 1500 - margin.left - margin.right,
+        height = 1150 - margin.top - margin.bottom,
+        innerRadius = 170,
+        // outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
+        outerRadius = 270;
+
+    
+
+    // append the svg object
+    var svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        //.style("background", "#a7b9b9")
+      .append("g")
+        .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
+    
+    
+    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "purple", x: -260, y: -490},
+                        {label: "💃 Danceability", csv_label: "Danceability", color: "orange", x: -110, y: -490},
+                        {label: "⚡ Energy", csv_label: "Energy", color: "maroon", x: 20, y: -490},
+                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#8597d0", x: 130, y: -490},
+                        {label: "😢 Valence", csv_label: "Valence", color: "green", x: 240, y: -490}
+                        ];
+
+    var sort_button_data = [{label: "🎸 Acousticness", csv_label: "Acousticness", x: -340, y: -400},
+                        {label: "🕺 Danceability", csv_label: "Danceability", x: -190, y: -400},
+                        {label: "🔋 Energy", csv_label: "Energy", x: -53, y: -400},
+                        {label: "⏱️ Tempo", csv_label: "Tempo", x: 48, y: -400},
+                        {label: "😃 Valence", csv_label: "Valence", x: 150, y: -400},
+                        {label: "📅 Year", csv_label: "Year", x: 260, y: -400}
+                        ];
+ 
+    var move_button_data = [{label: "🎶 Take Survey to Find Your Cluster!", x: -800, y: 260}];
+                        
+    
+
+    var button = d3.button()
+        .on('press', function(d, i) { clearAll(); })
+      
+    function clearAll() {
+      buttons.selectAll('rect')
+          .each(function(d, i) { button.clear.call(this, d, i) });
+    }
+
+    var sort_button = d3.button();
+    var buttons = d3.button();
+    //var move_button = d3.button();
+
+
+    var buttons = svg.selectAll(".button")
+        .data(button_data)
+        .enter()
+        .append("g")
+        .attr("class", "button")
+        .style("fill", "#eee")
+        .call(button)
+        
+       
+    var sorting_buttons = svg.selectAll(".sort_button")
+        .data(sort_button_data)
+        .enter()
+        .append("g")
+        .attr("class", "sort_button")
+        .style("fill", "#ddd")
+        .call(sort_button)
+        .on("mouseover", function() {
+          d3.select(this)
+            .style("fill", "pink");
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .style("fill", "#ddd");
+        })
+/* 
+    var move_button = svg.selectAll(".move_button")
+        .data(move_button_data)
+        .enter()
+        .append("g")
+        .append("a")
+            .attr("xlink:href", "./question/Question.html")
+        .attr("class", "move_button_data")
+        .style("fill", "white")
+        .call(move_button)
+        
+        move_button.on("click", function() {
+          console.log('i was clicked');
+        }) */
+
+
+      //Annotation 더하기 
+      const annotation = d3.select('#my_dataviz')
+                           .append("div")
+                           .attr("class", "annotation")   
+                           .style("position", "absolute")
+                           .style("visibility", "visible")
+                           .style("top", 70+"px")
+                           .style("left",10+"px")
+                          .html("<p class='annotation'>"+"<strong><big><big>"+"An Interactive Visualization of Billboard Song Clusters"+ "</big></big></strong>" 
+                            +"<br>By Team M&L from SNU"
+                            +"<br><br><br><br>&emsp;When our team first met, we realized we were all music enthusiasts. So we tried "
+                            +"<br>searching for music related data, and found a dataset with numerical audio features "
+                            +"<br>(provided by Spotify) on songs from the Billboard (1999 - 2019). "
+                            +"<br>You can find the data here. (link)"
+                            +"<br><br>&emsp;With the dataset, we wanted to explore topics like trends in audio features over time "
+                            +"<br>and clustering similar songs together. Thus, we used the audio feature values to form "
+                            +"<br>unique vectors for each song and performed k-means clustering to produce 5 clusters. "
+                            +"<br>Since our team members had different music tastes, we wondered if we fit in different "
+                            +"<br>clusters. We analyzed the data and created a survey that asks for one’s music taste "
+                            +"<br>and shows visualizations of a billboard song cluster that best defines him/her."
+                            +"<br><br>&emsp;For an understanding of the features, their relations, and possible trends, a circular "
+                            +"<br>bar chart of the no.1 billboard songs is shown. The bar lengths represent each song’s "
+                            +"<br>feature value ratio to the max feature value in the dataset, and you can check out the "
+                            +"<br>exact ratio by hovering on them. Try to pick a song you know, imagine the features the "
+                            +"<br>song may have, and compare with the actual data! You can choose which feature to see "
+                            +"<br>and how to sort it on the top. Here is an explanation of each feature."
+                            +"<br><br><br>"+"<strong><u><big>"+'Acousticness'+"</strong></u>"+": Whether the track is acoustic"
+                            +"<br>"+"<strong><u>"+"Danceability"+"</strong></u>"+": How suitable a track is for dancing"
+                            +"<br>"+"<strong><u>"+"Energy"+"</strong></u>"+": Perceptual measure of intensity and activity"
+                            +"<br>"+"<strong><u>"+"Key"+"</strong></u>"+": Estimated overall key of the track"
+                            +"<br>"+"<strong><u>"+"Tempo"+"</strong></u>"+": Overall estimated tempo of a track in beats per minute (BPM)"
+                            +"<br>"+"<strong><u>"+"Valence"+"</strong></u>"+': Musical positiveness conveyed by a track'
+                            +"</big><br><br><br>To discover relations between features, try sorting features with other features "
+                            +"<br>(ex. Whether more acoustics songs are slower). "
+                            +"<br>To discover trends, try to sort each feature by year "
+                            +"<br>(ex. If overall valence changes over time)."
+                            +"<em>"+"<br><br>&emsp;Now, click the button below to discover your music cluster! "
+                            +"<br>Pay attention to the background colors as you answer the questions " +"</em>"+" 😊"  
+                            +"<br><br><br><br><br>"
+
+                            
+                            )
+                            .style("font-size", "13.5px")
+                            .style("border", "3px solid black")
+                            .style("padding", "10px")
+                        //.style("box-shadow", "2px 2px 2px 0px black")
+                        .style("font-family", "Candara")
+
+
+                        
+      const questiontitle = d3.select('#my_dataviz')
+                           .append("div")
+                           .attr("class", "annotation")   
+                           .style("position", "absolute")
+                           .style("visibility", "visible")
+                           .style("top", 130+"px")
+                           .style("left",50+"px")
+                          .html("<p class='annotation'>"+"<i>"+'"Can music be represented with numbers?"'+"</i>" 
+                            )
+                            .style("font-size", "20px")
+                        .style("font-family", "Candara")
+                        .style("text-align", "center")
+                        .style("text-transform", "uppercase"); 
+
+      const pagetitle = d3.select('#my_dataviz')
+                           .append("div")
+                           .attr("class", "annotation")   
+                           .style("position", "absolute")
+                           .style("visibility", "visible")
+                           .style("top", 0+"px")
+                           .style("left",650+"px")
+                          .html("<p class='annotation'>" + "Which attribute do you want to see?"
+                            )
+                            .style("font-size", "27px")
+                        .style("font-family", "Candara")
+                        .style("text-align", "center")
+                        .style("text-transform", "uppercase"); 
+      
+      const pagetitle2 = d3.select('#my_dataviz')
+                           .append("div")
+                           .attr("class", "annotation")   
+                           .style("position", "absolute")
+                           .style("visibility", "visible")
+                           .style("top", 110+"px")
+                           .style("left",700+"px")
+                          .html("<p class='annotation'>"+"Which attribute do you want to sortby?" 
+                            )
+                            .style("font-size", "20px")
+                        .style("font-family", "Candara")
+                        .style("text-align", "center")
+                        .style("text-transform", "uppercase"); 
+
+
+    //TOOLTIP 더하기
+
+    const rectTooltip = d3.select('#my_space')
+                            .append("div")
+                            .attr("class", "tooltip")   
+                            .style("position", "absolute")
+                            .style("visibility", "hidden");
+
+     
+     
+     
+     
+    var move_button = svg.selectAll(".move_button_data")
+        .data(move_button_data)
+        .enter()
+        .append("g")
+        .append("a")
+            .attr("xlink:href", "./question/Question.html")
+        .attr("class", "move_button_data")
+        .style("fill", "#F2D7D5")
+        
+        .call(button)
+        .on("mouseover", function() {
+          d3.select(this)
+            .style("fill", "skyblue");
+            
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .style("fill", "#F2D7D5");
+        })
+        
+    
+
+                            
+    // csv 파일 읽기
+    // d3.csv("https://raw.githubusercontent.com/datawhales/DataVisualization/master/songs500.csv", function(data) {
+    d3.csv("https://raw.githubusercontent.com/datawhales/DataVisualization/master/1strankedsongs.csv", function(data) {
+      // 기본적으로 음반 발행 년도로 sorting
+      data.sort((a,b) => {
+        return d3.descending(a['Year'], b['Year'])
+      });
+
+      // Scales
+      var x = d3.scaleBand()
+          .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle
+          .align(0)                  // This does nothing
+          .domain(data.map(function(d) { return d.Title; })); // The domain of the X axis is the list of states.
+      var y = d3.scaleRadial()
+          .range([innerRadius, outerRadius])   // Domain will be define later.
+          .domain([0, 100]); // Domain of Y is from 0 to the max seen in the data
+    
+      // Add the bars
+      var bars = svg.append("g")
+        .selectAll("path")
+        .data(data)
+        .enter()
+        .append("path")
+          .attr("fill", "#8597d0")
+          .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d['Tempo']); })
+              .startAngle(function(d) { return x(d.Title); })
+              .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
+          .on('mouseover', function (d,i) {
+            bars
+              .style("fill-opacity", 0.5);
+
+            d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120* d['Tempo']); })
+                .startAngle(function(d) { return x(d.Title) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Title) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+            const percentage = 100 * d['Tempo']
+
+            const title = d.Title
+            const artist = d['Artist']
+            const year = d['Year'];
+
+            centerlabel
+                .style("visibility", null)
+                .select(".percentage")
+                .text(percentage.toFixed(2) + "%");
+            centerlabel
+                .select(".title")
+                .text("\"" + title + "\"");
+            centerlabel
+                .select(".year")
+                .text("in " + year);
+            centerlabel
+                .select(".artist")
+                .text("by " + artist);
+          })
+          .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
+            d3.select(this)
+                .style("fill", "#8597d0")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d['Tempo']); })
+                .startAngle(function(d) { return x(d.Title); })
+                .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
+
+            centerlabel
+                .style("visibility", "hidden");
+          })
+          
+
+      // Add the labels
+      var songlabels = svg.append("g")
+          .selectAll("g")
+          .data(data)
+          .enter()
+          .append("g")
+            .attr("text-anchor", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI)
+              % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+            .attr("transform", function(d) { return "rotate(" + ((x(d.Title) + x.bandwidth() / 2) 
+            * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d['Tempo'])+10) + ",0)"; })
+          .append("text")
+          .attr("class", "songtitles")
+            .text(function(d){return(d.Title)})
+            .attr("transform", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI) 
+              % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+            .style("font-size", "9px")
+            .attr("alignment-baseline", "middle")
+
+
+            ////////////////////////////////////
+          //////// sorting_buttons 시작 ///////
+          ////////////////////////////////////
+
+             
+          sorting_buttons
+            .on("click", function(sorting_d) {
+              bars.exit().remove();
+              songlabels.exit().remove();
+              svg.selectAll(".songtitles").remove();
+
+              data.sort((a,b) => {
+                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
+
+              });
+
+              d3.select(this)
+                .style("fill", "red");
+
+              // data 업데이트 - sorting한 data로 chart 그리기
+          // Scales
+            x
+            .domain(data.map(function(d) { return d.Title; })); // The domain of the X axis is the list of states.
+            
+          bars
+            .data(data)
+            .enter()
+            .append("path")
+            .on('mouseover', function (d,i) {
+              bars
+                .style("fill-opacity", 0.5);
+
+              d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120* d['Tempo']); })
+                .startAngle(function(d) { return x(d.Title) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Title) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+              const percentage = 100 * d['Tempo']
+              const title = d.Title
+              const artist = d['Artist']
+              const year = d['Year'];
+
+              centerlabel
+                .style("visibility", null)
+                .select(".percentage")
+                .text(percentage.toFixed(2) + "%");
+              centerlabel
+                .select(".title")
+                .text("\"" + title + "\"");
+              centerlabel
+                .select(".year")
+                .text("in " + year);
+              centerlabel
+                .select(".artist")
+                  .text("by " + artist);
+            })
+          
+          // bars mouseout
+          bars
+          .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
+            d3.select(this)
+                .style("fill", "#8597d0")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d['Tempo']); })
+                .startAngle(function(d) { return x(d.Title); })
+                .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
+
+            centerlabel
+                .style("visibility", "hidden");
+          })
+          
+          // bars transition
+          bars
+            .transition().duration(1500)
+            .style("fill", "#8597d0")
+            .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d['Tempo']); })
+              .startAngle(function(d) { return x(d.Title); })
+              .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
+
+
+          // Add the labels
+          svg
+            .append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+              .attr("text-anchor", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI) 
+                % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+              .attr("transform", function(d) { return "rotate(" + ((x(d.Title) + x.bandwidth() / 2) 
+              * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d['Tempo']) + 10) + ",0)"; })
+            .append("text")
+            .attr("class", "songtitles")
+              .text(function(d){return(d.Title)})
+              .attr("transform", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI) 
+                % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+              .style("font-size", "9px")
+              .attr("alignment-baseline", "middle")
+            })
+       /////////////////////////////////////////////
+      //////////// sorting 클릭 시 변화 끝 ///////////////
+      //////////////////////////////////////////////
+
+      //////////////////////////////////////////////
+      //////////// 버튼 클릭 시 변화 시작 ///////////////
+      //////////////////////////////////////////////
+
+
+
+      buttons
+        .on("click", function(button_d, button_i) {
+          d3.select(this)
+            .style("background-color", "#ccc");
+
+/*             return rectTooltip.style("visibility", "visible").style("top"+80+"px").style("left"+620+"px")
+            .html("<p class='tooltip'>"  +"Max excluding outlier:"                  
+            ).style("font-size", "12px").style("background", "white").style("border", "1px solid black").style("padding", "2px")
+            .style("box-shadow", "2px 2px 2px 0px black").style("font-family", "verdana"); 
+           */
+
+          bars
+            .on('mouseover', function (d,i) {
+              bars
+                .style("fill-opacity", 0.5);
+
+              d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120 * d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Title) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Title) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+              const percentage = 100 * d[button_d.csv_label]
+              const title = d.Title
+              const artist = d['Artist']
+              const year = d['Year'];
+
+              centerlabel
+                .style("visibility", null)
+                .select(".percentage")
+                .text(percentage.toFixed(2) + "%");
+              centerlabel
+                .select(".title")
+                .text("\"" + title + "\"");
+              centerlabel
+                .select(".year")
+                .text("in " + year);
+              centerlabel
+                .select(".artist")
+                  .text("by " + artist);
+            })
+          
+          // bars mouseout
+          bars
+          .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
+            d3.select(this)
+                .style("fill", button_d.color)
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Title); })
+                .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
+
+            centerlabel
+                .style("visibility", "hidden");
+          })
+          
+          // bars transition
+          bars
+            .transition().duration(1500)
+            .style("fill", button_d.color)
+            .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+              .startAngle(function(d) { return x(d.Title); })
+              .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
+        
+          svg.selectAll(".songtitles").remove();
+          // songlabels.remove();
+
+          svg
+            .append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+              .attr("text-anchor", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI) 
+                % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+              .attr("transform", function(d) { return "rotate(" + ((x(d.Title) + x.bandwidth() / 2) 
+              * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d[button_d.csv_label]) + 10) + ",0)"; })
+            .append("text")
+            .attr("class", "songtitles")
+              .text(function(d){return(d.Title)})
+              .attr("transform", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI) 
+                % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+              .style("font-size", "9px")
+              .attr("alignment-baseline", "middle")
+          
+          ////////////////////////////////////
+          //////// sorting_buttons 시작 ///////
+          ////////////////////////////////////
+
+          sorting_buttons
+            .on("click", function(sorting_d) {
+              bars.exit().remove();
+              songlabels.exit().remove();
+              svg.selectAll(".songtitles").remove();
+              
+              
+              d3.selectAll(".top10table").remove();
+
+              data.sort((a,b) => {
+                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
+              });
+
+              d3.select(this)
+                .style("fill", "pink");
+
+
+              // data 업데이트 - sorting한 data로 chart 그리기
+          // Scales
+            x
+            .domain(data.map(function(d) { return d.Title; })); // The domain of the X axis is the list of states.
+            
+          bars
+            
+            .data(data)
+            .enter()
+            .append("path")
+            .on('mouseover', function (d,i) {
+              bars
+                .style("fill-opacity", 0.5);
+
+              d3.select(this)
+                .style("fill", "red")
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(120* d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Title) - 0.5 * x.bandwidth(); })
+                .endAngle(function(d) { return x(d.Title) + 1.5 * x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius));
+              
+              const percentage = 100 * d[button_d.csv_label]
+              const title = d.Title
+              const artist = d['Artist']
+              const year = d['Year'];
+
+              centerlabel
+                .style("visibility", null)
+                .select(".percentage")
+                .text(percentage.toFixed(2) + "%");
+              centerlabel
+                .select(".title")
+                .text("\"" + title + "\"");
+              centerlabel
+                .select(".year")
+                .text("in " + year);
+              centerlabel
+                .select(".artist")
+                  .text("by " + artist);
+            })
+          
+          // bars mouseout
+          bars
+          .on('mouseout', function() {
+            bars
+              .style("fill-opacity", 1);
+
+            d3.select(this)
+                .style("fill", button_d.color)
+                .style("fill-opacity", 1)
+                .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+                .innerRadius(innerRadius)
+                .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+                .startAngle(function(d) { return x(d.Title); })
+                .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+                .padAngle(0.01)
+                .padRadius(innerRadius))
+
+            centerlabel
+                .style("visibility", "hidden");
+          })
+          
+          // bars transition
+          bars
+            .transition().duration(1500)
+            .style("fill", button_d.color)
+            .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+              .innerRadius(innerRadius)
+              .outerRadius(function(d) { return y(100* d[button_d.csv_label]); })
+              .startAngle(function(d) { return x(d.Title); })
+              .endAngle(function(d) { return x(d.Title) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius))
+
+
+          // Add the labels
+          svg
+            .append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+              .attr("text-anchor", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+              .attr("transform", function(d) { return "rotate(" + ((x(d.Title) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(100 * d[button_d.csv_label]) + 10) + ",0)"; })
+            .append("text")
+            .attr("class", "songtitles")
+              .text(function(d){return(d.Title)})
+              .attr("transform", function(d) { return (x(d.Title) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+              .style("font-size", "9px")
+              .attr("alignment-baseline", "middle")
+
+  
+              
+            var attrib = button_d.csv_label.toString()
+            var sorting = sorting_d.csv_label.toString()
+
+            console.log(attrib)
+            console.log(sorting)
+            ////////////////////////////
+            // Add Top 10 songs table //
+            ////////////////////////////
+
+            var anno2 = d3.select('#my_space')
+                           .append("div")
+                           .attr("class", "annotation")   
+                           .style("position", "absolute")
+                           .style("visibility", "visible")
+                           .style("top", 20+"px")
+                           .style("left",0+"px")
+                          .html("<p class='annotation'>"+"Attribute Name : " +"<strong><big><big>"+attrib+ "</big></big></strong>" 
+                            +"<br>Sort by : "+"<strong><big><big>"+ sorting+ "</big></big></strong>" 
+                            +"<br><br><br><br>"
+
+                            
+                            )
+                            .style("font-size", "13.5px")
+                            .style("border", "3px solid black")
+                            .style("padding", "10px")
+                        //.style("box-shadow", "2px 2px 2px 0px black")
+                        .style("font-family", "Candara")
+
+
+              var tabulate = function (data,columns) {
+                var table = d3.select("#my_table")
+                              .append('table')
+                              .attr("class", "top10table")
+                              
+	              var thead = table.append('thead')
+	              var tbody = table.append('tbody')
+
+              thead.append('tr')
+                .selectAll('th')
+                .data(columns)
+                .enter()
+                .append('th')
+                .text(function (d) { return d })
+
+               var rows = tbody.selectAll('tr')
+                   .data(data)
+                   .enter()
+                   .append('tr')
+
+                var cells = rows.selectAll('td')
+                    .data(function(row) {
+                	    return columns.map(function (column) {
+                		    return { column: column, value: row[column] }
+                        })
+                      })
+                      .enter()
+                      .append('td')
+                      .text(function (d) { return d.value })
+                    
+                      return table;
+              }
+
+              var columns = ['Artist', 'Title', 'Year']
+                data2 = data.slice(0, 5)
+              tabulate(data2,columns)
+              d3.select("#table_title").style("visibility", null);
+
+              ////////////////////////////////
+              // Add Top 10 songs table end //
+              ////////////////////////////////
+
+         
+              
+          })
+          ////////////////////////////////////
+          //////// sorting_buttons 끝 ///////
+          ////////////////////////////////////
+        })
+        ///////////////////////////////////////////////
+        //////////// 버튼 클릭 시 변화 끝 /////////////////
+        //////////////////////////////////////////////
+        
+
+      // center text
+      const centerlabel = svg
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("fill", "#888")
+        .style("visibility", "hidden");
+    
+      centerlabel
+        .append("tspan")
+        .attr("class", "title")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", "-2.6em")
+        .attr("font-size", "2em")
+        .text("");
+
+      centerlabel
+        .append("tspan")
+        .attr("class", "artist")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", "-1.6em")
+        .attr("font-size", "2em")
+        .text("");
+
+      centerlabel
+        .append("tspan")
+        .attr("class", "year")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", "-0.6em")
+        .attr("font-size", "2em")
+        .text("");
+
+      centerlabel
+        .append("tspan")
+        .attr("class", "percentage")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", "+0.6em")
+        .attr("font-size", "2em")
+        .text("");
+      
+    })
+    
+    </script>
