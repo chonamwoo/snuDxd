@@ -7,12 +7,467 @@
 <!-- Function for radial charts -->
 <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
 
+
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
-<div id="table_title" style = "position:absolute; left: 1420px; top:90px; background-color:blue; visibility: hidden">Top 10 Songs</div>
-<div id="my_table" style = "position:absolute; left:1420px; top:150px; background-color:yellow;"></div>
-<div id="my_table" style = "position:absolute; left:1420px; top:150px; background-color:yellow;"></div>
-<div id = "my_space"style = "position:absolute; left:1420px; top: 300px; background-color:black;"></div>
+
+<div id = "my_chosen"style = "position:absolute; left:1460px; top: 600px; background-color:black;"></div>
+<div id = "my_radar"style = "position:absolute; left:1420px; top: 500px; background-color:black;"></div>
+
+
+
+
+   <!-- add div of top 5 songs -->
+   <div class="l-song-index-content--side">
+    <table class="song-index-table tabItems">
+      <thead>
+          <tr>Top 5 Songs</tr>
+      </thead>
+      <tbody class="tabItem song-trend-Acousticness" style="display: none">
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">1st</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626867-e056fa00-3a60-11eb-99f6-f1319fa5931b.jpg" width=90></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">When I Was Your Man</div>
+                  <div class="song-index-table__position">Bruno Mars</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2013</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">2nd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626731-bbfb1d80-3a60-11eb-936a-96e378ad840e.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">All Of Me</div>
+                  <div class="song-index-table__position">John Legend</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2014</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">3rd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626855-ddf4a000-3a60-11eb-8e11-5915c2319f78.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Someone Like You</div>
+                  <div class="song-index-table__position">Adele</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2011</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">4th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626838-d92fec00-3a60-11eb-8681-9cac2dbe972e.jpeg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Hey There Delilah</div>
+                  <div class="song-index-table__position">Plain White T's</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2007</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">5th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626847-db924600-3a60-11eb-8fcc-45f1934170a6.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Love Yourself</div>
+                  <div class="song-index-table__position">Justin Bieber</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2016</td>
+          </tr>
+      </tbody>
+      <tbody class="tabItem song-trend-Danceability" style="display: none">
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">1st</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101630007-93295700-3a65-11eb-9bb3-7e2816e24e7b.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Give It To Me</div>
+                  <div class="song-index-table__position">Timbaland</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2007</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">2nd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101630014-97ee0b00-3a65-11eb-9200-801fc1678248.png"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Hot In Herre</div>
+                  <div class="song-index-table__position">Nelly</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2002</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">3rd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101630169-d71c5c00-3a65-11eb-8fcc-5ca5ecb73dc4.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Temperature</div>
+                  <div class="song-index-table__position">Sean Paul</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2006</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">4th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101630330-19de3400-3a66-11eb-82ef-7f7783a50344.png"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Hollaback Girl</div>
+                  <div class="song-index-table__position">Gwen Stefani</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2005</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">5th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101630502-4b56ff80-3a66-11eb-8444-e64f5f568719.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Bodak Yellow</div>
+                  <div class="song-index-table__position">Cardi B</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2017</td>
+          </tr>
+      </tbody>
+      <tbody class="tabItem song-trend-Energy" style="display: none">
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">1st</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101632668-932b5600-3a69-11eb-8e4b-8a2c67c2b935.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Promiscuous</div>
+                  <div class="song-index-table__position">Nelly Furtado</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2006</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">2nd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101632699-9b839100-3a69-11eb-92d1-ba3def958c4c.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Hey Ya!</div>
+                  <div class="song-index-table__position">OutKast</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2004</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">3rd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101632712-9f171800-3a69-11eb-8e0f-90687f877093.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Girlfriend</div>
+                  <div class="song-index-table__position">Avril Lavigne</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2007</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">4th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101632724-a3433580-3a69-11eb-85be-a6bc8e744cc2.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Not Afraid</div>
+                  <div class="song-index-table__position">Eminem</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2010</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">5th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101632761-ab9b7080-3a69-11eb-93fc-90dae7ad677f.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Whistle</div>
+                  <div class="song-index-table__position">Flo Rida</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2012</td>
+          </tr>
+      </tbody>
+      <tbody class="tabItem song-trend-Tempo" style>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">1st</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633033-0c2aad80-3a6a-11eb-8cf8-b99033b5b00c.png"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Starboy</div>
+                  <div class="song-index-table__position">The Weeknd</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2017</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">2nd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633055-13ea5200-3a6a-11eb-96e0-93fb2aa9d588.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Fireflies</div>
+                  <div class="song-index-table__position">Owl City</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2009</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">3rd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633064-177dd900-3a6a-11eb-8350-03e3521c28f3.png"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Roar</div>
+                  <div class="song-index-table__position">Katy Perry</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2013</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">4th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633074-1cdb2380-3a6a-11eb-85ce-fdf8fb998d1a.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Despacito</div>
+                  <div class="song-index-table__position">Luis Fonsi, Daddy Yankee</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2017</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">5th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633082-206eaa80-3a6a-11eb-8250-9b9bf6eeb471.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Genie In A Bottle</div>
+                  <div class="song-index-table__position">Christina Aguilera</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">1999</td>
+          </tr>
+      </tbody>
+      <tbody class="tabItem song-trend-Valence" style="display: none">
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">1st</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633097-25335e80-3a6a-11eb-8d64-2ea0da22f1a3.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Family Affair</div>
+                  <div class="song-index-table__position">Mary J.Blige</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2001</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">2nd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101632699-9b839100-3a69-11eb-92d1-ba3def958c4c.jpg"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Hey Ya!</div>
+                  <div class="song-index-table__position">OutKast</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2004</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">3rd</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633109-282e4f00-3a6a-11eb-830b-671bf2ab6eb0.png"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">All About That Bass</div>
+                  <div class="song-index-table__position">Meghan Trainor</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2014</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">4th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633121-2cf30300-3a6a-11eb-8263-5d0955bd074b.png"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Sucker</div>
+                  <div class="song-index-table__position">Jonas Brothers</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2019</td>
+          </tr>
+          <tr>
+              <td class="song-index-table__cell song-index-table__cell--rank">5th</td>
+              <td class="song-index-table__cell song-index-table__cell--image">
+                  <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101633142-32e8e400-3a6a-11eb-8422-552592cb4b81.png"></img>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--song">
+                  <div class="song-index-table__name">Shake It Off</div>
+                  <div class="song-index-table__position">Taylor Swift</div>
+              </td>
+              <td class="song-index-table__cell song-index-table__cell--year">2014</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- style of top 5 songs -->
+<style>
+  .song-index-table {
+      width: 100%;
+      /* table-layout: fixed; */
+      border-collapse: collapse;
+  }
+  
+  img {
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+  }
+  thead {
+      display: table-header-group;
+      vertical-align: middle;
+  }
+  tbody {
+      vertical-align: middle;
+  }
+  tr {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+      border-top-color: inherit;
+      border-right-color: inherit;
+      border-bottom-color: inherit;
+      border-left-color: inherit;
+  }
+  
+  td {
+      display: table-cell;
+      vertical-align: inherit;
+  }
+  table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      -webkit-border-horizontal-spacing: 0px;
+      -webkit-border-vertical-spacing: 0px;
+  }
+  table {
+      border-collapse: separate;
+      text-indent: initial;
+      border-spacing: 2px;
+      -webkit-border-horizontal-spacing: 2px;
+      -webkit-border-vertical-spacing: 2px;
+  }
+  .song-index-table__cell {
+      background-color: #fff;
+      border-top: solid 1px #e6e6e6;
+          border-top-width: 1px;
+          border-top-style: solid;
+          border-top-color: rgb(230, 230, 230);
+      border-bottom: solid 1px #e6e6e6;
+          border-bottom-width: 1px;
+          border-bottom-style: solid;
+          border-bottom-color: rgb(230, 230, 230);
+      height: 60px;
+      vertical-align: middle;
+  }
+  .song-index-table__cell:first-child {
+      border-left: solid 1px #e6e6e6;
+  }
+  .song-index-table__cell--rank {
+      line-height: 18px;
+      font-family: Helvetica,AppleSDGothic,"Apple SD Gothic Neo",AppleGothic,Arial,Tahoma;
+      font-size: 16px;
+      font-weight: 300;
+      font-style: italic;
+      text-align: center;
+      color: #8b8b8b;
+      width: 60px;
+  }
+  .song-index-table__cell--image {
+      font-size: 0;
+      width: 60px;
+      height: 100px;
+  }
+  .song-index-table__cell--song {
+      padding-left: 6px;
+      line-height: 15px;
+      font-size: 12px;
+      text-align: left;
+      color: #b6b6b6;
+      width: 100px;
+  }
+  .song-index-table__cell--year {
+      padding-left: 1px;
+      line-height: 14px;
+      font-family: Helvetica,AppleSDGothic,"Apple SD Gothic Neo",AppleGothic,Arial,Tahoma;
+      font-size: 12px;
+      text-align: center;
+      color: #b6b6b6;
+      width: 60px;
+  }
+  .song-index-table__name {
+      color: black;
+  }
+  /* small, div, p, span, button {
+      font-family: Helvetica,"Malgun Gothic","Apple SD Gothic Neo",AppleGothic,Dotum,Arial,Tahoma;
+  } */
+  :root {
+      --HSDSGlobalFontFamily: "Aktiv Grotesk","Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+      --HSDSGlobalFontFamilyMono: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+      --HSDSGlobalFontSize: 13px;
+  }
+  html {
+      font-family: sans-serif;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+  }
+  
+  
+  .l-song-index-content--side {
+      float: right;
+      width: 475px;
+      background-color: #f9f9fa;
+      border: solid 1px #e9eff4;
+      border-top-color: rgb(233, 239, 244);
+      border-top-style: solid;
+      border-top-width: 1px;
+      border-right-color: rgb(233, 239, 244);
+      border-right-style: solid;
+      border-right-width: 1px;
+      border-bottom-color: rgb(233, 239, 244);
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+      border-left-color: rgb(233, 239, 244);
+      border-left-style: solid;
+      border-left-width: 1px;
+      border-image-source: initial;
+      border-image-slice: initial;
+      border-image-width: initial;
+      border-image-outset: initial;
+      border-image-repeat: initial;
+      box-sizing: border-box;
+      margin-top: -1100px;
+
+  }
+  
+  </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
   #table_title {
     font-size: 50px;
@@ -27,7 +482,7 @@ body {
   stroke: #999faa; /* navy 40% */
   stroke-width: 0.5px;
 }
- 
+
 .button rect.pressed {
   fill: #04139c; /* navy 100% */
 }
@@ -67,7 +522,7 @@ d3.button = function() {
 
 var dispatch = d3.dispatch('press', 'release');
 
-var padding = 10,
+var padding = 3,
     radius = 10,
     stdDeviation = 5,
     offsetX = 2,
@@ -209,9 +664,9 @@ return my;
     var margin = {top: 0, right: 0, bottom: 0, left: 300},
         width = 1500 - margin.left - margin.right,
         height = 1150 - margin.top - margin.bottom,
-        innerRadius = 170,
+        innerRadius = 200,
         // outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
-        outerRadius = 270;
+        outerRadius = 300;
 
     
 
@@ -225,19 +680,18 @@ return my;
         .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
     
     
-    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "purple", x: -260, y: -490},
-                        {label: "💃 Danceability", csv_label: "Danceability", color: "orange", x: -110, y: -490},
-                        {label: "⚡ Energy", csv_label: "Energy", color: "maroon", x: 20, y: -490},
-                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#8597d0", x: 130, y: -490},
-                        {label: "😢 Valence", csv_label: "Valence", color: "green", x: 240, y: -490}
+    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "#2ECC71", x: -260, y: -500},
+                        {label: "💃 Danceability", csv_label: "Danceability", color: "#CD6155", x: -110, y: -500},
+                        {label: "⚡ Energy", csv_label: "Energy", color: "#F39C12", x: 20, y: -500},
+                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#3498DB", x: 130, y: -500},
+                        {label: "😢 Valence", csv_label: "Valence", color: "#9B59B6", x: 240, y: -500}
                         ];
 
-    var sort_button_data = [{label: "🎸 Acousticness", csv_label: "Acousticness", x: -340, y: -400},
-                        {label: "🕺 Danceability", csv_label: "Danceability", x: -190, y: -400},
-                        {label: "🔋 Energy", csv_label: "Energy", x: -53, y: -400},
-                        {label: "⏱️ Tempo", csv_label: "Tempo", x: 48, y: -400},
-                        {label: "😃 Valence", csv_label: "Valence", x: 150, y: -400},
-                        {label: "📅 Year", csv_label: "Year", x: 260, y: -400}
+    var sort_button_data = [{label: "🎸 Acousticness", csv_label: "Acousticness", x: -340, y: -430},
+                        {label: "🕺 Danceability", csv_label: "Danceability", x: -190, y: -430},
+                        {label: "🔋 Energy", csv_label: "Energy", x: -53, y: -430},
+                        {label: "⏱️ Tempo", csv_label: "Tempo", x: 48, y: -430},
+                        {label: "😃 Valence", csv_label: "Valence", x: 150, y: -430},
                         ];
  
     var move_button_data = [{label: "🎶 Take Survey to Find Your Cluster!", x: -800, y: 260}];
@@ -252,7 +706,7 @@ return my;
           .each(function(d, i) { button.clear.call(this, d, i) });
     }
 
-    var sort_button = d3.button();
+    //var sort_button = d3.button();
     var buttons = d3.button();
     //var move_button = d3.button();
 
@@ -266,21 +720,7 @@ return my;
         .call(button)
         
        
-    var sorting_buttons = svg.selectAll(".sort_button")
-        .data(sort_button_data)
-        .enter()
-        .append("g")
-        .attr("class", "sort_button")
-        .style("fill", "#ddd")
-        .call(sort_button)
-        .on("mouseover", function() {
-          d3.select(this)
-            .style("fill", "pink");
-        })
-        .on("mouseout", function() {
-          d3.select(this)
-            .style("fill", "#ddd");
-        })
+
 /* 
     var move_button = svg.selectAll(".move_button")
         .data(move_button_data)
@@ -310,7 +750,7 @@ return my;
                             +"<br><br><br><br>&emsp;When our team first met, we realized we were all music enthusiasts. So we tried "
                             +"<br>searching for music related data, and found a dataset with numerical audio features "
                             +"<br>(provided by Spotify) on songs from the Billboard (1999 - 2019). "
-                            +"<br>You can find the data here. (link)"
+                            +"<br>You can find the data" +"<a href = 'https://www.google.com'>"+ " here."+"</a>"
                             +"<br><br>&emsp;With the dataset, we wanted to explore topics like trends in audio features over time "
                             +"<br>and clustering similar songs together. Thus, we used the audio feature values to form "
                             +"<br>unique vectors for each song and performed k-means clustering to produce 5 clusters. "
@@ -366,9 +806,9 @@ return my;
                            .attr("class", "annotation")   
                            .style("position", "absolute")
                            .style("visibility", "visible")
-                           .style("top", 0+"px")
+                           .style("top", -10+"px")
                            .style("left",650+"px")
-                          .html("<p class='annotation'>" + "Which attribute do you want to see?"
+                          .html("<p class='annotation'>" + "Which feature do you want to see?"
                             )
                             .style("font-size", "27px")
                         .style("font-family", "Candara")
@@ -380,16 +820,23 @@ return my;
                            .attr("class", "annotation")   
                            .style("position", "absolute")
                            .style("visibility", "visible")
-                           .style("top", 110+"px")
-                           .style("left",700+"px")
-                          .html("<p class='annotation'>"+"Which attribute do you want to sortby?" 
-                            )
+                           .style("top", 82+"px")
+                           .style("left",600+"px")
+                           .html("<p id='p_sorting_buttons' class='annotation' style='display: inline-block'>"
+                           +"Which feature do you want to sort by?&emsp;</p>"                             )
                             .style("font-size", "20px")
                         .style("font-family", "Candara")
                         .style("text-align", "center")
                         .style("text-transform", "uppercase"); 
 
-
+        var sorting_buttons = d3.select("#p_sorting_buttons")
+							.append('select').html('<option hidden="" selected="">Select one..</option>')
+	      sorting_buttons.selectAll(".sort_button")
+        .data(sort_button_data)
+        .enter()
+        .append("option")
+        .text(function (d) { return d.label; }) // text showed in the menu
+		.attr("value", function (d) { return d.csv_label; }) // corresponding value returned by the button
     //TOOLTIP 더하기
 
     const rectTooltip = d3.select('#my_space')
@@ -534,18 +981,24 @@ return my;
           //////// sorting_buttons 시작 ///////
           ////////////////////////////////////
 
-             
+         var selected = "Year";          
           sorting_buttons
-            .on("click", function(sorting_d) {
+          .on("change", function(selectedOption) {
+				     var selectedOption = d3.select(this).property("value")
+             selected = selectedOption;
+              d3.selectAll(".chosen").remove();
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
 
               data.sort((a,b) => {
-                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
+                return d3.descending(a[selectedOption], b[selectedOption])
 
               });
 
+
+
+              var sorting = selectedOption.toString()
               d3.select(this)
                 .style("fill", "red");
 
@@ -576,7 +1029,7 @@ return my;
               const percentage = 100 * d['Tempo']
               const title = d.Title
               const artist = d['Artist']
-              const year = d['Year'];
+              const year = d['Year']; 
 
               centerlabel
                 .style("visibility", null)
@@ -645,6 +1098,8 @@ return my;
                 % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
               .style("font-size", "9px")
               .attr("alignment-baseline", "middle")
+
+
             })
        /////////////////////////////////////////////
       //////////// sorting 클릭 시 변화 끝 ///////////////
@@ -654,12 +1109,24 @@ return my;
       //////////// 버튼 클릭 시 변화 시작 ///////////////
       //////////////////////////////////////////////
 
+      console.log(selected)
 
 
       buttons
         .on("click", function(button_d, button_i) {
           d3.select(this)
-            .style("background-color", "#ccc");
+            d3.selectAll(".chosen").remove();
+
+            d3.select(".song-trend-Acousticness")
+            .style("display", "none");
+          d3.select(".song-trend-Danceability")
+            .style("display", "none");
+          d3.select(".song-trend-Energy")
+            .style("display", "none");
+          d3.select(".song-trend-Tempo")
+            .style("display", "none");
+          d3.select(".song-trend-Valence")
+            .style("display", "none");
 
 /*             return rectTooltip.style("visibility", "visible").style("top"+80+"px").style("left"+620+"px")
             .html("<p class='tooltip'>"  +"Max excluding outlier:"                  
@@ -756,22 +1223,21 @@ return my;
                 % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
               .style("font-size", "9px")
               .attr("alignment-baseline", "middle")
-          
+            d3.select(".song-trend-" + button_d.csv_label)
+            .style("display", null);
           ////////////////////////////////////
           //////// sorting_buttons 시작 ///////
           ////////////////////////////////////
 
           sorting_buttons
-            .on("click", function(sorting_d) {
+            .on("click", function(selectedOption) {
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
-              
-              
-              d3.selectAll(".top10table").remove();
+              d3.selectAll(".chosen").remove();
 
               data.sort((a,b) => {
-                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
+                return d3.descending(a[selectedOption], b[selectedOption])
               });
 
               d3.select(this)
@@ -876,34 +1342,59 @@ return my;
   
               
             var attrib = button_d.csv_label.toString()
-            var sorting = sorting_d.csv_label.toString()
+            var sorting = selectedOption
+            var color = button_d.color.toString()
 
             console.log(attrib)
-            console.log(sorting)
+            console.log(selectedOption)
+            console.log(color)
+
             ////////////////////////////
-            // Add Top 10 songs table //
+            // Add chosen table //
             ////////////////////////////
 
-            var anno2 = d3.select('#my_space')
+            var anno2 = d3.select('#my_chosen')
                            .append("div")
-                           .attr("class", "annotation")   
+                           .attr("class", "chosen")   
                            .style("position", "absolute")
                            .style("visibility", "visible")
                            .style("top", 20+"px")
                            .style("left",0+"px")
-                          .html("<p class='annotation'>"+"Attribute Name : " +"<strong><big><big>"+attrib+ "</big></big></strong>" 
-                            +"<br>Sort by : "+"<strong><big><big>"+ sorting+ "</big></big></strong>" 
+                           .style("width", 420 +"px")
+                           .style("height", 120 +"px")
+                           .style("background-color", color)
+
+                          .html("<p class='annotation'>"+"Feature Name : " +"<br><strong><big><big>"+attrib+ "</big></big></strong>" 
+                            +"<br>Sort by : "+"<br><strong><big><big>"+ selected+ "</big></big></strong>" 
                             +"<br><br><br><br>"
 
                             
                             )
                             .style("font-size", "13.5px")
                             .style("border", "3px solid black")
-                            .style("padding", "10px")
+                            .style("padding", "3px")
                         //.style("box-shadow", "2px 2px 2px 0px black")
                         .style("font-family", "Candara")
+                        .style("text-align", "center")
 
 
+            ////////////////////////////
+            // Add radar //
+            ////////////////////////////
+            let radarTooltip = d3.select('#my_radar').append("div").attr("id", "tooltip-radar-chart")
+                .style("position", "absolute").style("z-index", "10").style("visibility", "hidden")
+                .style("top", 0).style("left", 0)
+            radarTooltip.append("span").attr("id", "tooltip-radar-chart-key").style("display", "block");
+            radarTooltip.append("span").attr("id", "tooltip-radar-chart-bpm").style("display", "block");
+
+            ////////////////////////////
+            // Add Top 10 songs table //
+            ////////////////////////////
+             
+             var htmls = d3.select("#my_table")
+             .append("div")
+             .attr("w3-include-html","song.html")
+/*              
               var tabulate = function (data,columns) {
                 var table = d3.select("#my_table")
                               .append('table')
@@ -935,12 +1426,8 @@ return my;
                       .text(function (d) { return d.value })
                     
                       return table;
-              }
+              } */
 
-              var columns = ['Artist', 'Title', 'Year']
-                data2 = data.slice(0, 5)
-              tabulate(data2,columns)
-              d3.select("#table_title").style("visibility", null);
 
               ////////////////////////////////
               // Add Top 10 songs table end //
@@ -1000,6 +1487,7 @@ return my;
         .attr("dy", "+0.6em")
         .attr("font-size", "2em")
         .text("");
+
       
     })
     
