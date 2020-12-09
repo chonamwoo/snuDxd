@@ -236,8 +236,7 @@ return my;
                         {label: "🕺 Danceability", csv_label: "Danceability", x: -190, y: -400},
                         {label: "🔋 Energy", csv_label: "Energy", x: -53, y: -400},
                         {label: "⏱️ Tempo", csv_label: "Tempo", x: 48, y: -400},
-                        {label: "😃 Valence", csv_label: "Valence", x: 150, y: -400},
-                        {label: "📅 Year", csv_label: "Year", x: 260, y: -400}
+                        {label: "😃 Valence", csv_label: "Valence", x: 150, y: -400}
                         ];
  
     var move_button_data = [{label: "🎶 Take Survey to Find Your Cluster!", x: -800, y: 260}];
@@ -252,7 +251,7 @@ return my;
           .each(function(d, i) { button.clear.call(this, d, i) });
     }
 
-    var sort_button = d3.button();
+    //var sort_button = d3.button();
     var buttons = d3.button();
     //var move_button = d3.button();
 
@@ -266,21 +265,7 @@ return my;
         .call(button)
         
        
-    var sorting_buttons = svg.selectAll(".sort_button")
-        .data(sort_button_data)
-        .enter()
-        .append("g")
-        .attr("class", "sort_button")
-        .style("fill", "#ddd")
-        .call(sort_button)
-        .on("mouseover", function() {
-          d3.select(this)
-            .style("fill", "pink");
-        })
-        .on("mouseout", function() {
-          d3.select(this)
-            .style("fill", "#ddd");
-        })
+    
 /* 
     var move_button = svg.selectAll(".move_button")
         .data(move_button_data)
@@ -382,14 +367,22 @@ return my;
                            .style("visibility", "visible")
                            .style("top", 110+"px")
                            .style("left",700+"px")
-                          .html("<p class='annotation'>"+"Which attribute do you want to sortby?" 
+                          .html("<p id='p_sorting_buttons' class='annotation' style='display: inline-block'>"+"Which attribute do you want to sort by?</p>" 
                             )
                             .style("font-size", "20px")
                         .style("font-family", "Candara")
                         .style("text-align", "center")
                         .style("text-transform", "uppercase"); 
-
-
+	
+	var sorting_buttons = d3.select("#p_sorting_buttons")
+							.append('select').html('<option hidden="" selected="">Select one..</option>')
+	sorting_buttons.selectAll(".sort_button")
+        .data(sort_button_data)
+        .enter()
+        .append("option")
+        .text(function (d) { return d.label; }) // text showed in the menu
+		.attr("value", function (d) { return d.csv_label; }) // corresponding value returned by the button
+		
     //TOOLTIP 더하기
 
     const rectTooltip = d3.select('#my_space')
@@ -536,13 +529,14 @@ return my;
 
              
           sorting_buttons
-            .on("click", function(sorting_d) {
+            .on("change", function(sorting_d) {
+				var selectedOption = d3.select(this).property("value")
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
 
               data.sort((a,b) => {
-                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
+                return d3.descending(a[selectedOption], b[selectedOption])
 
               });
 
@@ -762,7 +756,8 @@ return my;
           ////////////////////////////////////
 
           sorting_buttons
-            .on("click", function(sorting_d) {
+            .on("change", function(sorting_d) {
+				var selectedOption = d3.select(this).property("value")
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
@@ -771,7 +766,7 @@ return my;
               d3.selectAll(".top10table").remove();
 
               data.sort((a,b) => {
-                return d3.descending(a[sorting_d.csv_label], b[sorting_d.csv_label])
+                return d3.descending(a[selectedOption], b[selectedOption])
               });
 
               d3.select(this)
@@ -876,7 +871,7 @@ return my;
   
               
             var attrib = button_d.csv_label.toString()
-            var sorting = sorting_d.csv_label.toString()
+            var sorting = selectedOption.toString()
 
             console.log(attrib)
             console.log(sorting)
