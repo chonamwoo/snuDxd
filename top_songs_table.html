@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<style>
+.song-index-table {
+    width: 30%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+.song-index-table__cell--rank {
+    line-height: 18px;
+    font-family: Helvetica,AppleSDGothic,"Apple SD Gothic Neo",AppleGothic,Arial,Tahoma;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    color: #8b8b8b;
+}
+.song-index-table__cell:first-child {
+    border-left: solid 1px #e6e6e6;
+}
+img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+}
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+}
+tbody {
+    vertical-align: middle;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+    border-top-color: inherit;
+    border-right-color: inherit;
+    border-bottom-color: inherit;
+    border-left-color: inherit;
+}
+.song-index-table__cell {
+    background-color: #fff;
+    border-top: solid 1px #e6e6e6;
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: rgb(230, 230, 230);
+    border-bottom: solid 1px #e6e6e6;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgb(230, 230, 230);
+    height: 60px;
+    vertical-align: middle;
+}
+.song-index-table__cell--image {
+    font-size: 2;
+}
+.song-index-table__cell--song {
+    padding-left: 6px;
+    line-height: 15px;
+    font-size: 12px;
+    text-align: left;
+    color: #b6b6b6;
+}
+.song-index-table__cell--year {
+    padding-left: 1px;
+    line-height: 14px;
+    font-family: Helvetica,AppleSDGothic,"Apple SD Gothic Neo",AppleGothic,Arial,Tahoma;
+    font-size: 12px;
+    text-align: center;
+    color: #b6b6b6;
+}
+.song-index-table__name {
+    color: black;
+}
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+}
+table {
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+    -webkit-border-horizontal-spacing: 2px;
+    -webkit-border-vertical-spacing: 2px;
+}
+/* small, div, p, span, button {
+    font-family: Helvetica,"Malgun Gothic","Apple SD Gothic Neo",AppleGothic,Dotum,Arial,Tahoma;
+} */
+:root {
+    --HSDSGlobalFontFamily: "Aktiv Grotesk","Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    --HSDSGlobalFontFamilyMono: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+    --HSDSGlobalFontSize: 13px;
+}
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+</style>
+<html>
+<body>
+<table class="song-index-table tabItems">
+<thead>
+    <tr>Top 10 Acoustic Songs</tr>
+</thead>
+<tbody class="tabItem song-trend-Acousticness" style>
+    <tr>
+        <td class="song-index-table__cell song-index-table__cell--rank">1st</td>
+        <td class="song-index-table__cell song-index-table__cell--image">
+            <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626867-e056fa00-3a60-11eb-99f6-f1319fa5931b.jpg"></img>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--song">
+            <div class="song-index-table__name">When I Was Your Man</div>
+            <div class="song-index-table__position">Bruno Mars</div>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--year">2013</td>
+    </tr>
+    <tr>
+        <td class="song-index-table__cell song-index-table__cell--rank">2nd</td>
+        <td class="song-index-table__cell song-index-table__cell--image">
+            <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626731-bbfb1d80-3a60-11eb-936a-96e378ad840e.jpg"></img>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--song">
+            <div class="song-index-table__name">All Of Me</div>
+            <div class="song-index-table__position">John Legend</div>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--year">2014</td>
+    </tr>
+    <tr>
+        <td class="song-index-table__cell song-index-table__cell--rank">3rd</td>
+        <td class="song-index-table__cell song-index-table__cell--image">
+            <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626855-ddf4a000-3a60-11eb-8e11-5915c2319f78.jpg"></img>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--song">
+            <div class="song-index-table__name">Someone Like You</div>
+            <div class="song-index-table__position">Adele</div>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--year">2011</td>
+    </tr>
+    <tr>
+        <td class="song-index-table__cell song-index-table__cell--rank">4th</td>
+        <td class="song-index-table__cell song-index-table__cell--image">
+            <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626838-d92fec00-3a60-11eb-8681-9cac2dbe972e.jpeg"></img>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--song">
+            <div class="song-index-table__name">Hey There Delilah</div>
+            <div class="song-index-table__position">Plain White T's</div>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--year">2007</td>
+    </tr>
+    <tr>
+        <td class="song-index-table__cell song-index-table__cell--rank">5th</td>
+        <td class="song-index-table__cell song-index-table__cell--image">
+            <img class="album_images" src="https://user-images.githubusercontent.com/67447280/101626847-db924600-3a60-11eb-8fcc-45f1934170a6.jpg"></img>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--song">
+            <div class="song-index-table__name">Love Yourself</div>
+            <div class="song-index-table__position">Justin Bieber</div>
+        </td>
+        <td class="song-index-table__cell song-index-table__cell--year">2016</td>
+    </tr>
+</tbody>
+
+</table>
+
+
+
+
+
+</body>
+</html>
