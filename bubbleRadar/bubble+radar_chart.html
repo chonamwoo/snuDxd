@@ -1021,7 +1021,22 @@
 		<script src="https://www.jqueryscript.net/demo/DataTables-Jquery-Table-Plugin/media/js/jquery.js"></script>
 		<script type="text/javascript" src="https://www.jqueryscript.net/demo/DataTables-Jquery-Table-Plugin/media/js/jquery.dataTables.js"></script>
 		<script>
-			var table = $('#example').DataTable();
+			var table = $('#example').DataTable({
+			  "columns": [
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				{ "visible": false }
+			  ] });
 		</script>
 
 		
