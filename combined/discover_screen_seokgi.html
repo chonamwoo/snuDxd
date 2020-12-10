@@ -680,11 +680,11 @@ return my;
         .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
     
     
-    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "#2ECC71", x: -260, y: -500},
-                        {label: "💃 Danceability", csv_label: "Danceability", color: "#CD6155", x: -110, y: -500},
-                        {label: "⚡ Energy", csv_label: "Energy", color: "#F39C12", x: 20, y: -500},
-                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#3498DB", x: 130, y: -500},
-                        {label: "😢 Valence", csv_label: "Valence", color: "#9B59B6", x: 240, y: -500}
+    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "purple", x: -260, y: -500},
+                        {label: "💃 Danceability", csv_label: "Danceability", color: "orange", x: -110, y: -500},
+                        {label: "⚡ Energy", csv_label: "Energy", color: "skyblue", x: 20, y: -500},
+                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#8597d0", x: 130, y: -500},
+                        {label: "😢 Valence", csv_label: "Valence", color: "blue", x: 240, y: -500}
                         ];
 
     var sort_button_data = [{label: "🎸 Acousticness", csv_label: "Acousticness", x: -340, y: -430},
@@ -1223,14 +1223,16 @@ return my;
                 % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
               .style("font-size", "9px")
               .attr("alignment-baseline", "middle")
+
             d3.select(".song-trend-" + button_d.csv_label)
             .style("display", null);
           ////////////////////////////////////
           //////// sorting_buttons 시작 ///////
           ////////////////////////////////////
-
           sorting_buttons
-            .on("click", function(selectedOption) {
+            .on("change", function(selectedOption) {
+              var selectedOption = d3.select(this).property("value")
+
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
@@ -1241,7 +1243,7 @@ return my;
               });
 
               d3.select(this)
-                .style("fill", "pink");
+                .style("fill", "red");
 
 
               // data 업데이트 - sorting한 data로 chart 그리기
