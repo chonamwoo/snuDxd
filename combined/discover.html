@@ -11,8 +11,8 @@
 
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
-<div id = "my_chosen"style = "position:absolute; left:1460px; top: 650px; background-color:black;"></div>
-<div id = "my_radar"style = "position:absolute; left:1420px; top: 500px; background-color:black;"></div>
+<!-- <div id = "my_chosen"style = "position:absolute; left:1460px; top: 650px; background-color:black;"></div>
+ --><div id = "my_radar"style = "position:absolute; left:1420px; top: 500px; background-color:black;"></div>
 
 <!-- //<button onclick="window.location='http://www.example.com';">Visit Page Now</button>
  -->
@@ -314,14 +314,14 @@
 </div>
 
 
-<script>
+<!-- <script>
   function visitPage(){
       window.location='./question/Question.html';
   }
 </script>
 <button class="button" onclick="visitPage();">🎶 Take Survey to Find Your Cluster!</button>
-<style>
-
+<style> -->
+<!-- 
 .button{
  display:inline-block;
  padding:0.35em 1.2em;
@@ -362,7 +362,7 @@
     margin: 4px 2px;
     cursor: pointer;
   } */}
-</style>
+</style> -->
 
 
 
@@ -741,7 +741,7 @@ return my;
                         {label: "😃 Valence", csv_label: "Valence", x: 150, y: -430},
                         ];
  
-   var move_button_data = [{label: "🎶 Take Survey to Find Your Cluster!", x: -800, y: 260}];
+   //var move_button_data = [{label: "🎶 Take Survey to Find Your Cluster!", x: -800, y: 260}];
                         
     
 
@@ -822,11 +822,11 @@ return my;
                             +"<br>(ex. Whether more acoustics songs are slower). "
                             +"<br>To discover trends, try to sort each feature by year "
                             +"<br>(ex. If overall valence changes over time)."
-                            +"<em>"+"<br><br>&emsp;Now, click the button below to discover your music cluster! "
+                            +"<em>"+"<br><br>&emsp;Now, click the" +"<a href ='./question/Question.html'>" +" button" +"</a>"  +"to discover your music cluster! "
                             +"<br>Pay attention to the background colors as you answer the questions " +"</em>"+" 😊"  
                             +"<br><br>"
 
-                            
+                            //"<a href ='./question/Question.html'>"
                             )
                             .style("font-size", "13.5px")
                             .style("border", "3px solid black")
@@ -891,14 +891,14 @@ return my;
         //var move_button = d3.select("#page_move_button")
         //.append('select') 
     //TOOLTIP 더하기
-
+/* 
     const rectTooltip = d3.select('#my_space')
                             .append("div")
                             .attr("class", "tooltip")   
                             .style("position", "absolute")
                             .style("visibility", "hidden");
 
-     
+      */
      
      
      
@@ -1061,7 +1061,7 @@ return my;
           .on("change", function(selectedOption) {
 				     var selectedOption = d3.select(this).property("value")
              selected = selectedOption;
-              d3.selectAll(".chosen").remove();
+            //  d3.selectAll(".chosen").remove();
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
@@ -1190,7 +1190,7 @@ return my;
       buttons
         .on("click", function(button_d, button_i) {
           d3.select(this)
-            d3.selectAll(".chosen").remove();
+           // d3.selectAll(".chosen").remove();
 
             d3.select(".song-trend-Acousticness")
             .style("display", "none");
@@ -1311,7 +1311,7 @@ return my;
               bars.exit().remove();
               songlabels.exit().remove();
               svg.selectAll(".songtitles").remove();
-              d3.selectAll(".chosen").remove();
+              //d3.selectAll(".chosen").remove();
 
               data.sort((a,b) => {
                 return d3.descending(a[selectedOption], b[selectedOption])
@@ -1429,7 +1429,7 @@ return my;
             ////////////////////////////
             // Add chosen table //
             ////////////////////////////
-
+/* 
             var anno2 = d3.select('#my_chosen')
                            .append("div")
                            .attr("class", "chosen")   
@@ -1453,7 +1453,7 @@ return my;
                         //.style("box-shadow", "2px 2px 2px 0px black")
                         .style("font-family", "Candara")
                         .style("text-align", "center")
-
+ */
 
             ////////////////////////////
             // Add radar //
