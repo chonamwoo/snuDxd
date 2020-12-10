@@ -19,7 +19,7 @@
                 <input type='radio' class = 'choices' id = '0' name='choice' value='Viva La Vida'>
                 <label for = 'cluster0'>Viva La Vida - Coldplay 
                     <a href = 'https://www.youtube.com/watch?v=zOQ4ld6NsXE&ab_channel=Coldplay-Topic' target='_blank'>
-                        <img class = 'youtube' src = 'youtube.png'>
+                        <img class = 'youtube' src = 'https://www.transparentpng.com/thumb/youtube-logo/youtube-logo-background-3.png'>
                     </a>
                 </label> 
             </div>
@@ -28,7 +28,7 @@
                 <input type="radio" class = "choices" id = "1" name='choice' value="One Dance">
                 <label for = "cluster1">One Dance - Drake 
                     <a href = "https://www.youtube.com/watch?v=5LFB3qdmZBM&ab_channel=Drake-Topic" target="_blank">
-                        <img class = "youtube" src = "youtube.png">
+                        <img class = "youtube" src = "https://www.transparentpng.com/thumb/youtube-logo/youtube-logo-background-3.png">
                     </a>
                 </label>
             </div>
@@ -37,7 +37,7 @@
                 <input type="radio" class = "choices" id = "2" name='choice' value="Diamonds">
                 <label for = "cluster2">Diamonds - Rihanna 
                     <a href = "https://www.youtube.com/watch?v=4mVo93E9wpU&ab_channel=Rihanna-Topic" target="_blank">
-                        <img class = "youtube" src = "youtube.png">
+                        <img class = "youtube" src = "https://www.transparentpng.com/thumb/youtube-logo/youtube-logo-background-3.png">
                     </a>
                 </label> 
             </div>
@@ -46,7 +46,7 @@
                 <input type="radio" class = "choices" id = "3" name='choice' value="Hello">
                 <label for = "cluster3">Hello - Adele 
                     <a href = "https://www.youtube.com/watch?v=Ei8UnOPJX7w&ab_channel=Adele-Topic" target="_blank">
-                        <img class = "youtube" src = "youtube.png">
+                        <img class = "youtube" src = "https://www.transparentpng.com/thumb/youtube-logo/youtube-logo-background-3.png">
                     </a>
                 </label> 
             </div>
@@ -55,12 +55,12 @@
                 <input type="radio" class = "choices" id = "4" name='choice' value="One More Night">
                 <label for = "cluster4">Maroon 5 - One More Night 
                     <a href = "https://www.youtube.com/watch?v=d_3voqjDxAg&ab_channel=Maroon5-Topic" target="_blank">
-                        <img class = "youtube" src = "youtube.png">
+                        <img class = "youtube" src = "https://www.transparentpng.com/thumb/youtube-logo/youtube-logo-background-3.png">
                     </a>
                 </label> 
             </div>
             
-            <input type='button' class = 'buttons' id='btn' value='NEXT' onclick = 'changeQ()'>
+            <input type='button' class = 'buttons' id='btn' value='NEXT'>
             <!-- <a href = '#'><input type='button' class = 'buttons' id='home' value='HOME'></a> -->
         </form>
     </div>
@@ -74,6 +74,10 @@
 
 </body>
 <script src="https://d3js.org/d3.v6.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 <script>
     // Define cosinesim
     function cosinesim(A,B) {
@@ -91,8 +95,8 @@
         return similarity;
     }
 
+    // these are mean values for clusters
     let vecs = [[0.071055294,0.453618826,0.761991185,0.684936436,0.615763737,0.40379325], [0.087702953,0.598848328,0.733740494,0.132974482,0.465931121,0.539022965], [0.249717763,0.61390192,0.553778786,0.806488118,0.364874871,0.360494282], [0.498260745,0.532139439,0.42701903,0.235011564,0.41620033,0.284172134], [0.118170506,0.674216718,0.764907637,0.676291214,0.407292043,0.750732841]];
-    console.log(vecs[0]);
     
     // define question options
     let currQ = 0;
@@ -105,10 +109,10 @@
     let val4 = 0.5;
 
     // list holding question artists/songs options
-    let qartist = [["Bruno Mars", "Ariana Grande", "The Chainsmokers", "Miley Cyrus", "Eminem"], ["Travis Scott", "Ed Sheeran", "Adele", "Alicia Keys", "Lady Gaga"], ["Rihanna", "Mariah Carey", "Kanye West", "Justin Bieber", "Robin Thicke"]];
-    let qname =[["Just The Way You Are", "Thank U, Next", "Closer", "Wrecking Ball", "Love The Way You Lie"], ["Sicko Mode", "Shape Of You", "Someone Like You", "If I Ain't Got You", "Poker Face"], ["SOS", "We Belong Together", "Stronger", "Love Yourself", "Blurred Lines"]];
+    let qartist = [["Bruno Mars", "Ariana Grande", "The Chainsmokers", "Miley Cyrus", "Eminem"], ["Travis Scott", "Ed Sheeran", "Adele", "Sam Smith", "Lady Gaga"], ["Rihanna", "Mariah Carey", "Kanye West", "Justin Bieber", "Robin Thicke"]];
+    let qname =[["Just The Way You Are", "Thank U, Next", "Closer", "Wrecking Ball", "Love The Way You Lie"], ["Sicko Mode", "Shape Of You", "Someone Like You", "Lay Me Down", "Poker Face"], ["SOS", "We Belong Together", "Stronger", "Love Yourself", "Blurred Lines"]];
     let qyoutube = [["https://www.youtube.com/watch?v=wGUKBXpfU1o&ab_channel=BrunoMars-Topic", "https://www.youtube.com/watch?v=5OeR5XBEahU&ab_channel=ArianaGrande", "https://www.youtube.com/watch?v=u-YGV5xt-jk&ab_channel=TheChainsmokers-Topic", "https://www.youtube.com/watch?v=iqXxfOnk-Z4&ab_channel=MileyCyrus-Topic", "https://www.youtube.com/watch?v=Xm0OCPZROkk&ab_channel=Eminem-Topic"]
-    , ["https://www.youtube.com/watch?v=d-JBBNg8YKs&ab_channel=TravisScottVEVO", "https://www.youtube.com/watch?v=JGwWNGJdvx8&ab_channel=EdSheeran", "https://www.youtube.com/watch?v=m_IhEz2sxDw&ab_channel=Adele-Topic", "https://www.youtube.com/watch?v=-mAGQUsV6Nw&ab_channel=AliciaKeys-Topic", "https://www.youtube.com/watch?v=HqK4-dIiKY8&ab_channel=LadyGaga-Topic"]
+    , ["https://www.youtube.com/watch?v=d-JBBNg8YKs&ab_channel=TravisScottVEVO", "https://www.youtube.com/watch?v=JGwWNGJdvx8&ab_channel=EdSheeran", "https://www.youtube.com/watch?v=m_IhEz2sxDw&ab_channel=Adele-Topic", "https://www.youtube.com/watch?v=tlX-m_pHXXQ&ab_channel=SamSmith-Topic", "https://www.youtube.com/watch?v=HqK4-dIiKY8&ab_channel=LadyGaga-Topic"]
     , ["https://www.youtube.com/watch?v=IXmF4GbA86E&ab_channel=RihannaVEVO", "https://www.youtube.com/watch?v=Mg2p5rdZATE&ab_channel=MariahCarey-Topic", "https://www.youtube.com/watch?v=ijkvGwjkY-4&ab_channel=KanyeWest-Topic", "https://www.youtube.com/watch?v=p-IXgwqhfmg&ab_channel=JustinBieber-Topic", "https://www.youtube.com/watch?v=UJHEK0GIdYE&ab_channel=RobinThicke-Topic"]];
 
     // list to keep answers
@@ -119,7 +123,7 @@
 
     function finishQ() {
         const rbs = document.querySelectorAll('input[name="choice"]');
-        let selectedValue;
+        let selectedValue = -1;
         for (const rb of rbs) {
             if (rb.checked) {
                 selectedValue = rb.id;
@@ -179,17 +183,24 @@
                 clustersim = cosinesim(vecs[count], finallist);
             }
         }
-        console.log(clusterresult);
-
-        document.getElementById("mainbox").style = "padding: 0; width: 50%; margin-left: auto; margin-right: auto;"
-        document.getElementById("mainbox").innerHTML = "<a class = 'results' href = '../result/bubbleRadar.html'><p class = 'resulttext'>View Results</p></a>";
-        })
+        // console.log(clusterresult);
+        // console.log(selectedValue);
+        if (selectedValue === -1){
+            alert("Please pick an option!");
+        }
+        else {
+            document.getElementById("mainbox").style = "padding: 0; width: 50%; margin-left: auto; margin-right: auto;"
+            document.getElementById("mainbox").innerHTML = "<a class = 'results' href = '../result/bubble+radar_chart.html'><p class = 'resulttext'>View Results</p></a>";
+            localStorage.setItem("backgroundstyle", "background: linear-gradient(to right, rgba(254, 177, 68, " + val0 + "), rgba(253, 253, 151, " + val1 + "), rgba(158, 224, 158, " + val2 + "), rgba(158, 193, 207, " + val3 + "), rgba(204, 153, 201, " + val4 + "));");
+            localStorage.setItem("clusterno", clusterresult);
+        }
+        });
     }
 
     // function that will activate when <Next> is clicked
     function changeQ() {
         const rbs = document.querySelectorAll('input[name="choice"]');
-        let selectedValue;
+        let selectedValue = -1;
         for (const rb of rbs) {
             if (rb.checked) {
                 selectedValue = rb.id;
@@ -220,7 +231,7 @@
         
         let v = "";
         for (var i = 0; i < 5; i++) {
-            v += "<div><input type='radio' class = 'choices' id = '"+ i + "' name='choice' value='" + qname[currQ][i] + "'><label for = 'cluster" + i + "'>" + qname[currQ][i] + " - " + qartist[currQ][i] + "<a href = '" + qyoutube[currQ][i] + "' target='_blank'><img class = 'youtube' src = 'youtube.png'></a></label> </div>";
+            v += "<div><input type='radio' class = 'choices' id = '"+ i + "' name='choice' value='" + qname[currQ][i] + "'><label for = 'cluster" + i + "'>" + qname[currQ][i] + " - " + qartist[currQ][i] + "<a href = '" + qyoutube[currQ][i] + "' target='_blank'><img class = 'youtube' src = 'https://www.transparentpng.com/thumb/youtube-logo/youtube-logo-background-3.png'></a></label> </div>";
         }
 
         if (currQ != 2) {
@@ -233,11 +244,20 @@
 
         // v += " <a href = '#'><input type='button' class = 'buttons' id='home' value='HOME'></a>"
         
-        document.getElementById("form1").innerHTML = v;
-        
+        console.log(selectedValue);
+        if (selectedValue === -1){
+            alert("Please pick an option!");
+        }
+        else {
+            document.getElementById("form1").innerHTML = v;
+            currQ += 1;
+        }
 
-        currQ += 1;
+        
     };
+
+    $('#btn').on('click', changeQ);
+
 
 </script>
 

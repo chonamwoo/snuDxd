@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
+		<title>Smoothed D3.js Radar Chart</title>
+
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	
+		<!--DataTable -->
+		<link rel="stylesheet" type="text/css" href="https://www.jqueryscript.net/demo/DataTables-Jquery-Table-Plugin/media/css/jquery.dataTables.css"/>
+		
+		<!-- D3.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		
+		
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				width: 1700px;
+				/* margin: 0; */
+				font-family: 'Open Sans', sans-serif;
+				font-size: 11px;
+				font-weight: 300;
+				fill: #242424;
+				text-align: center;
+				cursor: default;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				/* background: linear-gradient(to right, rgba(254, 177, 68, 0.5), rgba(253, 253, 151,0.5), rgba(158, 224, 158, 0.5), rgba(158, 193, 207, 0.5),  rgba(204, 153, 201, 0.5)); */
+			}
+			
+			div.left {
+				width: 800px;
+				height: 540px;
+				float: left;
+				/* border: 1px solid black;	 */
+			}
+
+			div.right {
+				width: 500px;
+				height: 540px;
+				float: left;
+				text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+				/* border: 1px solid black; */
+			}
+
+			#annotation {
+				padding-left: 20px;
+				padding-right: 20px;
+				width: 400px;
+				float: left;
+				height: 540px;
+				/* border: 1px solid black; */
+				/* background-color: #333333; */
+				line-height: 540px;
+			}
+			
+
+			#textbox {
+				display: inline-block;
+				vertical-align: middle;
+				line-height: normal;
+			}
+
+			.header {
+				font-style: italic;
+			}
+			#annotation h1 {
+				font-size: 30px;
+				/* background-color: lightgoldenrodyellow; */
+			}
+
+			#annotation p {
+				text-align: left;
+				font-size: 13px;
+				font-weight: 500;
+			}
+			
+			.funfact {
+				padding:5px;
+				/* color: white; */
+				background-color: lightgoldenrodyellow;
+				border-radius: 8px;
+			}
+
+			.legend {
+				font-family: 'Raleway', sans-serif;
+				fill: #333333;
+			}
+			
+			.tooltip {
+				fill: #333333;
+			}
+			
+			
+			.bubbles {
+			  stroke-width: 1px;
+			  stroke: white;
+			}
+			.bubbles:hover {
+			  stroke: black;
+			}
+			
+			table.dataTable thead .sorting:after,
+			table.dataTable thead .sorting:before,
+			table.dataTable thead .sorting_asc:after,
+			table.dataTable thead .sorting_asc:before,
+			table.dataTable thead .sorting_asc_disabled:after,
+			table.dataTable thead .sorting_asc_disabled:before,
+			table.dataTable thead .sorting_desc:after,
+			table.dataTable thead .sorting_desc:before,
+			table.dataTable thead .sorting_desc_disabled:after,
+			table.dataTable thead .sorting_desc_disabled:before {
+				bottom: .5em;
+			}
+			
+		</style>
+	
+	</head>
+	<body>
+		<div id = "annotation"></div>
+		<div id="my_dataviz" class="left"></div>
+		
+		<div class="radarChart right"></div>
+		
+		
+		<table id="example" class="display" style="width: 100%">
+			<thead>
+				<tr>
+					<th>Artists</th>
+					<th>Song Name</th>
+					<th>Year</th>
+					<th>Peak Position (Rank)</th>
+					<th>Weeks On Chart</th>
+					<th>Popularity</th>
+					<th>Acousticness</th>
+					<th>Danceability</th>
+					<th>Energy</th>
+					<th>Key</th>
+					<th>Tempo</th>
+					<th>Valence</th>
+					<th>Cluster</th>
+				</tr>
+			</thead>
+
+			<tbody>
+<tr class="cluster_2"><td>Lady Gaga, Bradley Cooper</td><td>Shallow</td><td>2019</td><td>1</td><td>39</td><td>86</td><td>38</td><td>53</td><td>35</td><td>64</td><td>29</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Ariana Grande</td><td>7 Rings</td><td>2019</td><td>1</td><td>23</td><td>87</td><td>61</td><td>76</td><td>28</td><td>9</td><td>56</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Jonas Brothers</td><td>Sucker</td><td>2019</td><td>1</td><td>17</td><td>85</td><td>4</td><td>84</td><td>72</td><td>9</td><td>55</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Maroon 5</td><td>Girls Like You</td><td>2018</td><td>1</td><td>52</td><td>64</td><td>57</td><td>57</td><td>43</td><td>0</td><td>7</td><td>0</td><td>3</td></tr>
+<tr class="cluster_0"><td>Travis Scott</td><td>Sicko Mode</td><td>2018</td><td>1</td><td>47</td><td>92</td><td>1</td><td>83</td><td>72</td><td>73</td><td>66</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>XXXTENTACION</td><td>Sad!</td><td>2018</td><td>1</td><td>38</td><td>87</td><td>26</td><td>72</td><td>59</td><td>73</td><td>16</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Ariana Grande</td><td>Thank U, Next</td><td>2018</td><td>1</td><td>28</td><td>85</td><td>23</td><td>69</td><td>64</td><td>9</td><td>36</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Childish Gambino</td><td>This Is America</td><td>2018</td><td>1</td><td>17</td><td>83</td><td>12</td><td>85</td><td>43</td><td>45</td><td>44</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Ed Sheeran</td><td>Shape Of You</td><td>2017</td><td>1</td><td>59</td><td>85</td><td>59</td><td>82</td><td>63</td><td>9</td><td>29</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Cardi B</td><td>Bodak Yellow</td><td>2017</td><td>1</td><td>35</td><td>74</td><td>7</td><td>93</td><td>69</td><td>100</td><td>47</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>The Weeknd</td><td>Starboy</td><td>2017</td><td>1</td><td>30</td><td>84</td><td>14</td><td>65</td><td>56</td><td>64</td><td>85</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Sia</td><td>Cheap Thrills</td><td>2016</td><td>1</td><td>52</td><td>72</td><td>5</td><td>59</td><td>68</td><td>55</td><td>25</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Justin Bieber</td><td>Love Yourself</td><td>2016</td><td>1</td><td>41</td><td>81</td><td>85</td><td>57</td><td>34</td><td>36</td><td>32</td><td>100</td><td>3</td></tr>
+<tr class="cluster_1"><td>Drake</td><td>One Dance</td><td>2016</td><td>1</td><td>36</td><td>82</td><td>1</td><td>78</td><td>61</td><td>9</td><td>34</td><td>0</td><td>1</td></tr>
+<tr class="cluster_2"><td>Zayn</td><td>Pillowtalk</td><td>2016</td><td>1</td><td>24</td><td>78</td><td>12</td><td>54</td><td>69</td><td>100</td><td>47</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Justin Bieber</td><td>What Do You Mean?</td><td>2015</td><td>1</td><td>31</td><td>77</td><td>60</td><td>84</td><td>54</td><td>45</td><td>47</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Adele</td><td>Hello</td><td>2015</td><td>1</td><td>26</td><td>72</td><td>34</td><td>42</td><td>42</td><td>45</td><td>67</td><td>0</td><td>3</td></tr>
+<tr class="cluster_0"><td>Taylor Swift</td><td>Bad Blood</td><td>2015</td><td>1</td><td>25</td><td>65</td><td>9</td><td>62</td><td>79</td><td>64</td><td>75</td><td>0</td><td>0</td></tr>
+<tr class="cluster_3"><td>John Legend</td><td>All Of Me</td><td>2014</td><td>1</td><td>59</td><td>85</td><td>94</td><td>35</td><td>22</td><td>73</td><td>44</td><td>0</td><td>3</td></tr>
+<tr class="cluster_0"><td>Katy Perry</td><td>Dark Horse</td><td>2014</td><td>1</td><td>57</td><td>75</td><td>0</td><td>61</td><td>56</td><td>55</td><td>51</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Meghan Trainor</td><td>All About That Bass</td><td>2014</td><td>1</td><td>47</td><td>71</td><td>6</td><td>79</td><td>88</td><td>82</td><td>53</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>MAGIC!</td><td>Rude</td><td>2014</td><td>1</td><td>41</td><td>78</td><td>4</td><td>76</td><td>74</td><td>9</td><td>59</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Iggy Azalea</td><td>Fancy</td><td>2014</td><td>1</td><td>39</td><td>68</td><td>9</td><td>92</td><td>70</td><td>91</td><td>29</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Robin Thicke</td><td>Blurred Lines</td><td>2013</td><td>1</td><td>48</td><td>52</td><td>0</td><td>86</td><td>48</td><td>64</td><td>44</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Lorde</td><td>Royals</td><td>2013</td><td>1</td><td>44</td><td>10</td><td>4</td><td>63</td><td>49</td><td>64</td><td>22</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Katy Perry</td><td>Roar</td><td>2013</td><td>1</td><td>35</td><td>75</td><td>0</td><td>51</td><td>76</td><td>64</td><td>81</td><td>0</td><td>0</td></tr>
+<tr class="cluster_3"><td>Miley Cyrus</td><td>Wrecking Ball</td><td>2013</td><td>1</td><td>32</td><td>75</td><td>42</td><td>48</td><td>39</td><td>45</td><td>44</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Eminem</td><td>The Monster</td><td>2013</td><td>1</td><td>29</td><td>74</td><td>5</td><td>77</td><td>85</td><td>9</td><td>38</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Gotye</td><td>Somebody That I Used To Know</td><td>2012</td><td>1</td><td>59</td><td>76</td><td>60</td><td>86</td><td>47</td><td>0</td><td>50</td><td>100</td><td>3</td></tr>
+<tr class="cluster_4"><td>Bruno Mars</td><td>Locked Out Of Heaven</td><td>2012</td><td>1</td><td>36</td><td>80</td><td>5</td><td>70</td><td>68</td><td>45</td><td>59</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Flo Rida</td><td>Whistle</td><td>2012</td><td>1</td><td>29</td><td>76</td><td>2</td><td>73</td><td>94</td><td>0</td><td>34</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Rihanna</td><td>Diamonds</td><td>2012</td><td>1</td><td>26</td><td>55</td><td>0</td><td>52</td><td>70</td><td>100</td><td>27</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Adele</td><td>Rolling In The Deep</td><td>2011</td><td>1</td><td>65</td><td>75</td><td>13</td><td>71</td><td>74</td><td>73</td><td>35</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Adele</td><td>Someone Like You</td><td>2011</td><td>1</td><td>39</td><td>78</td><td>91</td><td>51</td><td>29</td><td>82</td><td>53</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Bruno Mars</td><td>Grenade</td><td>2011</td><td>1</td><td>36</td><td>75</td><td>15</td><td>68</td><td>53</td><td>18</td><td>38</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Wiz Khalifa</td><td>Black And Yellow</td><td>2011</td><td>1</td><td>25</td><td>74</td><td>7</td><td>65</td><td>83</td><td>18</td><td>71</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Lady Gaga</td><td>Born This Way</td><td>2011</td><td>1</td><td>20</td><td>68</td><td>0</td><td>54</td><td>82</td><td>100</td><td>46</td><td>0</td><td>0</td></tr>
+<tr class="cluster_0"><td>Bruno Mars</td><td>Just The Way You Are</td><td>2010</td><td>1</td><td>48</td><td>80</td><td>2</td><td>60</td><td>84</td><td>45</td><td>37</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Eminem</td><td>Love The Way You Lie</td><td>2010</td><td>1</td><td>29</td><td>81</td><td>25</td><td>73</td><td>92</td><td>91</td><td>24</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Eminem</td><td>Not Afraid</td><td>2010</td><td>1</td><td>25</td><td>78</td><td>54</td><td>85</td><td>96</td><td>0</td><td>41</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Lady Gaga</td><td>Poker Face</td><td>2009</td><td>1</td><td>40</td><td>72</td><td>12</td><td>85</td><td>80</td><td>36</td><td>43</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Owl City</td><td>Fireflies</td><td>2009</td><td>1</td><td>31</td><td>79</td><td>3</td><td>46</td><td>64</td><td>27</td><td>81</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Kelly Clarkson</td><td>My Life Would Suck Without You</td><td>2009</td><td>1</td><td>24</td><td>66</td><td>0</td><td>47</td><td>88</td><td>82</td><td>59</td><td>0</td><td>0</td></tr>
+<tr class="cluster_0"><td>Coldplay</td><td>Viva La Vida</td><td>2008</td><td>1</td><td>51</td><td>79</td><td>10</td><td>43</td><td>60</td><td>45</td><td>55</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Rihanna</td><td>Disturbia</td><td>2008</td><td>1</td><td>37</td><td>72</td><td>9</td><td>68</td><td>81</td><td>100</td><td>47</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Lil Wayne</td><td>Lollipop</td><td>2008</td><td>1</td><td>28</td><td>70</td><td>6</td><td>82</td><td>40</td><td>0</td><td>61</td><td>0</td><td>1</td></tr>
+<tr class="cluster_2"><td>Rihanna</td><td>Take A Bow</td><td>2008</td><td>1</td><td>27</td><td>76</td><td>25</td><td>67</td><td>44</td><td>82</td><td>21</td><td>100</td><td>2</td></tr>
+<tr class="cluster_1"><td>Alicia Keys</td><td>No One</td><td>2007</td><td>1</td><td>39</td><td>79</td><td>2</td><td>61</td><td>52</td><td>9</td><td>25</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>Plain White T's</td><td>Hey There Delilah</td><td>2007</td><td>1</td><td>35</td><td>80</td><td>89</td><td>62</td><td>25</td><td>18</td><td>34</td><td>0</td><td>3</td></tr>
+<tr class="cluster_2"><td>Kanye West</td><td>Stronger</td><td>2007</td><td>1</td><td>27</td><td>80</td><td>1</td><td>58</td><td>70</td><td>91</td><td>34</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Timbaland</td><td>Give It To Me</td><td>2007</td><td>1</td><td>26</td><td>65</td><td>17</td><td>99</td><td>70</td><td>73</td><td>38</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Avril Lavigne</td><td>Girlfriend</td><td>2007</td><td>1</td><td>24</td><td>74</td><td>0</td><td>51</td><td>96</td><td>64</td><td>71</td><td>100</td><td>0</td></tr>
+<tr class="cluster_3"><td>James Blunt</td><td>You're Beautiful</td><td>2006</td><td>1</td><td>38</td><td>76</td><td>65</td><td>64</td><td>45</td><td>0</td><td>21</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Chamillionaire</td><td>Ridin'</td><td>2006</td><td>1</td><td>31</td><td>70</td><td>19</td><td>77</td><td>79</td><td>73</td><td>58</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Sean Paul</td><td>Temperature</td><td>2006</td><td>1</td><td>31</td><td>77</td><td>11</td><td>96</td><td>58</td><td>0</td><td>47</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Rihanna</td><td>SOS</td><td>2006</td><td>1</td><td>28</td><td>69</td><td>0</td><td>65</td><td>65</td><td>64</td><td>54</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Kanye West</td><td>Gold Digger</td><td>2005</td><td>1</td><td>39</td><td>77</td><td>2</td><td>59</td><td>68</td><td>9</td><td>27</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>50 Cent</td><td>Candy Shop</td><td>2005</td><td>1</td><td>23</td><td>78</td><td>3</td><td>57</td><td>55</td><td>100</td><td>47</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Mariah Carey</td><td>Don't Forget About Us</td><td>2005</td><td>1</td><td>21</td><td>58</td><td>4</td><td>67</td><td>50</td><td>91</td><td>58</td><td>0</td><td>2</td></tr>
+<tr class="cluster_2"><td>Mario</td><td>Let Me Love You</td><td>2004</td><td>1</td><td>36</td><td>76</td><td>24</td><td>62</td><td>56</td><td>64</td><td>28</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>OutKast</td><td>Hey Ya!</td><td>2004</td><td>1</td><td>32</td><td>79</td><td>11</td><td>70</td><td>98</td><td>36</td><td>19</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Snoop Dogg</td><td>Drop It Like It's Hot</td><td>2004</td><td>1</td><td>30</td><td>68</td><td>19</td><td>89</td><td>61</td><td>9</td><td>27</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Sean Paul</td><td>Get Busy</td><td>2003</td><td>1</td><td>32</td><td>74</td><td>63</td><td>71</td><td>82</td><td>91</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>B2K, P. Diddy</td><td>Bump, Bump, Bump</td><td>2003</td><td>1</td><td>22</td><td>52</td><td>10</td><td>83</td><td>67</td><td>9</td><td>29</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Nickelback</td><td>How You Remind Me</td><td>2002</td><td>1</td><td>49</td><td>78</td><td>0</td><td>38</td><td>75</td><td>91</td><td>76</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Ashanti</td><td>Foolish</td><td>2002</td><td>1</td><td>32</td><td>71</td><td>34</td><td>63</td><td>68</td><td>0</td><td>26</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Nelly</td><td>Hot In Herre</td><td>2002</td><td>1</td><td>26</td><td>72</td><td>21</td><td>97</td><td>73</td><td>100</td><td>36</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Alicia Keys</td><td>Fallin'</td><td>2001</td><td>1</td><td>34</td><td>73</td><td>27</td><td>62</td><td>59</td><td>100</td><td>29</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Shaggy</td><td>It Wasn't Me</td><td>2001</td><td>1</td><td>25</td><td>76</td><td>6</td><td>85</td><td>59</td><td>0</td><td>28</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Usher</td><td>U Remind Me</td><td>2001</td><td>1</td><td>24</td><td>73</td><td>20</td><td>62</td><td>61</td><td>55</td><td>28</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Creed</td><td>With Arms Wide Open</td><td>2000</td><td>1</td><td>47</td><td>65</td><td>0</td><td>34</td><td>51</td><td>0</td><td>56</td><td>0</td><td>1</td></tr>
+<tr class="cluster_2"><td>Savage Garden</td><td>I Knew I Loved You</td><td>2000</td><td>1</td><td>33</td><td>69</td><td>33</td><td>57</td><td>47</td><td>82</td><td>22</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Destiny's Child</td><td>Say My Name</td><td>2000</td><td>1</td><td>32</td><td>76</td><td>28</td><td>69</td><td>66</td><td>45</td><td>55</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Sisqo</td><td>Incomplete</td><td>2000</td><td>1</td><td>26</td><td>59</td><td>29</td><td>73</td><td>41</td><td>9</td><td>44</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Christina Aguilera</td><td>Genie In A Bottle</td><td>1999</td><td>1</td><td>25</td><td>72</td><td>21</td><td>59</td><td>79</td><td>9</td><td>78</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Enrique Iglesias</td><td>Bailamos</td><td>1999</td><td>1</td><td>20</td><td>53</td><td>5</td><td>59</td><td>89</td><td>82</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Destiny's Child</td><td>Bills, Bills, Bills</td><td>1999</td><td>1</td><td>20</td><td>65</td><td>14</td><td>84</td><td>55</td><td>100</td><td>49</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Marshmello, Bastille</td><td>Happier</td><td>2019</td><td>2</td><td>45</td><td>86</td><td>20</td><td>66</td><td>78</td><td>45</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Ariana Grande</td><td>Break Up With Your Girlfriend, I'm Bored</td><td>2019</td><td>2</td><td>20</td><td>81</td><td>4</td><td>70</td><td>53</td><td>45</td><td>75</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Billie Eilish</td><td>Bad Guy</td><td>2019</td><td>2</td><td>13</td><td>91</td><td>34</td><td>67</td><td>39</td><td>64</td><td>53</td><td>100</td><td>2</td></tr>
+<tr class="cluster_1"><td>Taylor Swift</td><td>You Need To Calm Down</td><td>2019</td><td>2</td><td>2</td><td>83</td><td>1</td><td>75</td><td>65</td><td>18</td><td>22</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Juice WRLD</td><td>Lucid Dreams</td><td>2018</td><td>2</td><td>46</td><td>89</td><td>36</td><td>46</td><td>54</td><td>55</td><td>22</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>twenty one pilots</td><td>Stressed Out</td><td>2016</td><td>2</td><td>52</td><td>83</td><td>5</td><td>71</td><td>62</td><td>36</td><td>75</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Lukas Graham</td><td>7 Years</td><td>2016</td><td>2</td><td>36</td><td>79</td><td>29</td><td>75</td><td>44</td><td>91</td><td>44</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Ed Sheeran</td><td>Thinking Out Loud</td><td>2015</td><td>2</td><td>58</td><td>65</td><td>48</td><td>77</td><td>41</td><td>18</td><td>19</td><td>100</td><td>3</td></tr>
+<tr class="cluster_4"><td>Fetty Wap</td><td>Trap Queen</td><td>2015</td><td>2</td><td>52</td><td>75</td><td>2</td><td>73</td><td>87</td><td>64</td><td>61</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Maroon 5</td><td>Sugar</td><td>2015</td><td>2</td><td>42</td><td>80</td><td>6</td><td>73</td><td>78</td><td>9</td><td>44</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>OneRepublic</td><td>Counting Stars</td><td>2014</td><td>2</td><td>68</td><td>74</td><td>7</td><td>63</td><td>69</td><td>9</td><td>45</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>Sam Smith</td><td>Stay With Me</td><td>2014</td><td>2</td><td>54</td><td>82</td><td>60</td><td>35</td><td>39</td><td>0</td><td>22</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Nicki Minaj</td><td>Anaconda</td><td>2014</td><td>2</td><td>22</td><td>65</td><td>7</td><td>97</td><td>58</td><td>82</td><td>50</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Justin Timberlake</td><td>Mirrors</td><td>2013</td><td>2</td><td>42</td><td>76</td><td>24</td><td>53</td><td>49</td><td>45</td><td>17</td><td>100</td><td>2</td></tr>
+<tr class="cluster_1"><td>Miley Cyrus</td><td>We Can't Stop</td><td>2013</td><td>2</td><td>26</td><td>77</td><td>1</td><td>57</td><td>60</td><td>9</td><td>19</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Ellie Goulding</td><td>Lights</td><td>2012</td><td>2</td><td>57</td><td>47</td><td>7</td><td>68</td><td>72</td><td>73</td><td>44</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Maroon 5</td><td>Payphone</td><td>2012</td><td>2</td><td>31</td><td>73</td><td>1</td><td>72</td><td>74</td><td>36</td><td>38</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Katy Perry</td><td>Wide Awake</td><td>2012</td><td>2</td><td>26</td><td>68</td><td>8</td><td>46</td><td>67</td><td>45</td><td>69</td><td>100</td><td>0</td></tr>
+<tr class="cluster_2"><td>Justin Bieber</td><td>Boyfriend</td><td>2012</td><td>2</td><td>20</td><td>67</td><td>4</td><td>69</td><td>53</td><td>91</td><td>30</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Taio Cruz</td><td>Dynamite</td><td>2010</td><td>2</td><td>47</td><td>55</td><td>0</td><td>74</td><td>78</td><td>36</td><td>44</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Lady Gaga</td><td>Bad Romance</td><td>2010</td><td>2</td><td>35</td><td>80</td><td>0</td><td>67</td><td>92</td><td>0</td><td>43</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Iyaz</td><td>Replay</td><td>2010</td><td>2</td><td>34</td><td>74</td><td>18</td><td>68</td><td>74</td><td>82</td><td>26</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Taylor Swift</td><td>Today Was A Fairytale</td><td>2010</td><td>2</td><td>18</td><td>52</td><td>3</td><td>43</td><td>69</td><td>64</td><td>67</td><td>0</td><td>0</td></tr>
+<tr class="cluster_0"><td>Taylor Swift</td><td>You Belong With Me</td><td>2009</td><td>2</td><td>50</td><td>70</td><td>18</td><td>66</td><td>73</td><td>55</td><td>50</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Kanye West</td><td>Heartless</td><td>2009</td><td>2</td><td>30</td><td>76</td><td>5</td><td>78</td><td>63</td><td>91</td><td>24</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Miley Cyrus</td><td>Party In The U.S.A.</td><td>2009</td><td>2</td><td>28</td><td>74</td><td>0</td><td>62</td><td>68</td><td>91</td><td>29</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Drake</td><td>Best I Ever Had</td><td>2009</td><td>2</td><td>24</td><td>47</td><td>10</td><td>38</td><td>90</td><td>9</td><td>70</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Chris Brown</td><td>Forever</td><td>2008</td><td>2</td><td>33</td><td>73</td><td>4</td><td>64</td><td>81</td><td>100</td><td>44</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Chris Brown</td><td>With You</td><td>2008</td><td>2</td><td>29</td><td>72</td><td>14</td><td>63</td><td>68</td><td>27</td><td>23</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Timbaland</td><td>Apologize</td><td>2007</td><td>2</td><td>47</td><td>71</td><td>3</td><td>62</td><td>58</td><td>73</td><td>43</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Gwen Stefani</td><td>The Sweet Escape</td><td>2007</td><td>2</td><td>40</td><td>68</td><td>20</td><td>74</td><td>76</td><td>9</td><td>44</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Fergie</td><td>Fergalicious</td><td>2007</td><td>2</td><td>27</td><td>71</td><td>6</td><td>91</td><td>56</td><td>73</td><td>50</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Fall Out Boy</td><td>This Ain't A Scene, It's An Arms Race</td><td>2007</td><td>2</td><td>20</td><td>43</td><td>0</td><td>37</td><td>88</td><td>82</td><td>93</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Gnarls Barkley</td><td>Crazy</td><td>2006</td><td>2</td><td>29</td><td>71</td><td>2</td><td>83</td><td>73</td><td>73</td><td>39</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>The Pussycat Dolls</td><td>Don't Cha</td><td>2005</td><td>2</td><td>40</td><td>67</td><td>1</td><td>88</td><td>62</td><td>9</td><td>44</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Green Day</td><td>Boulevard Of Broken Dreams</td><td>2005</td><td>2</td><td>36</td><td>74</td><td>1</td><td>44</td><td>67</td><td>73</td><td>73</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Rihanna</td><td>Pon de Replay</td><td>2005</td><td>2</td><td>27</td><td>75</td><td>0</td><td>76</td><td>62</td><td>64</td><td>31</td><td>0</td><td>4</td></tr>
+<tr class="cluster_2"><td>The Game</td><td>Hate It Or Love It</td><td>2005</td><td>2</td><td>23</td><td>72</td><td>14</td><td>79</td><td>78</td><td>82</td><td>32</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Hoobastank</td><td>The Reason</td><td>2004</td><td>2</td><td>38</td><td>53</td><td>1</td><td>41</td><td>63</td><td>36</td><td>21</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Chingy</td><td>One Call Away</td><td>2004</td><td>2</td><td>20</td><td>60</td><td>9</td><td>75</td><td>81</td><td>36</td><td>70</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>R. Kelly</td><td>Ignition</td><td>2003</td><td>2</td><td>42</td><td>46</td><td>35</td><td>79</td><td>29</td><td>91</td><td>11</td><td>100</td><td>2</td></tr>
+<tr class="cluster_1"><td>Chingy</td><td>Right Thurr</td><td>2003</td><td>2</td><td>33</td><td>67</td><td>15</td><td>86</td><td>74</td><td>18</td><td>27</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Christina Aguilera</td><td>Beautiful</td><td>2003</td><td>2</td><td>27</td><td>71</td><td>59</td><td>39</td><td>55</td><td>45</td><td>17</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Linkin Park</td><td>In The End</td><td>2002</td><td>2</td><td>39</td><td>83</td><td>1</td><td>51</td><td>86</td><td>27</td><td>35</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Eminem</td><td>Without Me</td><td>2002</td><td>2</td><td>20</td><td>38</td><td>0</td><td>93</td><td>63</td><td>64</td><td>39</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Eve</td><td>Let Me Blow Ya Mind</td><td>2001</td><td>2</td><td>33</td><td>72</td><td>25</td><td>91</td><td>53</td><td>73</td><td>25</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Destiny's Child</td><td>Survivor</td><td>2001</td><td>2</td><td>20</td><td>71</td><td>6</td><td>46</td><td>91</td><td>9</td><td>69</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Faith Hill</td><td>Breathe</td><td>2000</td><td>2</td><td>53</td><td>65</td><td>18</td><td>48</td><td>47</td><td>64</td><td>54</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Marc Anthony</td><td>You Sang To Me</td><td>2000</td><td>2</td><td>32</td><td>53</td><td>1</td><td>53</td><td>89</td><td>91</td><td>72</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Brian McKnight</td><td>Back At One</td><td>1999</td><td>2</td><td>37</td><td>70</td><td>46</td><td>63</td><td>31</td><td>100</td><td>50</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Jennifer Lopez</td><td>If You Had My Love</td><td>1999</td><td>2</td><td>25</td><td>64</td><td>7</td><td>65</td><td>61</td><td>100</td><td>28</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Mariah Carey</td><td>All I Want For Christmas Is You</td><td>2019</td><td>3</td><td>30</td><td>64</td><td>17</td><td>25</td><td>61</td><td>64</td><td>63</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Khalid</td><td>Talk</td><td>2019</td><td>3</td><td>20</td><td>76</td><td>5</td><td>90</td><td>37</td><td>0</td><td>54</td><td>0</td><td>1</td></tr>
+<tr class="cluster_2"><td>Post Malone</td><td>Better Now</td><td>2018</td><td>3</td><td>52</td><td>85</td><td>34</td><td>65</td><td>56</td><td>91</td><td>59</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Bruno Mars, Cardi B</td><td>Finesse</td><td>2018</td><td>3</td><td>23</td><td>67</td><td>1</td><td>72</td><td>79</td><td>45</td><td>35</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>6ix9ine</td><td>FEFE</td><td>2018</td><td>3</td><td>20</td><td>81</td><td>9</td><td>94</td><td>35</td><td>9</td><td>48</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>French Montana</td><td>Unforgettable</td><td>2017</td><td>3</td><td>42</td><td>81</td><td>3</td><td>70</td><td>76</td><td>55</td><td>30</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>The Chainsmokers, Coldplay</td><td>Something Just Like This</td><td>2017</td><td>3</td><td>39</td><td>83</td><td>5</td><td>58</td><td>62</td><td>100</td><td>33</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Meghan Trainor</td><td>No</td><td>2016</td><td>3</td><td>20</td><td>70</td><td>1</td><td>51</td><td>79</td><td>9</td><td>27</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>One Direction</td><td>Drag Me Down</td><td>2015</td><td>3</td><td>20</td><td>78</td><td>11</td><td>71</td><td>69</td><td>0</td><td>55</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Jessie J, Ariana Grande, Nicki Minaj</td><td>Bang Bang</td><td>2014</td><td>3</td><td>31</td><td>78</td><td>27</td><td>68</td><td>78</td><td>0</td><td>62</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Iggy Azalea</td><td>Black Widow</td><td>2014</td><td>3</td><td>30</td><td>65</td><td>20</td><td>72</td><td>71</td><td>100</td><td>71</td><td>100</td><td>0</td></tr>
+<tr class="cluster_0"><td>Imagine Dragons</td><td>Radioactive</td><td>2013</td><td>3</td><td>87</td><td>72</td><td>11</td><td>38</td><td>77</td><td>82</td><td>54</td><td>0</td><td>0</td></tr>
+<tr class="cluster_3"><td>Rihanna</td><td>Stay</td><td>2013</td><td>3</td><td>32</td><td>48</td><td>97</td><td>58</td><td>27</td><td>82</td><td>39</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>will.i.am, Britney Spears</td><td>Scream & Shout</td><td>2013</td><td>3</td><td>24</td><td>74</td><td>2</td><td>75</td><td>67</td><td>45</td><td>50</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Eminem</td><td>Berzerk</td><td>2013</td><td>3</td><td>20</td><td>67</td><td>2</td><td>72</td><td>87</td><td>100</td><td>29</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>The Wanted</td><td>Glad You Came</td><td>2012</td><td>3</td><td>37</td><td>46</td><td>6</td><td>57</td><td>84</td><td>64</td><td>48</td><td>0</td><td>0</td></tr>
+<tr class="cluster_3"><td>Whitney Houston</td><td>I Will Always Love You</td><td>2012</td><td>3</td><td>29</td><td>76</td><td>86</td><td>22</td><td>17</td><td>36</td><td>11</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>One Direction</td><td>Live While We're Young</td><td>2012</td><td>3</td><td>16</td><td>73</td><td>6</td><td>62</td><td>83</td><td>18</td><td>48</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Foster The People</td><td>Pumped Up Kicks</td><td>2011</td><td>3</td><td>40</td><td>83</td><td>15</td><td>71</td><td>70</td><td>45</td><td>49</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Jennifer Lopez</td><td>On The Floor</td><td>2011</td><td>3</td><td>29</td><td>60</td><td>11</td><td>71</td><td>77</td><td>27</td><td>50</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Lil Wayne</td><td>She Will</td><td>2011</td><td>3</td><td>21</td><td>56</td><td>0</td><td>29</td><td>84</td><td>73</td><td>32</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Train</td><td>Hey, Soul Sister</td><td>2010</td><td>3</td><td>54</td><td>82</td><td>19</td><td>64</td><td>88</td><td>9</td><td>30</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Lady Gaga</td><td>Telephone</td><td>2010</td><td>3</td><td>33</td><td>69</td><td>1</td><td>82</td><td>83</td><td>45</td><td>45</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Keri Hilson</td><td>Knock You Down</td><td>2009</td><td>3</td><td>31</td><td>66</td><td>1</td><td>54</td><td>87</td><td>73</td><td>66</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Kanye West</td><td>Love Lockdown</td><td>2008</td><td>3</td><td>23</td><td>67</td><td>6</td><td>74</td><td>50</td><td>9</td><td>44</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Britney Spears</td><td>Circus</td><td>2008</td><td>3</td><td>22</td><td>70</td><td>15</td><td>78</td><td>72</td><td>55</td><td>41</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>David Cook</td><td>The Time Of My Life</td><td>2008</td><td>3</td><td>20</td><td>54</td><td>6</td><td>34</td><td>56</td><td>73</td><td>66</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Timbaland</td><td>The Way I Are</td><td>2007</td><td>3</td><td>38</td><td>51</td><td>17</td><td>70</td><td>80</td><td>55</td><td>41</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Britney Spears</td><td>Gimme More</td><td>2007</td><td>3</td><td>20</td><td>72</td><td>26</td><td>77</td><td>84</td><td>18</td><td>40</td><td>0</td><td>1</td></tr>
+<tr class="cluster_2"><td>The Fray</td><td>How To Save A Life</td><td>2006</td><td>3</td><td>58</td><td>80</td><td>28</td><td>60</td><td>73</td><td>91</td><td>45</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Hinder</td><td>Lips Of An Angel</td><td>2006</td><td>3</td><td>33</td><td>71</td><td>2</td><td>42</td><td>72</td><td>18</td><td>50</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Sean Paul</td><td>Give It Up To Me</td><td>2006</td><td>3</td><td>22</td><td>57</td><td>17</td><td>85</td><td>66</td><td>64</td><td>29</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>50 Cent</td><td>Disco Inferno</td><td>2005</td><td>3</td><td>29</td><td>69</td><td>21</td><td>93</td><td>64</td><td>27</td><td>30</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Destiny's Child</td><td>Lose My Breath</td><td>2004</td><td>3</td><td>23</td><td>57</td><td>1</td><td>80</td><td>90</td><td>9</td><td>43</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Alicia Keys</td><td>You Don't Know My Name</td><td>2004</td><td>3</td><td>20</td><td>61</td><td>60</td><td>17</td><td>65</td><td>82</td><td>73</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>50 Cent</td><td>P.I.M.P.</td><td>2003</td><td>3</td><td>25</td><td>66</td><td>5</td><td>67</td><td>75</td><td>91</td><td>18</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Justin Timberlake</td><td>Cry Me A River</td><td>2003</td><td>3</td><td>20</td><td>73</td><td>59</td><td>59</td><td>64</td><td>73</td><td>16</td><td>100</td><td>2</td></tr>
+<tr class="cluster_1"><td>Nelly</td><td>Air Force Ones</td><td>2003</td><td>3</td><td>20</td><td>61</td><td>9</td><td>77</td><td>43</td><td>36</td><td>71</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>No Doubt</td><td>Underneath It All</td><td>2002</td><td>3</td><td>30</td><td>59</td><td>24</td><td>71</td><td>72</td><td>36</td><td>55</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Usher</td><td>U Don't Have To Call</td><td>2002</td><td>3</td><td>26</td><td>59</td><td>5</td><td>78</td><td>54</td><td>9</td><td>32</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Dido</td><td>Thank You</td><td>2001</td><td>3</td><td>39</td><td>61</td><td>29</td><td>70</td><td>57</td><td>9</td><td>19</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Enrique Iglesias</td><td>Hero</td><td>2001</td><td>3</td><td>34</td><td>45</td><td>15</td><td>51</td><td>62</td><td>64</td><td>64</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Nelly</td><td>Ride Wit Me</td><td>2001</td><td>3</td><td>29</td><td>74</td><td>6</td><td>84</td><td>69</td><td>64</td><td>33</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>3 Doors Down</td><td>Kryptonite</td><td>2000</td><td>3</td><td>53</td><td>77</td><td>1</td><td>49</td><td>86</td><td>100</td><td>31</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Sisqo</td><td>Thong Song</td><td>2000</td><td>3</td><td>28</td><td>66</td><td>12</td><td>68</td><td>89</td><td>18</td><td>45</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Christina Aguilera</td><td>I Turn To You</td><td>2000</td><td>3</td><td>22</td><td>58</td><td>39</td><td>56</td><td>44</td><td>9</td><td>48</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Marc Anthony</td><td>I Need To Know</td><td>1999</td><td>3</td><td>40</td><td>56</td><td>50</td><td>80</td><td>95</td><td>27</td><td>41</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Jessica Simpson</td><td>I Wanna Love You Forever</td><td>1999</td><td>3</td><td>20</td><td>58</td><td>16</td><td>55</td><td>65</td><td>36</td><td>34</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>LFO</td><td>Summer Girls</td><td>1999</td><td>3</td><td>17</td><td>59</td><td>16</td><td>80</td><td>80</td><td>64</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Panic! At The Disco</td><td>High Hopes</td><td>2019</td><td>4</td><td>47</td><td>84</td><td>20</td><td>53</td><td>90</td><td>45</td><td>21</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>J. Cole</td><td>Middle Child</td><td>2019</td><td>4</td><td>23</td><td>64</td><td>20</td><td>83</td><td>46</td><td>73</td><td>48</td><td>100</td><td>2</td></tr>
+<tr class="cluster_3"><td>The Weeknd</td><td>Call Out My Name</td><td>2018</td><td>4</td><td>18</td><td>82</td><td>17</td><td>40</td><td>57</td><td>9</td><td>53</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Imagine Dragons</td><td>Believer</td><td>2017</td><td>4</td><td>52</td><td>87</td><td>6</td><td>76</td><td>77</td><td>91</td><td>47</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Imagine Dragons</td><td>Thunder</td><td>2017</td><td>4</td><td>52</td><td>84</td><td>1</td><td>56</td><td>81</td><td>0</td><td>74</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>Lady Gaga</td><td>Million Reasons</td><td>2017</td><td>4</td><td>20</td><td>77</td><td>51</td><td>63</td><td>39</td><td>0</td><td>50</td><td>0</td><td>3</td></tr>
+<tr class="cluster_0"><td>Harry Styles</td><td>Sign Of The Times</td><td>2017</td><td>4</td><td>13</td><td>81</td><td>3</td><td>46</td><td>57</td><td>45</td><td>44</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Bruno Mars</td><td>24K Magic</td><td>2016</td><td>4</td><td>41</td><td>78</td><td>3</td><td>81</td><td>79</td><td>9</td><td>36</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Flo Rida</td><td>My House</td><td>2016</td><td>4</td><td>39</td><td>76</td><td>2</td><td>66</td><td>69</td><td>64</td><td>28</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>DJ Snake</td><td>Let Me Love You</td><td>2016</td><td>4</td><td>33</td><td>80</td><td>9</td><td>61</td><td>70</td><td>73</td><td>32</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Ariana Grande</td><td>Side To Side</td><td>2016</td><td>4</td><td>28</td><td>78</td><td>5</td><td>62</td><td>72</td><td>55</td><td>68</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>WALK THE MOON</td><td>Shut Up And Dance</td><td>2015</td><td>4</td><td>53</td><td>79</td><td>1</td><td>53</td><td>86</td><td>9</td><td>49</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Meghan Trainor</td><td>Lips Are Movin</td><td>2015</td><td>4</td><td>29</td><td>69</td><td>5</td><td>76</td><td>82</td><td>64</td><td>56</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Rihanna, Kanye West, Paul McCartney</td><td>FourFiveSeconds</td><td>2015</td><td>4</td><td>20</td><td>79</td><td>89</td><td>54</td><td>23</td><td>18</td><td>97</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>DJ Snake, Lil Jon</td><td>Turn Down For What</td><td>2014</td><td>4</td><td>37</td><td>72</td><td>0</td><td>81</td><td>79</td><td>9</td><td>32</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>A Great Big World, Christina Aguilera</td><td>Say Something</td><td>2014</td><td>4</td><td>26</td><td>59</td><td>89</td><td>39</td><td>10</td><td>18</td><td>55</td><td>0</td><td>3</td></tr>
+<tr class="cluster_0"><td>Ariana Grande</td><td>Break Free</td><td>2014</td><td>4</td><td>22</td><td>74</td><td>1</td><td>66</td><td>69</td><td>64</td><td>50</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Florida Georgia Line</td><td>Cruise</td><td>2013</td><td>4</td><td>54</td><td>58</td><td>2</td><td>39</td><td>95</td><td>91</td><td>61</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Drake</td><td>Hold On, We're Going Home</td><td>2013</td><td>4</td><td>33</td><td>71</td><td>0</td><td>76</td><td>38</td><td>55</td><td>32</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>One Direction</td><td>What Makes You Beautiful</td><td>2012</td><td>4</td><td>34</td><td>80</td><td>1</td><td>70</td><td>78</td><td>36</td><td>47</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Bruno Mars</td><td>The Lazy Song</td><td>2011</td><td>4</td><td>27</td><td>71</td><td>34</td><td>72</td><td>80</td><td>100</td><td>78</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Bad Meets Evil</td><td>Lighters</td><td>2011</td><td>4</td><td>22</td><td>68</td><td>36</td><td>64</td><td>68</td><td>0</td><td>26</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Dr. Dre</td><td>I Need A Doctor</td><td>2011</td><td>4</td><td>20</td><td>71</td><td>9</td><td>55</td><td>95</td><td>27</td><td>66</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Enrique Iglesias</td><td>I Like It</td><td>2010</td><td>4</td><td>38</td><td>64</td><td>2</td><td>61</td><td>94</td><td>91</td><td>50</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Kings Of Leon</td><td>Use Somebody</td><td>2009</td><td>4</td><td>57</td><td>75</td><td>1</td><td>19</td><td>70</td><td>0</td><td>54</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Miley Cyrus</td><td>The Climb</td><td>2009</td><td>4</td><td>28</td><td>69</td><td>9</td><td>25</td><td>57</td><td>36</td><td>69</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Jeremih</td><td>Birthday Sex</td><td>2009</td><td>4</td><td>20</td><td>68</td><td>30</td><td>65</td><td>50</td><td>64</td><td>7</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Sara Bareilles</td><td>Love Song</td><td>2008</td><td>4</td><td>41</td><td>75</td><td>2</td><td>54</td><td>78</td><td>18</td><td>46</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Daughtry</td><td>It's Not Over</td><td>2007</td><td>4</td><td>29</td><td>60</td><td>5</td><td>36</td><td>92</td><td>91</td><td>60</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Dixie Chicks</td><td>Not Ready To Make Nice</td><td>2007</td><td>4</td><td>24</td><td>48</td><td>11</td><td>38</td><td>48</td><td>55</td><td>21</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>The Game</td><td>How We Do</td><td>2005</td><td>4</td><td>28</td><td>72</td><td>5</td><td>86</td><td>63</td><td>36</td><td>30</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Akon</td><td>Lonely</td><td>2005</td><td>4</td><td>20</td><td>37</td><td>34</td><td>59</td><td>51</td><td>45</td><td>26</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Alicia Keys</td><td>If I Ain't Got You</td><td>2004</td><td>4</td><td>40</td><td>78</td><td>62</td><td>57</td><td>41</td><td>64</td><td>43</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Kevin Lyttle</td><td>Turn Me On</td><td>2004</td><td>4</td><td>25</td><td>67</td><td>4</td><td>65</td><td>67</td><td>82</td><td>36</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Nelly</td><td>My Place</td><td>2004</td><td>4</td><td>20</td><td>57</td><td>5</td><td>56</td><td>62</td><td>9</td><td>71</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Avril Lavigne</td><td>I'm With You</td><td>2003</td><td>4</td><td>27</td><td>70</td><td>8</td><td>39</td><td>37</td><td>82</td><td>64</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Creed</td><td>My Sacrifice</td><td>2002</td><td>4</td><td>29</td><td>40</td><td>0</td><td>23</td><td>87</td><td>18</td><td>60</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Eminem</td><td>Cleanin' Out My Closet</td><td>2002</td><td>4</td><td>20</td><td>70</td><td>7</td><td>91</td><td>75</td><td>82</td><td>61</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Lenny Kravitz</td><td>Again</td><td>2001</td><td>4</td><td>32</td><td>67</td><td>2</td><td>50</td><td>80</td><td>18</td><td>19</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Ginuwine</td><td>Differences</td><td>2001</td><td>4</td><td>30</td><td>68</td><td>33</td><td>51</td><td>57</td><td>27</td><td>9</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Madonna</td><td>Don't Tell Me</td><td>2001</td><td>4</td><td>21</td><td>42</td><td>5</td><td>67</td><td>60</td><td>64</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Joe</td><td>I Wanna Know</td><td>2000</td><td>4</td><td>44</td><td>64</td><td>27</td><td>70</td><td>46</td><td>73</td><td>54</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Montell Jordan</td><td>Get It On Tonite</td><td>2000</td><td>4</td><td>32</td><td>52</td><td>26</td><td>79</td><td>47</td><td>91</td><td>31</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>P!nk</td><td>Most Girls</td><td>2000</td><td>4</td><td>27</td><td>53</td><td>4</td><td>72</td><td>72</td><td>18</td><td>30</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Smash Mouth</td><td>All Star</td><td>1999</td><td>4</td><td>30</td><td>79</td><td>4</td><td>71</td><td>86</td><td>100</td><td>34</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Whitney Houston</td><td>My Love Is Your Love</td><td>1999</td><td>4</td><td>28</td><td>68</td><td>6</td><td>75</td><td>45</td><td>64</td><td>21</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Logic</td><td>Homicide</td><td>2019</td><td>5</td><td>5</td><td>71</td><td>15</td><td>70</td><td>75</td><td>91</td><td>56</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Zedd, Maren Morris, Grey</td><td>The Middle</td><td>2018</td><td>5</td><td>40</td><td>82</td><td>17</td><td>73</td><td>64</td><td>64</td><td>36</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Halsey</td><td>Bad At Love</td><td>2018</td><td>5</td><td>33</td><td>75</td><td>6</td><td>64</td><td>74</td><td>0</td><td>43</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Charlie Puth</td><td>Attention</td><td>2017</td><td>5</td><td>40</td><td>82</td><td>11</td><td>76</td><td>59</td><td>27</td><td>32</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Rihanna</td><td>Love On The Brain</td><td>2017</td><td>5</td><td>31</td><td>80</td><td>7</td><td>45</td><td>62</td><td>36</td><td>76</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>twenty one pilots</td><td>Ride</td><td>2016</td><td>5</td><td>39</td><td>81</td><td>1</td><td>61</td><td>70</td><td>55</td><td>16</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Alessia Cara</td><td>Here</td><td>2016</td><td>5</td><td>34</td><td>65</td><td>8</td><td>30</td><td>81</td><td>0</td><td>44</td><td>0</td><td>1</td></tr>
+<tr class="cluster_2"><td>Selena Gomez</td><td>Same Old Love</td><td>2016</td><td>5</td><td>28</td><td>64</td><td>2</td><td>64</td><td>57</td><td>100</td><td>30</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Sam Smith</td><td>I'm Not The Only One</td><td>2015</td><td>5</td><td>37</td><td>82</td><td>54</td><td>65</td><td>46</td><td>45</td><td>21</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Jason Derulo</td><td>Want To Want Me</td><td>2015</td><td>5</td><td>35</td><td>76</td><td>1</td><td>76</td><td>66</td><td>0</td><td>40</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Taylor Swift</td><td>Wildest Dreams</td><td>2015</td><td>5</td><td>27</td><td>53</td><td>7</td><td>50</td><td>67</td><td>73</td><td>56</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Selena Gomez</td><td>Good For You</td><td>2015</td><td>5</td><td>26</td><td>61</td><td>18</td><td>56</td><td>66</td><td>45</td><td>25</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Bastille</td><td>Pompeii</td><td>2014</td><td>5</td><td>53</td><td>13</td><td>7</td><td>63</td><td>78</td><td>82</td><td>49</td><td>100</td><td>0</td></tr>
+<tr class="cluster_2"><td>Passenger</td><td>Let Her Go</td><td>2014</td><td>5</td><td>43</td><td>76</td><td>37</td><td>42</td><td>52</td><td>64</td><td>16</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Justin Bieber</td><td>Beauty And A Beat</td><td>2013</td><td>5</td><td>24</td><td>71</td><td>0</td><td>56</td><td>84</td><td>0</td><td>49</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Bruno Mars</td><td>Treasure</td><td>2013</td><td>5</td><td>23</td><td>48</td><td>3</td><td>87</td><td>68</td><td>45</td><td>42</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Nicki Minaj</td><td>Starships</td><td>2012</td><td>5</td><td>31</td><td>71</td><td>14</td><td>73</td><td>70</td><td>100</td><td>47</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Rihanna</td><td>Where Have You Been</td><td>2012</td><td>5</td><td>26</td><td>56</td><td>0</td><td>69</td><td>84</td><td>0</td><td>49</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Lil Wayne</td><td>How To Love</td><td>2011</td><td>5</td><td>24</td><td>61</td><td>0</td><td>61</td><td>64</td><td>100</td><td>65</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Jason Derulo</td><td>In My Head</td><td>2010</td><td>5</td><td>34</td><td>65</td><td>3</td><td>74</td><td>74</td><td>0</td><td>38</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Lady Gaga</td><td>Alejandro</td><td>2010</td><td>5</td><td>23</td><td>63</td><td>0</td><td>59</td><td>79</td><td>100</td><td>31</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Justin Bieber</td><td>Baby</td><td>2010</td><td>5</td><td>20</td><td>76</td><td>4</td><td>70</td><td>85</td><td>45</td><td>10</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Lady Gaga</td><td>LoveGame</td><td>2009</td><td>5</td><td>22</td><td>62</td><td>1</td><td>89</td><td>66</td><td>55</td><td>35</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Sean Kingston</td><td>Fire Burning</td><td>2009</td><td>5</td><td>21</td><td>70</td><td>2</td><td>83</td><td>80</td><td>9</td><td>46</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Kardinal Offishall</td><td>Dangerous</td><td>2008</td><td>5</td><td>27</td><td>66</td><td>0</td><td>96</td><td>78</td><td>73</td><td>42</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Jonas Brothers</td><td>Burnin' Up</td><td>2008</td><td>5</td><td>16</td><td>70</td><td>3</td><td>63</td><td>96</td><td>18</td><td>40</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Colbie Caillat</td><td>Bubbly</td><td>2007</td><td>5</td><td>47</td><td>69</td><td>62</td><td>67</td><td>44</td><td>82</td><td>49</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Daughtry</td><td>Home</td><td>2007</td><td>5</td><td>37</td><td>56</td><td>0</td><td>38</td><td>85</td><td>55</td><td>59</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Fergie</td><td>Clumsy</td><td>2007</td><td>5</td><td>25</td><td>59</td><td>20</td><td>71</td><td>54</td><td>18</td><td>83</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>J. Holiday</td><td>Bed</td><td>2007</td><td>5</td><td>23</td><td>67</td><td>17</td><td>65</td><td>59</td><td>45</td><td>49</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Snow Patrol</td><td>Chasing Cars</td><td>2006</td><td>5</td><td>45</td><td>78</td><td>21</td><td>52</td><td>57</td><td>82</td><td>34</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Natasha Bedingfield</td><td>Unwritten</td><td>2006</td><td>5</td><td>42</td><td>43</td><td>1</td><td>68</td><td>78</td><td>45</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Lifehouse</td><td>You And Me</td><td>2005</td><td>5</td><td>62</td><td>75</td><td>12</td><td>40</td><td>39</td><td>64</td><td>56</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>The Pussycat Dolls</td><td>Stickwitu</td><td>2005</td><td>5</td><td>26</td><td>63</td><td>27</td><td>62</td><td>51</td><td>82</td><td>19</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Maroon 5</td><td>This Love</td><td>2004</td><td>5</td><td>43</td><td>76</td><td>5</td><td>69</td><td>86</td><td>45</td><td>29</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Maroon 5</td><td>She Will Be Loved</td><td>2004</td><td>5</td><td>41</td><td>73</td><td>6</td><td>68</td><td>70</td><td>0</td><td>33</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Christina Milian</td><td>Dip It Low</td><td>2004</td><td>5</td><td>30</td><td>53</td><td>1</td><td>73</td><td>70</td><td>100</td><td>74</td><td>100</td><td>0</td></tr>
+<tr class="cluster_0"><td>Evanescence</td><td>Bring Me To Life</td><td>2003</td><td>5</td><td>32</td><td>79</td><td>1</td><td>25</td><td>94</td><td>36</td><td>28</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Justin Timberlake</td><td>Rock Your Body</td><td>2003</td><td>5</td><td>22</td><td>71</td><td>21</td><td>89</td><td>70</td><td>36</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Vanessa Carlton</td><td>A Thousand Miles</td><td>2002</td><td>5</td><td>41</td><td>76</td><td>33</td><td>51</td><td>82</td><td>100</td><td>29</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Jimmy Eat World</td><td>The Middle</td><td>2002</td><td>5</td><td>33</td><td>77</td><td>4</td><td>61</td><td>84</td><td>18</td><td>70</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>No Doubt</td><td>Hey Baby</td><td>2002</td><td>5</td><td>20</td><td>38</td><td>6</td><td>55</td><td>86</td><td>100</td><td>85</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Train</td><td>Drops Of Jupiter</td><td>2001</td><td>5</td><td>53</td><td>78</td><td>16</td><td>41</td><td>62</td><td>0</td><td>19</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Staind</td><td>It's Been Awhile</td><td>2001</td><td>5</td><td>46</td><td>67</td><td>0</td><td>45</td><td>76</td><td>55</td><td>42</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>matchbox twenty</td><td>If You're Gone</td><td>2001</td><td>5</td><td>42</td><td>65</td><td>44</td><td>49</td><td>64</td><td>82</td><td>38</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Uncle Kracker</td><td>Follow Me</td><td>2001</td><td>5</td><td>33</td><td>73</td><td>45</td><td>81</td><td>56</td><td>45</td><td>35</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Macy Gray</td><td>I Try</td><td>2000</td><td>5</td><td>27</td><td>72</td><td>32</td><td>55</td><td>62</td><td>18</td><td>17</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Ruff Endz</td><td>No More</td><td>2000</td><td>5</td><td>26</td><td>52</td><td>3</td><td>83</td><td>62</td><td>91</td><td>30</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Ricky Martin</td><td>Livin' La Vida Loca</td><td>1999</td><td>5</td><td>20</td><td>72</td><td>0</td><td>36</td><td>96</td><td>9</td><td>80</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Camila Cabello</td><td>Never Be The Same</td><td>2018</td><td>6</td><td>37</td><td>64</td><td>15</td><td>61</td><td>69</td><td>0</td><td>50</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Lil Baby, Drake</td><td>Yes Indeed</td><td>2018</td><td>6</td><td>29</td><td>80</td><td>4</td><td>97</td><td>31</td><td>45</td><td>44</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Sheck Wes</td><td>Mo Bamba</td><td>2018</td><td>6</td><td>28</td><td>80</td><td>20</td><td>71</td><td>61</td><td>36</td><td>60</td><td>0</td><td>3</td></tr>
+<tr class="cluster_2"><td>J. Cole</td><td>ATM</td><td>2018</td><td>6</td><td>5</td><td>68</td><td>12</td><td>69</td><td>47</td><td>73</td><td>20</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Sam Hunt</td><td>Body Like A Back Road</td><td>2017</td><td>6</td><td>41</td><td>78</td><td>46</td><td>71</td><td>43</td><td>45</td><td>31</td><td>100</td><td>3</td></tr>
+<tr class="cluster_4"><td>Shawn Mendes</td><td>There's Nothing Holdin' Me Back</td><td>2017</td><td>6</td><td>34</td><td>81</td><td>39</td><td>86</td><td>81</td><td>100</td><td>45</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Big Sean</td><td>Bounce Back</td><td>2017</td><td>6</td><td>28</td><td>75</td><td>11</td><td>76</td><td>55</td><td>9</td><td>20</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Kodak Black</td><td>Tunnel Vision</td><td>2017</td><td>6</td><td>20</td><td>74</td><td>6</td><td>44</td><td>46</td><td>100</td><td>76</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Shawn Mendes</td><td>Treat You Better</td><td>2016</td><td>6</td><td>39</td><td>82</td><td>11</td><td>38</td><td>81</td><td>91</td><td>21</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Drake</td><td>Summer Sixteen</td><td>2016</td><td>6</td><td>14</td><td>58</td><td>0</td><td>55</td><td>43</td><td>9</td><td>60</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Taylor Swift</td><td>Style</td><td>2015</td><td>6</td><td>32</td><td>64</td><td>0</td><td>56</td><td>78</td><td>18</td><td>29</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Rachel Platten</td><td>Fight Song</td><td>2015</td><td>6</td><td>31</td><td>79</td><td>6</td><td>52</td><td>70</td><td>64</td><td>78</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Lorde</td><td>Team</td><td>2014</td><td>6</td><td>38</td><td>74</td><td>17</td><td>66</td><td>56</td><td>55</td><td>32</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Jeremih</td><td>Don't Tell 'Em</td><td>2014</td><td>6</td><td>31</td><td>72</td><td>40</td><td>85</td><td>50</td><td>18</td><td>30</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Maroon 5</td><td>Maps</td><td>2014</td><td>6</td><td>22</td><td>50</td><td>2</td><td>72</td><td>70</td><td>9</td><td>44</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Selena Gomez</td><td>The Heart Wants What It Wants</td><td>2014</td><td>6</td><td>20</td><td>68</td><td>5</td><td>58</td><td>78</td><td>64</td><td>21</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Imagine Dragons</td><td>Demons</td><td>2013</td><td>6</td><td>61</td><td>73</td><td>19</td><td>45</td><td>70</td><td>27</td><td>25</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>One Direction</td><td>Story Of My Life</td><td>2013</td><td>6</td><td>32</td><td>81</td><td>23</td><td>56</td><td>65</td><td>27</td><td>45</td><td>0</td><td>3</td></tr>
+<tr class="cluster_2"><td>Drake</td><td>Started From The Bottom</td><td>2013</td><td>6</td><td>22</td><td>66</td><td>3</td><td>78</td><td>50</td><td>73</td><td>23</td><td>100</td><td>2</td></tr>
+<tr class="cluster_0"><td>Neon Trees</td><td>Everybody Talks</td><td>2012</td><td>6</td><td>39</td><td>46</td><td>0</td><td>41</td><td>92</td><td>73</td><td>66</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Justin Bieber</td><td>As Long As You Love Me</td><td>2012</td><td>6</td><td>29</td><td>69</td><td>8</td><td>52</td><td>87</td><td>0</td><td>56</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Flo Rida</td><td>I Cry</td><td>2012</td><td>6</td><td>21</td><td>64</td><td>1</td><td>66</td><td>81</td><td>36</td><td>48</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Chris Brown</td><td>Look At Me Now</td><td>2011</td><td>6</td><td>27</td><td>73</td><td>3</td><td>75</td><td>66</td><td>100</td><td>60</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Wiz Khalifa</td><td>No Sleep</td><td>2011</td><td>6</td><td>15</td><td>66</td><td>11</td><td>62</td><td>70</td><td>82</td><td>69</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Mike Posner</td><td>Cooler Than Me</td><td>2010</td><td>6</td><td>29</td><td>45</td><td>15</td><td>83</td><td>48</td><td>64</td><td>50</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Lil Wayne</td><td>Right Above It</td><td>2010</td><td>6</td><td>24</td><td>68</td><td>4</td><td>30</td><td>84</td><td>27</td><td>17</td><td>0</td><td>1</td></tr>
+<tr class="cluster_1"><td>Lady Gaga</td><td>Paparazzi</td><td>2009</td><td>6</td><td>27</td><td>67</td><td>12</td><td>74</td><td>68</td><td>45</td><td>41</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Linkin Park</td><td>New Divide</td><td>2009</td><td>6</td><td>20</td><td>69</td><td>0</td><td>44</td><td>80</td><td>45</td><td>43</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Jason Mraz</td><td>I'm Yours</td><td>2008</td><td>6</td><td>76</td><td>42</td><td>61</td><td>66</td><td>43</td><td>100</td><td>63</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Lil Wayne</td><td>A Milli</td><td>2008</td><td>6</td><td>23</td><td>72</td><td>4</td><td>64</td><td>68</td><td>55</td><td>63</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Huey</td><td>Pop, Lock & Drop It</td><td>2007</td><td>6</td><td>23</td><td>51</td><td>0</td><td>72</td><td>54</td><td>0</td><td>59</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Rich Boy</td><td>Throw Some D's</td><td>2007</td><td>6</td><td>21</td><td>56</td><td>4</td><td>67</td><td>86</td><td>100</td><td>69</td><td>0</td><td>0</td></tr>
+<tr class="cluster_0"><td>Rascal Flatts</td><td>What Hurts The Most</td><td>2006</td><td>6</td><td>51</td><td>70</td><td>1</td><td>49</td><td>66</td><td>45</td><td>54</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Red Hot Chili Peppers</td><td>Dani California</td><td>2006</td><td>6</td><td>26</td><td>76</td><td>2</td><td>51</td><td>91</td><td>0</td><td>29</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Christina Aguilera</td><td>Ain't No Other Man</td><td>2006</td><td>6</td><td>20</td><td>61</td><td>0</td><td>86</td><td>73</td><td>64</td><td>49</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Rihanna</td><td>Unfaithful</td><td>2006</td><td>6</td><td>20</td><td>70</td><td>86</td><td>54</td><td>36</td><td>0</td><td>59</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Rob Thomas</td><td>Lonely No More</td><td>2005</td><td>6</td><td>34</td><td>39</td><td>3</td><td>58</td><td>90</td><td>82</td><td>23</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Sean Paul</td><td>We Be Burnin'</td><td>2005</td><td>6</td><td>28</td><td>57</td><td>15</td><td>96</td><td>79</td><td>9</td><td>42</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Green Day</td><td>Wake Me Up When September Ends</td><td>2005</td><td>6</td><td>27</td><td>76</td><td>2</td><td>50</td><td>81</td><td>64</td><td>35</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>50 Cent</td><td>Outta Control</td><td>2005</td><td>6</td><td>19</td><td>52</td><td>31</td><td>66</td><td>72</td><td>82</td><td>29</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Kelly Clarkson</td><td>Breakaway</td><td>2004</td><td>6</td><td>46</td><td>64</td><td>3</td><td>38</td><td>69</td><td>82</td><td>69</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Jagged Edge</td><td>Walked Outta Heaven</td><td>2004</td><td>6</td><td>27</td><td>55</td><td>59</td><td>64</td><td>60</td><td>91</td><td>44</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Twista</td><td>Overnight Celebrity</td><td>2004</td><td>6</td><td>20</td><td>65</td><td>19</td><td>82</td><td>78</td><td>91</td><td>53</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>D12</td><td>My Band</td><td>2004</td><td>6</td><td>18</td><td>69</td><td>51</td><td>85</td><td>84</td><td>9</td><td>44</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Snoop Dogg</td><td>Beautiful</td><td>2003</td><td>6</td><td>20</td><td>61</td><td>25</td><td>91</td><td>68</td><td>100</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Creed</td><td>One Last Breath</td><td>2002</td><td>6</td><td>34</td><td>45</td><td>1</td><td>31</td><td>71</td><td>18</td><td>50</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Michelle Branch</td><td>All You Wanted</td><td>2002</td><td>6</td><td>28</td><td>60</td><td>0</td><td>44</td><td>71</td><td>73</td><td>29</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Ja Rule</td><td>Livin' It Up</td><td>2001</td><td>6</td><td>25</td><td>62</td><td>8</td><td>87</td><td>76</td><td>55</td><td>35</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Shakira</td><td>Whenever, Wherever</td><td>2001</td><td>6</td><td>24</td><td>75</td><td>24</td><td>78</td><td>83</td><td>9</td><td>36</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Backstreet Boys</td><td>Show Me The Meaning Of Being Lonely</td><td>2000</td><td>6</td><td>24</td><td>66</td><td>24</td><td>59</td><td>61</td><td>55</td><td>74</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Erykah Badu</td><td>Bag Lady</td><td>2000</td><td>6</td><td>20</td><td>55</td><td>37</td><td>70</td><td>38</td><td>45</td><td>63</td><td>100</td><td>3</td></tr>
+<tr class="cluster_2"><td>Backstreet Boys</td><td>I Want It That Way</td><td>1999</td><td>6</td><td>31</td><td>79</td><td>26</td><td>66</td><td>68</td><td>55</td><td>31</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>DaBaby</td><td>Suge</td><td>2019</td><td>7</td><td>13</td><td>82</td><td>6</td><td>87</td><td>64</td><td>18</td><td>16</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>5 Seconds Of Summer</td><td>Youngblood</td><td>2018</td><td>7</td><td>48</td><td>83</td><td>2</td><td>55</td><td>85</td><td>64</td><td>44</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Lil Wayne</td><td>Uproar</td><td>2018</td><td>7</td><td>20</td><td>71</td><td>6</td><td>72</td><td>87</td><td>9</td><td>31</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Drake</td><td>I'm Upset</td><td>2018</td><td>7</td><td>16</td><td>72</td><td>29</td><td>90</td><td>56</td><td>100</td><td>62</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Lil Uzi Vert</td><td>XO TOUR Llif3</td><td>2017</td><td>7</td><td>34</td><td>60</td><td>0</td><td>71</td><td>74</td><td>100</td><td>66</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Zedd, Alessia Cara</td><td>Stay</td><td>2017</td><td>7</td><td>31</td><td>78</td><td>26</td><td>66</td><td>60</td><td>45</td><td>33</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Rihanna</td><td>Needed Me</td><td>2016</td><td>7</td><td>45</td><td>78</td><td>11</td><td>64</td><td>27</td><td>45</td><td>38</td><td>0</td><td>3</td></tr>
+<tr class="cluster_2"><td>J. Cole</td><td>Deja Vu</td><td>2016</td><td>7</td><td>20</td><td>70</td><td>36</td><td>62</td><td>39</td><td>82</td><td>77</td><td>0</td><td>2</td></tr>
+<tr class="cluster_2"><td>Nick Jonas</td><td>Jealous</td><td>2015</td><td>7</td><td>32</td><td>66</td><td>1</td><td>67</td><td>69</td><td>100</td><td>27</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Calvin Harris</td><td>Summer</td><td>2014</td><td>7</td><td>26</td><td>81</td><td>2</td><td>55</td><td>85</td><td>36</td><td>49</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Maroon 5</td><td>Daylight</td><td>2013</td><td>7</td><td>25</td><td>58</td><td>0</td><td>62</td><td>66</td><td>18</td><td>44</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Eminem</td><td>Rap God</td><td>2013</td><td>7</td><td>20</td><td>77</td><td>41</td><td>68</td><td>84</td><td>64</td><td>61</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Alex Clare</td><td>Too Close</td><td>2012</td><td>7</td><td>44</td><td>59</td><td>1</td><td>54</td><td>70</td><td>100</td><td>48</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Drake</td><td>Take Care</td><td>2012</td><td>7</td><td>34</td><td>72</td><td>3</td><td>59</td><td>49</td><td>0</td><td>45</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>Tyga</td><td>Rack City</td><td>2012</td><td>7</td><td>25</td><td>63</td><td>4</td><td>93</td><td>30</td><td>9</td><td>31</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>Hot Chelle Rae</td><td>Tonight Tonight</td><td>2011</td><td>7</td><td>30</td><td>74</td><td>8</td><td>66</td><td>77</td><td>36</td><td>32</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Jason Aldean</td><td>Dirt Road Anthem</td><td>2011</td><td>7</td><td>27</td><td>73</td><td>35</td><td>65</td><td>73</td><td>18</td><td>48</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Shinedown</td><td>Second Chance</td><td>2009</td><td>7</td><td>41</td><td>45</td><td>0</td><td>40</td><td>79</td><td>0</td><td>32</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>The Fray</td><td>You Found Me</td><td>2009</td><td>7</td><td>39</td><td>74</td><td>2</td><td>26</td><td>79</td><td>73</td><td>64</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Mariah Carey</td><td>Obsessed</td><td>2009</td><td>7</td><td>21</td><td>66</td><td>5</td><td>72</td><td>44</td><td>91</td><td>23</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Sean Kingston</td><td>Take You There</td><td>2008</td><td>7</td><td>25</td><td>61</td><td>2</td><td>73</td><td>92</td><td>45</td><td>41</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Yael Naim</td><td>New Soul</td><td>2008</td><td>7</td><td>19</td><td>60</td><td>75</td><td>75</td><td>34</td><td>0</td><td>32</td><td>100</td><td>3</td></tr>
+<tr class="cluster_0"><td>Christina Aguilera</td><td>Keeps Gettin' Better</td><td>2008</td><td>7</td><td>18</td><td>42</td><td>8</td><td>61</td><td>68</td><td>45</td><td>50</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Rihanna</td><td>Hate That I Love You</td><td>2007</td><td>7</td><td>26</td><td>70</td><td>33</td><td>60</td><td>72</td><td>45</td><td>28</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Linkin Park</td><td>What I've Done</td><td>2007</td><td>7</td><td>23</td><td>76</td><td>1</td><td>58</td><td>93</td><td>45</td><td>44</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Kanye West</td><td>Good Life</td><td>2007</td><td>7</td><td>21</td><td>43</td><td>0</td><td>33</td><td>73</td><td>9</td><td>75</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Rascal Flatts</td><td>Life Is A Highway</td><td>2006</td><td>7</td><td>20</td><td>73</td><td>0</td><td>54</td><td>95</td><td>45</td><td>33</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Jibbs</td><td>Chain Hang Low</td><td>2006</td><td>7</td><td>20</td><td>58</td><td>3</td><td>78</td><td>57</td><td>36</td><td>67</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Kelly Clarkson</td><td>Because Of You</td><td>2005</td><td>7</td><td>37</td><td>72</td><td>26</td><td>54</td><td>56</td><td>45</td><td>56</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Will Smith</td><td>Switch</td><td>2005</td><td>7</td><td>28</td><td>57</td><td>1</td><td>88</td><td>88</td><td>9</td><td>33</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Gwen Stefani</td><td>Rich Girl</td><td>2005</td><td>7</td><td>27</td><td>61</td><td>3</td><td>85</td><td>74</td><td>64</td><td>30</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Madonna</td><td>Hung Up</td><td>2005</td><td>7</td><td>20</td><td>59</td><td>0</td><td>60</td><td>63</td><td>82</td><td>47</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Nickelback</td><td>Someday</td><td>2004</td><td>7</td><td>50</td><td>69</td><td>0</td><td>39</td><td>85</td><td>100</td><td>71</td><td>100</td><td>0</td></tr>
+<tr class="cluster_3"><td>Evanescence</td><td>My Immortal</td><td>2004</td><td>7</td><td>32</td><td>74</td><td>88</td><td>9</td><td>22</td><td>82</td><td>19</td><td>0</td><td>3</td></tr>
+<tr class="cluster_2"><td>Kanye West</td><td>All Falls Down</td><td>2004</td><td>7</td><td>20</td><td>72</td><td>15</td><td>62</td><td>72</td><td>73</td><td>26</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Baby Bash</td><td>Suga Suga</td><td>2003</td><td>7</td><td>33</td><td>72</td><td>70</td><td>63</td><td>74</td><td>45</td><td>21</td><td>100</td><td>3</td></tr>
+<tr class="cluster_1"><td>Tyrese</td><td>How You Gonna Act Like That</td><td>2003</td><td>7</td><td>25</td><td>37</td><td>11</td><td>71</td><td>37</td><td>27</td><td>40</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Ashanti</td><td>Rain On Me</td><td>2003</td><td>7</td><td>20</td><td>47</td><td>35</td><td>56</td><td>68</td><td>73</td><td>22</td><td>100</td><td>2</td></tr>
+<tr class="cluster_1"><td>Sean Paul</td><td>Gimme The Light</td><td>2002</td><td>7</td><td>39</td><td>60</td><td>14</td><td>76</td><td>75</td><td>18</td><td>36</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Kylie Minogue</td><td>Can't Get You Out Of My Head</td><td>2002</td><td>7</td><td>20</td><td>72</td><td>3</td><td>75</td><td>54</td><td>82</td><td>48</td><td>100</td><td>4</td></tr>
+<tr class="cluster_3"><td>Alicia Keys</td><td>A Woman's Worth</td><td>2002</td><td>7</td><td>20</td><td>56</td><td>34</td><td>63</td><td>38</td><td>36</td><td>16</td><td>0</td><td>3</td></tr>
+<tr class="cluster_0"><td>Brandy</td><td>What About Us?</td><td>2002</td><td>7</td><td>18</td><td>39</td><td>26</td><td>47</td><td>72</td><td>91</td><td>85</td><td>100</td><td>0</td></tr>
+<tr class="cluster_4"><td>Aerosmith</td><td>Jaded</td><td>2001</td><td>7</td><td>20</td><td>60</td><td>1</td><td>46</td><td>89</td><td>82</td><td>43</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Creed</td><td>Higher</td><td>2000</td><td>7</td><td>57</td><td>68</td><td>0</td><td>40</td><td>82</td><td>18</td><td>66</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>P!nk</td><td>There You Go</td><td>2000</td><td>7</td><td>32</td><td>54</td><td>9</td><td>81</td><td>84</td><td>91</td><td>37</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Sugar Ray</td><td>Someday</td><td>1999</td><td>7</td><td>32</td><td>58</td><td>1</td><td>72</td><td>67</td><td>9</td><td>38</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Donell Jones</td><td>U Know What's Up</td><td>1999</td><td>7</td><td>24</td><td>43</td><td>7</td><td>82</td><td>46</td><td>91</td><td>33</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Khalid</td><td>Better</td><td>2019</td><td>8</td><td>41</td><td>66</td><td>5</td><td>66</td><td>53</td><td>0</td><td>30</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>Bobby Helms</td><td>Jingle Bell Rock</td><td>2019</td><td>8</td><td>25</td><td>35</td><td>66</td><td>73</td><td>39</td><td>18</td><td>44</td><td>100</td><td>3</td></tr>
+<tr class="cluster_2"><td>Blueface</td><td>Thotiana</td><td>2019</td><td>8</td><td>20</td><td>74</td><td>18</td><td>91</td><td>35</td><td>91</td><td>34</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Ariana Grande</td><td>God Is A Woman</td><td>2018</td><td>8</td><td>22</td><td>80</td><td>2</td><td>56</td><td>64</td><td>9</td><td>59</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Travis Scott</td><td>Stargazing</td><td>2018</td><td>8</td><td>8</td><td>84</td><td>1</td><td>43</td><td>78</td><td>73</td><td>62</td><td>0</td><td>0</td></tr>
+<tr class="cluster_0"><td>Post Malone</td><td>Congratulations</td><td>2017</td><td>8</td><td>50</td><td>54</td><td>21</td><td>59</td><td>80</td><td>55</td><td>46</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Alessia Cara</td><td>Scars To Your Beautiful</td><td>2017</td><td>8</td><td>43</td><td>73</td><td>3</td><td>53</td><td>73</td><td>0</td><td>30</td><td>0</td><td>1</td></tr>
+<tr class="cluster_2"><td>Drake</td><td>Passionfruit</td><td>2017</td><td>8</td><td>20</td><td>80</td><td>26</td><td>80</td><td>43</td><td>100</td><td>39</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Prince</td><td>When Doves Cry</td><td>2016</td><td>8</td><td>23</td><td>71</td><td>1</td><td>71</td><td>99</td><td>82</td><td>48</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Ariana Grande</td><td>Dangerous Woman</td><td>2016</td><td>8</td><td>21</td><td>77</td><td>5</td><td>63</td><td>58</td><td>36</td><td>53</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Kent Jones</td><td>Don't Mind</td><td>2016</td><td>8</td><td>20</td><td>66</td><td>2</td><td>40</td><td>76</td><td>73</td><td>68</td><td>100</td><td>0</td></tr>
+<tr class="cluster_3"><td>Sam Smith</td><td>Lay Me Down</td><td>2015</td><td>8</td><td>20</td><td>76</td><td>94</td><td>41</td><td>14</td><td>36</td><td>47</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Sia</td><td>Chandelier</td><td>2014</td><td>8</td><td>46</td><td>70</td><td>2</td><td>33</td><td>78</td><td>9</td><td>42</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Justin Timberlake</td><td>Not A Bad Thing</td><td>2014</td><td>8</td><td>22</td><td>56</td><td>54</td><td>22</td><td>54</td><td>0</td><td>23</td><td>0</td><td>3</td></tr>
+<tr class="cluster_2"><td>Aloe Blacc</td><td>The Man</td><td>2014</td><td>8</td><td>20</td><td>59</td><td>3</td><td>22</td><td>76</td><td>100</td><td>20</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Capital Cities</td><td>Safe And Sound</td><td>2013</td><td>8</td><td>43</td><td>77</td><td>0</td><td>62</td><td>81</td><td>0</td><td>43</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Zedd</td><td>Clarity</td><td>2013</td><td>8</td><td>33</td><td>74</td><td>4</td><td>45</td><td>77</td><td>73</td><td>49</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Owl City, Carly Rae Jepsen</td><td>Good Time</td><td>2012</td><td>8</td><td>24</td><td>74</td><td>2</td><td>51</td><td>87</td><td>27</td><td>48</td><td>100</td><td>1</td></tr>
+<tr class="cluster_3"><td>Adele</td><td>Skyfall</td><td>2012</td><td>8</td><td>20</td><td>73</td><td>43</td><td>27</td><td>53</td><td>0</td><td>17</td><td>0</td><td>3</td></tr>
+<tr class="cluster_4"><td>OneRepublic</td><td>Good Life</td><td>2011</td><td>8</td><td>35</td><td>44</td><td>8</td><td>60</td><td>68</td><td>55</td><td>29</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Justin Bieber</td><td>Never Say Never</td><td>2011</td><td>8</td><td>19</td><td>69</td><td>2</td><td>72</td><td>80</td><td>0</td><td>30</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>La Roux</td><td>Bulletproof</td><td>2010</td><td>8</td><td>27</td><td>65</td><td>0</td><td>64</td><td>88</td><td>27</td><td>46</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Miley Cyrus</td><td>Can't Be Tamed</td><td>2010</td><td>8</td><td>10</td><td>63</td><td>3</td><td>59</td><td>91</td><td>100</td><td>42</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Drake</td><td>Forever</td><td>2009</td><td>8</td><td>24</td><td>40</td><td>24</td><td>41</td><td>93</td><td>45</td><td>35</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Pitbull</td><td>Hotel Room Service</td><td>2009</td><td>8</td><td>23</td><td>70</td><td>1</td><td>85</td><td>61</td><td>9</td><td>48</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Jonas Brothers</td><td>Tonight</td><td>2008</td><td>8</td><td>4</td><td>50</td><td>0</td><td>40</td><td>96</td><td>36</td><td>66</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Carrie Underwood</td><td>Before He Cheats</td><td>2007</td><td>8</td><td>64</td><td>74</td><td>28</td><td>47</td><td>74</td><td>55</td><td>61</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Jordin Sparks</td><td>Tattoo</td><td>2007</td><td>8</td><td>31</td><td>64</td><td>44</td><td>52</td><td>76</td><td>18</td><td>74</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Fabolous</td><td>Make Me Better</td><td>2007</td><td>8</td><td>21</td><td>61</td><td>34</td><td>57</td><td>58</td><td>100</td><td>23</td><td>100</td><td>2</td></tr>
+<tr class="cluster_0"><td>Nickelback</td><td>Far Away</td><td>2006</td><td>8</td><td>30</td><td>70</td><td>0</td><td>46</td><td>79</td><td>55</td><td>52</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Danity Kane</td><td>Show Stopper</td><td>2006</td><td>8</td><td>20</td><td>55</td><td>1</td><td>74</td><td>37</td><td>45</td><td>17</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Usher</td><td>Caught Up</td><td>2005</td><td>8</td><td>27</td><td>61</td><td>3</td><td>81</td><td>80</td><td>55</td><td>38</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Coldplay</td><td>Speed Of Sound</td><td>2005</td><td>8</td><td>20</td><td>68</td><td>0</td><td>46</td><td>90</td><td>100</td><td>46</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Lloyd Banks</td><td>On Fire</td><td>2004</td><td>8</td><td>20</td><td>58</td><td>9</td><td>74</td><td>82</td><td>73</td><td>28</td><td>0</td><td>2</td></tr>
+<tr class="cluster_3"><td>Ginuwine</td><td>In Those Jeans</td><td>2003</td><td>8</td><td>20</td><td>61</td><td>52</td><td>66</td><td>52</td><td>9</td><td>49</td><td>0</td><td>3</td></tr>
+<tr class="cluster_0"><td>DJ Sammy, Yanou</td><td>Heaven</td><td>2002</td><td>8</td><td>27</td><td>64</td><td>0</td><td>52</td><td>95</td><td>73</td><td>55</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Ashanti</td><td>Happy</td><td>2002</td><td>8</td><td>23</td><td>63</td><td>25</td><td>70</td><td>49</td><td>18</td><td>25</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>P!nk</td><td>Just Like A Pill</td><td>2002</td><td>8</td><td>20</td><td>66</td><td>0</td><td>66</td><td>76</td><td>82</td><td>33</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>City High</td><td>What Would You Do?</td><td>2001</td><td>8</td><td>28</td><td>54</td><td>26</td><td>71</td><td>79</td><td>64</td><td>29</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Ja Rule</td><td>Put It On Me</td><td>2001</td><td>8</td><td>27</td><td>44</td><td>3</td><td>53</td><td>85</td><td>55</td><td>85</td><td>100</td><td>0</td></tr>
+<tr class="cluster_0"><td>Sonique</td><td>It Feels So Good</td><td>2000</td><td>8</td><td>24</td><td>61</td><td>1</td><td>60</td><td>66</td><td>45</td><td>53</td><td>100</td><td>0</td></tr>
+<tr class="cluster_4"><td>Jennifer Lopez</td><td>Waiting For Tonight</td><td>1999</td><td>8</td><td>20</td><td>57</td><td>0</td><td>67</td><td>94</td><td>91</td><td>47</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Brenda Lee</td><td>Rockin' Around The Christmas Tree</td><td>2019</td><td>9</td><td>27</td><td>53</td><td>63</td><td>55</td><td>44</td><td>73</td><td>11</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Drake</td><td>Portland</td><td>2017</td><td>9</td><td>16</td><td>74</td><td>2</td><td>93</td><td>41</td><td>9</td><td>54</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>DNCE</td><td>Cake By The Ocean</td><td>2016</td><td>9</td><td>46</td><td>80</td><td>16</td><td>76</td><td>74</td><td>36</td><td>43</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Andy Grammer</td><td>Honey, I'm Good.</td><td>2015</td><td>9</td><td>31</td><td>72</td><td>3</td><td>73</td><td>76</td><td>82</td><td>45</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Pitbull, Ne</td><td>Time Of Our Lives</td><td>2015</td><td>9</td><td>27</td><td>77</td><td>9</td><td>70</td><td>79</td><td>9</td><td>46</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Ed Sheeran</td><td>Don't</td><td>2014</td><td>9</td><td>36</td><td>72</td><td>1</td><td>79</td><td>59</td><td>9</td><td>29</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Michael Jackson, Justin Timberlake</td><td>Love Never Felt So Good</td><td>2014</td><td>9</td><td>20</td><td>68</td><td>13</td><td>76</td><td>71</td><td>64</td><td>42</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Ariana Grande</td><td>The Way</td><td>2013</td><td>9</td><td>26</td><td>66</td><td>30</td><td>61</td><td>87</td><td>45</td><td>21</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>P!nk</td><td>Try</td><td>2013</td><td>9</td><td>24</td><td>73</td><td>0</td><td>64</td><td>61</td><td>18</td><td>34</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Lil Wayne</td><td>Love Me</td><td>2013</td><td>9</td><td>22</td><td>60</td><td>1</td><td>64</td><td>61</td><td>100</td><td>47</td><td>0</td><td>2</td></tr>
+<tr class="cluster_4"><td>Usher</td><td>Scream</td><td>2012</td><td>9</td><td>21</td><td>66</td><td>0</td><td>58</td><td>86</td><td>64</td><td>49</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Lupe Fiasco</td><td>The Show Goes On</td><td>2011</td><td>9</td><td>33</td><td>71</td><td>2</td><td>55</td><td>89</td><td>64</td><td>58</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Drake</td><td>Make Me Proud</td><td>2011</td><td>9</td><td>20</td><td>66</td><td>0</td><td>65</td><td>46</td><td>9</td><td>51</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Jason Derulo</td><td>Ridin' Solo</td><td>2010</td><td>9</td><td>28</td><td>67</td><td>13</td><td>38</td><td>82</td><td>82</td><td>25</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Lil Wayne</td><td>6 Foot 7 Foot</td><td>2010</td><td>9</td><td>21</td><td>69</td><td>0</td><td>29</td><td>74</td><td>18</td><td>19</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Katy Perry</td><td>Waking Up In Vegas</td><td>2009</td><td>9</td><td>23</td><td>41</td><td>0</td><td>47</td><td>87</td><td>45</td><td>51</td><td>100</td><td>0</td></tr>
+<tr class="cluster_2"><td>Rihanna</td><td>Russian Roulette</td><td>2009</td><td>9</td><td>14</td><td>64</td><td>5</td><td>42</td><td>46</td><td>55</td><td>19</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Eminem</td><td>We Made You</td><td>2009</td><td>9</td><td>10</td><td>47</td><td>11</td><td>93</td><td>85</td><td>18</td><td>40</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>The Pussycat Dolls</td><td>When I Grow Up</td><td>2008</td><td>9</td><td>20</td><td>71</td><td>0</td><td>64</td><td>67</td><td>100</td><td>43</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Demi Lovato, Joe Jonas</td><td>This Is Me</td><td>2008</td><td>9</td><td>7</td><td>65</td><td>1</td><td>35</td><td>81</td><td>9</td><td>26</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>P!nk</td><td>Who Knew</td><td>2007</td><td>9</td><td>36</td><td>69</td><td>0</td><td>66</td><td>72</td><td>82</td><td>56</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Rihanna, Sean Paul</td><td>Break It Off</td><td>2007</td><td>9</td><td>20</td><td>49</td><td>2</td><td>90</td><td>73</td><td>91</td><td>53</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Amy Winehouse</td><td>Rehab</td><td>2007</td><td>9</td><td>20</td><td>70</td><td>5</td><td>37</td><td>87</td><td>0</td><td>14</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Fall Out Boy</td><td>Dance, Dance</td><td>2006</td><td>9</td><td>31</td><td>44</td><td>0</td><td>59</td><td>97</td><td>100</td><td>41</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Chingy</td><td>Pullin' Me Back</td><td>2006</td><td>9</td><td>20</td><td>61</td><td>8</td><td>77</td><td>48</td><td>64</td><td>19</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Ludacris</td><td>Pimpin' All Over The World</td><td>2005</td><td>9</td><td>20</td><td>56</td><td>29</td><td>44</td><td>88</td><td>100</td><td>27</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Ying Yang Twins</td><td>Salt Shaker</td><td>2004</td><td>9</td><td>26</td><td>62</td><td>5</td><td>88</td><td>68</td><td>100</td><td>33</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>OutKast</td><td>Roses</td><td>2004</td><td>9</td><td>21</td><td>71</td><td>5</td><td>73</td><td>69</td><td>0</td><td>37</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Britney Spears</td><td>Toxic</td><td>2004</td><td>9</td><td>20</td><td>79</td><td>3</td><td>76</td><td>83</td><td>45</td><td>58</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Uncle Kracker</td><td>Drift Away</td><td>2003</td><td>9</td><td>35</td><td>70</td><td>19</td><td>54</td><td>64</td><td>100</td><td>64</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>R. Kelly</td><td>Step In The Name Of Love</td><td>2003</td><td>9</td><td>27</td><td>41</td><td>27</td><td>73</td><td>56</td><td>55</td><td>27</td><td>100</td><td>2</td></tr>
+<tr class="cluster_0"><td>Kelly Clarkson</td><td>Miss Independent</td><td>2003</td><td>9</td><td>20</td><td>58</td><td>9</td><td>62</td><td>60</td><td>100</td><td>78</td><td>100</td><td>0</td></tr>
+<tr class="cluster_2"><td>Shakira</td><td>Underneath Your Clothes</td><td>2002</td><td>9</td><td>20</td><td>65</td><td>70</td><td>58</td><td>58</td><td>73</td><td>72</td><td>0</td><td>2</td></tr>
+<tr class="cluster_1"><td>Incubus</td><td>Drive</td><td>2001</td><td>9</td><td>39</td><td>48</td><td>7</td><td>60</td><td>84</td><td>36</td><td>26</td><td>100</td><td>1</td></tr>
+<tr class="cluster_2"><td>Nelly Furtado</td><td>I'm Like A Bird</td><td>2001</td><td>9</td><td>24</td><td>71</td><td>14</td><td>58</td><td>59</td><td>91</td><td>25</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Jagged Edge</td><td>Promise</td><td>2001</td><td>9</td><td>21</td><td>57</td><td>14</td><td>73</td><td>54</td><td>45</td><td>49</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Backstreet Boys</td><td>Shape Of My Heart</td><td>2000</td><td>9</td><td>20</td><td>73</td><td>26</td><td>53</td><td>78</td><td>82</td><td>29</td><td>100</td><td>2</td></tr>
+<tr class="cluster_1"><td>Red Hot Chili Peppers</td><td>Scar Tissue</td><td>1999</td><td>9</td><td>29</td><td>76</td><td>8</td><td>55</td><td>70</td><td>0</td><td>25</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Len</td><td>Steal My Sunshine</td><td>1999</td><td>9</td><td>25</td><td>58</td><td>47</td><td>34</td><td>95</td><td>36</td><td>88</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Ava Max</td><td>Sweet But Psycho</td><td>2019</td><td>10</td><td>28</td><td>85</td><td>7</td><td>69</td><td>69</td><td>9</td><td>52</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Migos</td><td>Walk It Talk It</td><td>2018</td><td>10</td><td>22</td><td>77</td><td>9</td><td>91</td><td>61</td><td>18</td><td>60</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Andy Williams</td><td>It's The Most Wonderful Time Of The Year</td><td>2018</td><td>10</td><td>10</td><td>51</td><td>78</td><td>15</td><td>58</td><td>64</td><td>95</td><td>100</td><td>0</td></tr>
+<tr class="cluster_2"><td>Liam Payne</td><td>Strip That Down</td><td>2017</td><td>10</td><td>28</td><td>71</td><td>22</td><td>87</td><td>47</td><td>55</td><td>35</td><td>100</td><td>2</td></tr>
+<tr class="cluster_0"><td>Miley Cyrus</td><td>Malibu</td><td>2017</td><td>10</td><td>15</td><td>77</td><td>8</td><td>53</td><td>77</td><td>73</td><td>56</td><td>0</td><td>0</td></tr>
+<tr class="cluster_0"><td>Fall Out Boy</td><td>Centuries</td><td>2015</td><td>10</td><td>34</td><td>79</td><td>0</td><td>32</td><td>85</td><td>36</td><td>79</td><td>100</td><td>0</td></tr>
+<tr class="cluster_3"><td>Ed Sheeran</td><td>Photograph</td><td>2015</td><td>10</td><td>30</td><td>65</td><td>62</td><td>57</td><td>34</td><td>36</td><td>37</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>One Direction</td><td>Perfect</td><td>2015</td><td>10</td><td>20</td><td>75</td><td>6</td><td>61</td><td>82</td><td>18</td><td>32</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Coldplay</td><td>A Sky Full Of Stars</td><td>2014</td><td>10</td><td>26</td><td>77</td><td>1</td><td>50</td><td>62</td><td>55</td><td>47</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Paramore</td><td>Ain't It Fun</td><td>2014</td><td>10</td><td>24</td><td>72</td><td>16</td><td>57</td><td>89</td><td>82</td><td>34</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Maroon 5</td><td>Love Somebody</td><td>2013</td><td>10</td><td>21</td><td>60</td><td>15</td><td>64</td><td>78</td><td>9</td><td>44</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>Demi Lovato</td><td>Heart Attack</td><td>2013</td><td>10</td><td>20</td><td>53</td><td>7</td><td>44</td><td>77</td><td>73</td><td>77</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Train</td><td>Drive By</td><td>2012</td><td>10</td><td>36</td><td>74</td><td>0</td><td>75</td><td>83</td><td>9</td><td>45</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Chris Brown</td><td>Don't Wake Me Up</td><td>2012</td><td>10</td><td>28</td><td>63</td><td>6</td><td>56</td><td>68</td><td>64</td><td>49</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Kelly Clarkson</td><td>Mr. Know It All</td><td>2011</td><td>10</td><td>23</td><td>50</td><td>3</td><td>64</td><td>80</td><td>45</td><td>29</td><td>0</td><td>1</td></tr>
+<tr class="cluster_0"><td>DJ Khaled</td><td>I'm On One</td><td>2011</td><td>10</td><td>23</td><td>67</td><td>5</td><td>34</td><td>80</td><td>100</td><td>62</td><td>0</td><td>0</td></tr>
+<tr class="cluster_2"><td>Demi Lovato</td><td>Skyscraper</td><td>2011</td><td>10</td><td>15</td><td>68</td><td>15</td><td>53</td><td>56</td><td>64</td><td>34</td><td>0</td><td>2</td></tr>
+<tr class="cluster_0"><td>Adam Lambert</td><td>Whataya Want From Me</td><td>2010</td><td>10</td><td>30</td><td>64</td><td>1</td><td>37</td><td>67</td><td>100</td><td>85</td><td>0</td><td>0</td></tr>
+<tr class="cluster_4"><td>Jay Sean</td><td>Do You Remember</td><td>2010</td><td>10</td><td>20</td><td>67</td><td>2</td><td>85</td><td>65</td><td>100</td><td>48</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Young Money</td><td>Every Girl</td><td>2009</td><td>10</td><td>20</td><td>52</td><td>0</td><td>59</td><td>72</td><td>55</td><td>17</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Hannah Montana</td><td>He Could Be The One</td><td>2009</td><td>10</td><td>5</td><td>67</td><td>0</td><td>56</td><td>89</td><td>36</td><td>48</td><td>100</td><td>1</td></tr>
+<tr class="cluster_1"><td>Metro Station</td><td>Shake It</td><td>2008</td><td>10</td><td>30</td><td>69</td><td>0</td><td>58</td><td>96</td><td>36</td><td>62</td><td>100</td><td>1</td></tr>
+<tr class="cluster_4"><td>Jesse McCartney</td><td>Leavin'</td><td>2008</td><td>10</td><td>24</td><td>66</td><td>3</td><td>66</td><td>70</td><td>82</td><td>19</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Taylor Swift</td><td>Change</td><td>2008</td><td>10</td><td>3</td><td>43</td><td>0</td><td>50</td><td>74</td><td>45</td><td>29</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>Lil Mama</td><td>Lip Gloss</td><td>2007</td><td>10</td><td>11</td><td>64</td><td>42</td><td>58</td><td>87</td><td>18</td><td>86</td><td>100</td><td>1</td></tr>
+<tr class="cluster_0"><td>Panic! At The Disco</td><td>I Write Sins Not Tragedies</td><td>2006</td><td>10</td><td>37</td><td>74</td><td>10</td><td>52</td><td>79</td><td>82</td><td>75</td><td>100</td><td>0</td></tr>
+<tr class="cluster_1"><td>Chris Brown</td><td>Say Goodbye</td><td>2006</td><td>10</td><td>23</td><td>67</td><td>0</td><td>79</td><td>47</td><td>9</td><td>41</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Field Mob</td><td>So What</td><td>2006</td><td>10</td><td>21</td><td>54</td><td>6</td><td>94</td><td>46</td><td>55</td><td>44</td><td>100</td><td>4</td></tr>
+<tr class="cluster_4"><td>Weezer</td><td>Beverly Hills</td><td>2005</td><td>10</td><td>43</td><td>70</td><td>10</td><td>66</td><td>82</td><td>45</td><td>24</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>The Killers</td><td>Mr. Brightside</td><td>2005</td><td>10</td><td>38</td><td>78</td><td>0</td><td>28</td><td>92</td><td>9</td><td>61</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>No Doubt</td><td>It's My Life</td><td>2004</td><td>10</td><td>28</td><td>57</td><td>0</td><td>56</td><td>74</td><td>73</td><td>48</td><td>100</td><td>4</td></tr>
+<tr class="cluster_2"><td>Fabolous</td><td>Breathe</td><td>2004</td><td>10</td><td>20</td><td>50</td><td>35</td><td>69</td><td>91</td><td>91</td><td>21</td><td>100</td><td>2</td></tr>
+<tr class="cluster_2"><td>Monica</td><td>So Gone</td><td>2003</td><td>10</td><td>22</td><td>67</td><td>18</td><td>58</td><td>53</td><td>73</td><td>21</td><td>100</td><td>2</td></tr>
+<tr class="cluster_4"><td>Craig David</td><td>7 Days</td><td>2002</td><td>10</td><td>20</td><td>55</td><td>27</td><td>61</td><td>84</td><td>36</td><td>21</td><td>100</td><td>4</td></tr>
+<tr class="cluster_1"><td>Avril Lavigne</td><td>Sk8er Boi</td><td>2002</td><td>10</td><td>20</td><td>76</td><td>0</td><td>43</td><td>90</td><td>0</td><td>62</td><td>0</td><td>1</td></tr>
+<tr class="cluster_3"><td>Enya</td><td>Only Time</td><td>2001</td><td>10</td><td>32</td><td>71</td><td>86</td><td>35</td><td>21</td><td>27</td><td>21</td><td>0</td><td>3</td></tr>
+<tr class="cluster_1"><td>Tamia</td><td>Stranger In My House</td><td>2001</td><td>10</td><td>21</td><td>48</td><td>11</td><td>64</td><td>58</td><td>0</td><td>44</td><td>0</td><td>1</td></tr>
+<tr class="cluster_4"><td>Michael Jackson</td><td>You Rock My World</td><td>2001</td><td>10</td><td>20</td><td>64</td><td>4</td><td>85</td><td>66</td><td>36</td><td>29</td><td>100</td><td>4</td></tr>
+<tr class="cluster_0"><td>Destiny's Child</td><td>Emotion</td><td>2001</td><td>10</td><td>20</td><td>59</td><td>17</td><td>34</td><td>55</td><td>64</td><td>77</td><td>0</td><td>0</td></tr>
+<tr class="cluster_1"><td>LFO</td><td>Girl On TV</td><td>1999</td><td>10</td><td>17</td><td>51</td><td>13</td><td>66</td><td>70</td><td>36</td><td>29</td><td>0</td><td>1</td></tr>
+
+			</tbody>
+		</table>
+		
+        <!-- <script src="radarChart.js"></script>	 -->
+        <script>
+			// get background from Question.html
+			// document.body.style = localStorage.getItem("backgroundstyle");
+
+			
+			
+			var color_cluster0 = "#f48f01"
+			var color_cluster1 = "#a88d32"
+			var color_cluster2 = "#00f000"
+			var color_cluster3 = "#2eafff"
+			var color_cluster4 = "#ff66f5"
+			var cluster_colors = [color_cluster0,color_cluster1,color_cluster2,color_cluster3,color_cluster4];
+
+			
+            function RadarChart(id, data, options) {
+	var cfg = {
+	 w: 600,				//Width of the circle
+	 h: 600,				//Height of the circle
+	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
+	 levels: 3,				//How many levels or inner circles should there be drawn
+	 maxValue: 0, 			//What is the value that the biggest circle will represent
+	 labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
+	 wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
+	 opacityArea: 0.07, 	//The opacity of the area of the blob
+	 dotRadius: 1.5, 			//The size of the colored circles of each blob
+	 opacityCircles: 0.1, 	//The opacity of the circles of each blob
+	 strokeWidth: 2, 		//The width of the stroke around each blob
+	 roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
+	 color: d3.scale.category10()	//Color function
+	};
+	
+	//Put all of the options into a variable called cfg
+	if('undefined' !== typeof options){
+	  for(var i in options){
+		if('undefined' !== typeof options[i]){ cfg[i] = options[i] }
+	  }//for i
+	}//if
+	
+	//If the supplied maxValue is smaller than the actual one, replace by the max in the data
+	var maxValue = Math.max(cfg.maxValue, d3.max(data, function(i){return d3.max(i.map(function(o){return o.value;}))}));
+		
+	var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
+		total = allAxis.length,					//The number of different axes
+		radius = Math.min(cfg.w/2, cfg.h/2), 	//Radius of the outermost circle
+		Format = d3.format('%'),			 	//Percentage formatting
+		angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
+	
+	//Scale for the radius
+	var rScale = d3.scale.linear()
+		.range([0, radius])
+		.domain([0, maxValue]);
+		
+	/////////////////////////////////////////////////////////
+	//////////// Create the container SVG and g /////////////
+	/////////////////////////////////////////////////////////
+
+	//Remove whatever chart with the same id/class was present before
+	d3.select(id).select("svg").remove();
+	
+	//Initiate the radar chart SVG
+	var svg = d3.select(id).append("svg")
+			.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
+			.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+			.attr("class", "radar"+id);
+	//Append a g element		
+	var g = svg.append("g")
+			.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
+	
+	/////////////////////////////////////////////////////////
+	////////// Glow filter for some extra pizzazz ///////////
+	/////////////////////////////////////////////////////////
+	
+	//Filter for the outside glow
+	var filter = g.append('defs').append('filter').attr('id','glow'),
+		feGaussianBlur = filter.append('feGaussianBlur').attr('stdDeviation','2.5').attr('result','coloredBlur'),
+		feMerge = filter.append('feMerge'),
+		feMergeNode_1 = feMerge.append('feMergeNode').attr('in','coloredBlur'),
+		feMergeNode_2 = feMerge.append('feMergeNode').attr('in','SourceGraphic');
+
+	/////////////////////////////////////////////////////////
+	/////////////// Draw the Circular grid //////////////////
+	/////////////////////////////////////////////////////////
+	
+	//Wrapper for the grid & axes
+	var axisGrid = g.append("g").attr("class", "axisWrapper");
+	
+	//Draw the background circles
+	axisGrid.selectAll(".levels")
+	   .data(d3.range(1,(cfg.levels+1)).reverse())
+	   .enter()
+		.append("circle")
+		.attr("class", "gridCircle")
+		.attr("r", function(d, i){return radius/cfg.levels*d;})
+		.style("fill", "#CDCDCD")
+		.style("stroke", "#CDCDCD")
+		.style("fill-opacity", cfg.opacityCircles)
+		.style("filter" , "url(#glow)");
+
+	//Text indicating at what % each level is
+	axisGrid.selectAll(".axisLabel")
+	   .data(d3.range(1,(cfg.levels+1)).reverse())
+	   .enter().append("text")
+	   .attr("class", "axisLabel")
+	   .attr("x", 4)
+	   .attr("y", function(d){return -d*radius/cfg.levels;})
+	   .attr("dy", "0.4em")
+	   .style("font-size", "10px")
+	   .attr("fill", "#737373")
+	   .text(function(d,i) { return Format(maxValue * d/cfg.levels); });
+
+	/////////////////////////////////////////////////////////
+	//////////////////// Draw the axes //////////////////////
+	/////////////////////////////////////////////////////////
+	
+	//Create the straight lines radiating outward from the center
+	var axis = axisGrid.selectAll(".axis")
+		.data(allAxis)
+		.enter()
+		.append("g")
+		.attr("class", "axis");
+	//Append the lines
+	axis.append("line")
+		.attr("x1", 0)
+		.attr("y1", 0)
+		.attr("x2", function(d, i){ return rScale(maxValue*1.1) * Math.cos(angleSlice*i - Math.PI/2); })
+		.attr("y2", function(d, i){ return rScale(maxValue*1.1) * Math.sin(angleSlice*i - Math.PI/2); })
+		.attr("class", "line")
+		.style("stroke", "white")
+		.style("stroke-width", "2px");
+
+	//Append the labels at each axis
+	axis.append("text")
+		.attr("class", "legend")
+		.style("font-size", "14px")
+		.attr("text-anchor", "middle")
+		.attr("dy", "0.35em")
+		.attr("x", function(d, i){ return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
+		.attr("y", function(d, i){ return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
+		.text(function(d){return d})
+		.call(wrap, cfg.wrapWidth);
+
+	/////////////////////////////////////////////////////////
+	///////////// Draw the radar chart blobs ////////////////
+	/////////////////////////////////////////////////////////
+	
+	//The radial line function
+	var radarLine = d3.svg.line.radial()
+		.interpolate("linear-closed")
+		.radius(function(d) { return rScale(d.value); })
+		.angle(function(d,i) {	return i*angleSlice; });
+		
+	if(cfg.roundStrokes) {
+		radarLine.interpolate("cardinal-closed");
+	}
+				
+	//Create a wrapper for the blobs	
+	var blobWrapper = g.selectAll(".radarWrapper")
+		.data(data)
+		.enter().append("g")
+		.attr("class", "radarWrapper");
+	
+	//Append the backgrounds	
+	blobWrapper
+		.append("path")
+		.attr("class", function (d,i) { return "radarArea cluster_"+i; })
+		.attr("d", function(d,i) { return radarLine(d); })
+		.style("fill", function(d,i) { return cluster_colors[i]; })
+		.style("fill-opacity", cfg.opacityArea)
+		.on('mouseover', function (d,i){
+			//Dim all blobs
+			d3.selectAll(".radarArea")
+				.transition().duration(50)
+				.style("fill-opacity", 0.07); 
+			//Bring back the hovered over blob
+			d3.select(this)
+				.transition().duration(50)
+				.style("fill-opacity", 0.5);
+			
+			d3.select(blobStrokes[0][i])
+				.style("stroke-width", 3);
+			
+			d3.select(blobCircles[i][0])
+				.attr("r", 4);
+			d3.select(blobCircles[i][1])
+				.attr("r", 4);
+			d3.select(blobCircles[i][2])
+				.attr("r", 4);
+			d3.select(blobCircles[i][3])
+				.attr("r", 4);
+			d3.select(blobCircles[i][4])
+				.attr("r", 4);
+			d3.select(blobCircles[i][5])
+				.attr("r", 4);
+		})
+		.on('mouseout', function(){
+			//Bring back all blobs
+			d3.selectAll(".radarArea")
+				.transition().duration(50)
+				.style("fill-opacity", cfg.opacityArea);
+
+			// dot size go to original
+			d3.selectAll(".radarCircle")
+				.attr("r", cfg.dotRadius);
+			d3.selectAll(".radarStroke")
+				.style("stroke-width", cfg.strokeWidth + "px");
+		});
+		
+	// Create the outlines	
+	var blobStrokes = blobWrapper.append("path")
+		.attr("class", "radarStroke")
+		.attr("d", function(d,i) { return radarLine(d); })
+		.style("stroke-width", cfg.strokeWidth + "px")
+		.style("stroke", function(d,i) { return cluster_colors[i]; })
+		.style("fill", "none")
+		.style("filter" , "url(#glow)");		
+	
+	//Append the circles
+	var blobCircles = blobWrapper.selectAll(".radarCircle")
+		.data(function(d,i) { return d; })
+		.enter().append("circle")
+		.attr("class", "radarCircle")
+		.attr("r", cfg.dotRadius)
+		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
+		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
+		.style("fill", function(d,i,j) { return cluster_colors[j]; })
+		.style("fill-opacity", 0.5);
+
+	/////////////////////////////////////////////////////////
+	//////// Append invisible circles for tooltip ///////////
+	/////////////////////////////////////////////////////////
+	
+	//Wrapper for the invisible circles on top
+	var blobCircleWrapper = g.selectAll(".radarCircleWrapper")
+		.data(data)
+		.enter().append("g")
+		.attr("class", "radarCircleWrapper");
+		
+	//Append a set of invisible circles on top for the mouseover pop-up
+	blobCircleWrapper.selectAll(".radarInvisibleCircle")
+		.data(function(d,i) { return d; })
+		.enter().append("circle")
+		.attr("class", "radarInvisibleCircle")
+		.attr("r", cfg.dotRadius*3)
+		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
+		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
+		.style("fill", "none")
+		.style("pointer-events", "all")
+		.on("mouseover", function(d,i) {
+			newX =  parseFloat(d3.select(this).attr('cx')) - 10;
+			newY =  parseFloat(d3.select(this).attr('cy')) - 10;
+					
+			tooltip
+				.attr('x', newX)
+				.attr('y', newY)
+				.text(Format(d.value))
+				.transition().duration(100)
+				.style('opacity', 1);
+		})
+		.on("mouseout", function(){
+			tooltip.transition().duration(100)
+				.style("opacity", 0);
+		});
+		
+	//Set up the small tooltip for when you hover over a circle
+	var tooltip = g.append("text")
+		.attr("class", "tooltip")
+		.style("opacity", 0);
+	
+	/////////////////////////////////////////////////////////
+	/////////////////// Helper Function /////////////////////
+	/////////////////////////////////////////////////////////
+
+	//Taken from http://bl.ocks.org/mbostock/7555321
+	//Wraps SVG text	
+	function wrap(text, width) {
+	  text.each(function() {
+		var text = d3.select(this),
+			words = text.text().split(/\s+/).reverse(),
+			word,
+			line = [],
+			lineNumber = 0,
+			lineHeight = 1.4, // ems
+			y = text.attr("y"),
+			x = text.attr("x"),
+			dy = parseFloat(text.attr("dy")),
+			tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+			
+		while (word = words.pop()) {
+		  line.push(word);
+		  tspan.text(line.join(" "));
+		  if (tspan.node().getComputedTextLength() > width) {
+			line.pop();
+			tspan.text(line.join(" "));
+			line = [word];
+			tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+		  }
+		}
+	  });
+	}//wrap	
+	
+}//RadarChart
+
+      
+      /* Radar chart design created by Nadieh Bremer - VisualCinnamon.com */
+      
+			////////////////////////////////////////////////////////////// 
+			//////////////////////// Set-Up ////////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 100},
+				width = Math.min(500, window.innerWidth - 10) - margin.left - margin.right,
+				height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+					
+			////////////////////////////////////////////////////////////// 
+			////////////////////////// Data ////////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+
+			var data = [
+					  [//Cluster 0
+						{axis:"Acousticness",value:0.071055294},
+						{axis:"Danceability",value:0.453618826},
+						{axis:"Energy",value:0.761991185},
+						{axis:"Key",value:0.684936436},
+						{axis:"Tempo",value:0.615763737},
+						{axis:"Valence",value:0.40379325}			
+					  ],[//Cluster 1
+						{axis:"Acousticness",value:0.087702953},
+						{axis:"Danceability",value:0.598848328},
+						{axis:"Energy",value:0.733740494},
+						{axis:"Key",value:0.132974482},
+						{axis:"Tempo",value:0.465931121},
+						{axis:"Valence",value:0.539022965}
+					  ],[//Cluster 2
+						{axis:"Acousticness",value:0.249717763},
+						{axis:"Danceability",value:0.61390192},
+						{axis:"Energy",value:0.553778786},
+						{axis:"Key",value:0.806488118},
+						{axis:"Tempo",value:0.364874871},
+						{axis:"Valence",value:0.360494282}
+					  ],[//Cluster 3
+						{axis:"Acousticness",value:0.498260745},
+						{axis:"Danceability",value:0.532139439},
+						{axis:"Energy",value:0.42701903},
+						{axis:"Key",value:0.235011564},
+						{axis:"Tempo",value:0.41620033},
+						{axis:"Valence",value:0.284172134}
+					  ],[//Cluster 4
+						{axis:"Acousticness",value:0.118170506},
+						{axis:"Danceability",value:0.674216718},
+						{axis:"Energy",value:0.764907637},
+						{axis:"Key",value:0.676291214},
+						{axis:"Tempo",value:0.407292043},
+						{axis:"Valence",value:0.750732841}
+					  ]
+			    	];
+			////////////////////////////////////////////////////////////// 
+			//////////////////// Draw the Chart ////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+
+			var color = d3.scale.ordinal()
+				.range(cluster_colors);
+				
+			var radarChartOptions = {
+			  w: width,
+			  h: height,
+			  margin: margin,
+			  maxValue: 0.5,
+			  levels: 5,
+			  roundStrokes: true,
+			  color: color
+			};
+			//Call function to draw the Radar chart
+			RadarChart(".radarChart", data, radarChartOptions);
+		</script>
+
+		<script src="https://www.jqueryscript.net/demo/DataTables-Jquery-Table-Plugin/media/js/jquery.js"></script>
+		<script type="text/javascript" src="https://www.jqueryscript.net/demo/DataTables-Jquery-Table-Plugin/media/js/jquery.dataTables.js"></script>
+		<script>
+			var table = $('#example').DataTable({
+			  "columns": [
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				{ "visible": false }
+			  ] });
+		</script>
+
+		
+		
+		<script src="https://d3js.org/d3.v4.js"></script>
+		<script>	
+			/////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////
+			///////////////////Bubble Chart/////////////////////
+			/////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////
+			// set the dimensions and margins of the graph
+			var margin = {top: 90, right: 60, bottom: 30, left: 50},
+				width = 900 - margin.left - margin.right,
+				height = 470 - margin.top - margin.bottom;
+
+			// append the svg object to the body of the page
+			var svg = d3.select("#my_dataviz")
+			  .append("svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+			  .append("g")
+				.attr("transform",
+					  "translate(" + margin.left + "," + margin.top + ")");
+
+			//Read the data
+			d3.csv("data_for_bubble.csv", function(data) {
+
+			  // Add X axis
+			  var x = d3.scaleLinear()
+				.domain([1998, 2020])
+				.range([ 0, width-margin.right*4 ]);
+			  var xAxis = d3.axisBottom().scale(x).tickFormat(d3.format("d"));
+			  svg.append("g")
+				.attr("transform", "translate(0," + height + ")")
+				.call(xAxis);
+
+			  // Add Y axis
+			  var y = d3.scaleLinear()
+				.domain([10, 1])
+				.range([height, 0]);
+			  svg.append("g")
+					.call(d3.axisLeft(y))
+				.append("text")
+				.attr("class", "axis-title")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 6)
+				.attr("dy", ".71em")
+				.style("text-anchor", "end")
+				.attr("fill", "#5D6971")
+				.text("Peak position (Rank)");
+
+			  // Add a scale for bubble size
+			  var z = d3.scaleLinear()
+				.domain([0, 200])
+				.range([ 0, 50]);
+
+			  // -1- Create a tooltip div that is hidden by default:
+			  var tooltip = d3.select("#my_dataviz")
+				.append("div")
+				  .style("opacity", 0)
+				  .attr("class", "tooltip")
+				  .style("background-color", "black")
+				  .style("border-radius", "5px")
+				  .style("padding", "10px")
+				  .style("color", "white")
+
+			  // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
+			  var showTooltip = function(d) {
+				tooltip
+				  .transition()
+				  .duration(200)
+				tooltip
+				  .style("opacity", 1)
+				  .html('"' + d.Name + '" ' + 'by ' + d.Artists + ' (' + d.Year + ') <br>Peak Position: ' + d.PeakPosition + ' ('+d.WeeksOnChart+' weeks on chart)')
+				  .style("left", (d3.mouse(this)[0]+30) + "px")
+				  .style("top", (d3.mouse(this)[1]+30) + "px")
+			  }
+			  var moveTooltip = function(d) {
+				tooltip
+				  .style("left", (d3.mouse(this)[0]+30) + "px")
+				  .style("top", (d3.mouse(this)[1]+30) + "px")
+			  }
+			  var hideTooltip = function(d) {
+				tooltip
+				  .transition()
+				  .duration(200)
+				  .style("opacity", 0)
+			  }
+
+			  // Add dots
+			  svg.append('g')
+				.selectAll("dot")
+				.data(data)
+				.enter()
+				.append("circle")
+				  .attr("class", function (d) { return "bubbles cluster_"+d.cluster; })
+				  .attr("cx", function (d) { return x(d.Year); } )
+				  .attr("cy", function (d) { return y(d.PeakPosition); } )
+				  .attr("r", function (d) { return z(d.WeeksOnChart); } )
+				  .style("fill", function (d) { return cluster_colors[d.cluster]; } )
+				// -3- Trigger the functions
+				.on("mouseover", showTooltip )
+				.on("mousemove", moveTooltip )
+				.on("mouseleave", hideTooltip )
+
+			  /* Legends of bubbles START */
+			  // The scale you use for bubble size
+			  var size = d3.scaleSqrt()
+				.domain([0, 100])  // What's in the data, let's say it is percentage
+				.range([1, 100])  // Size in pixel
+			  
+			  // Add legend: circles
+			  var valuesToShow = [1, 2, 3]
+			  var xCircle = 590
+			  var xLabel = 620
+			  var yCircle = 330
+			  svg
+				.selectAll("legend")
+				.data(valuesToShow)
+				.enter()
+				.append("circle")
+				  .attr("cx", xCircle)
+				  .attr("cy", function(d){ return yCircle - size(d) } )
+				  .attr("r", function(d){ return size(d) })
+				  .style("fill", "none")
+				  .attr("stroke", "black")
+			  
+			  // Add legend: segments
+			  svg
+				.selectAll("legend")
+				.data(valuesToShow)
+				.enter()
+				.append("line")
+				  .attr('x1', function(d){ return xCircle + size(d)*0 } )
+				  .attr('x2', xLabel)
+				  .attr('y1', function(d){ return yCircle - size(d)*2 } )
+				  .attr('y2', function(d){ return yCircle - size(d)*2 } )
+				  .attr('stroke', 'black')
+				  .style('stroke-dasharray', ('2,2'))
+			  
+			  // Add legend: labels
+			  svg
+				.selectAll("legend")
+				.data(valuesToShow)
+				.enter()
+				.append("text")
+				  .attr('x', xLabel)
+				  .attr('y', function(d){ return yCircle - size(d)*2 } )
+				  .text( function(d){ return 60+15*(d-1)+' Weeks on chart' } )
+				  .style("font-size", 8)
+				  .attr('alignment-baseline', 'middle')
+			  /* Legends of bubbles END */
+			  
+			  // Handmade legend
+			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_0").attr("cx",620).attr("cy",100).attr("r", 6).style("fill", color_cluster0)
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_0").attr("x", 640).attr("y", 100).text("Karaoke Please").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_1").attr("cx",620).attr("cy",130).attr("r", 6).style("fill", color_cluster1)
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_1").attr("x", 640).attr("y", 130).text("All About That BASS").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_2").attr("cx",620).attr("cy",160).attr("r", 6).style("fill", color_cluster2)
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_2").attr("x", 640).attr("y", 160).text("All About That Treble").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_3").attr("cx",620).attr("cy",190).attr("r", 6).style("fill", color_cluster3)
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_3").attr("x", 640).attr("y", 190).text("Acoustic Life").style("font-size", "15px").attr("alignment-baseline","middle")
+			  svg.append("circle").attr("class","cluster-btn").attr("id","cluster_4").attr("cx",620).attr("cy",220).attr("r", 6).style("fill", color_cluster4)
+			  svg.append("text").attr("class","cluster-btn").attr("id","cluster_4").attr("x", 640).attr("y", 220).text("Positive Vibes Only").style("font-size", "15px").attr("alignment-baseline","middle")
+
+			  /* cluster legend button */
+			  var cluster_btns = document.getElementsByClassName("cluster-btn")
+			  for (var i=0; i < cluster_btns.length; i++) {
+				cluster_btns[i].onclick = function(){
+					onchange_cluster(d3.select(this).property('id'));
+				}
+			  };
+			  function onchange_cluster(clicked_id) {
+					//bubble chart
+					d3.selectAll("circle.bubbles").style('stroke', 'white')
+					d3.selectAll("circle.bubbles."+clicked_id).transition().duration(100).style('stroke', 'black')
+					
+					//radarArea
+					//Dim all blobs
+					d3.selectAll(".radarArea").transition().duration(50).style("fill-opacity", 0.07); 
+					//Bring back the hovered over blob
+					d3.select(".radarArea."+clicked_id).transition().duration(50).style("fill-opacity", 0.5);
+					
+					//table
+					var num = clicked_id.substring(8, 9)
+					table.column(12).search(num).draw();
+				}
+				
+				function hide_or_show_cluster(clicked_id) {
+					if (d3.selectAll("circle."+clicked_id).attr('opacity') == null) {
+						d3.selectAll("circle."+clicked_id).transition().duration(100).style('opacity', 0)
+						d3.selectAll("circle."+clicked_id).attr('opacity', 0)
+					} else {
+						d3.selectAll("circle."+clicked_id).transition().duration(100).style('opacity', null)
+						d3.selectAll("circle."+clicked_id).attr('opacity', null)
+					}
+				}
+				
+			  /* Forced click */
+			  hide_or_show_cluster('cluster_0')
+			  hide_or_show_cluster('cluster_1')
+			  hide_or_show_cluster('cluster_2')
+			  hide_or_show_cluster('cluster_3')
+			  hide_or_show_cluster('cluster_4')
+			  
+			  /* Animation */
+			  setTimeout(function() {
+				  hide_or_show_cluster('cluster_0')
+			  }, 1000);
+			  setTimeout(function() {
+				  hide_or_show_cluster('cluster_1')
+			  }, 2000);
+			  setTimeout(function() {
+				  hide_or_show_cluster('cluster_2')
+			  }, 3000);  
+			  setTimeout(function() {
+				  hide_or_show_cluster('cluster_3')
+			  }, 4000);
+			  setTimeout(function() {
+				  hide_or_show_cluster('cluster_4')
+			  }, 5000);
+			  
+			
+			  let annotations = ["<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Karaoke Please</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p> <p>Characterized by anthems made for climaxes at stadium gigs like Radioactive by Imagine Dragons and How You Remind Me by Nickelback, this cluster has the highest tempo and energy value out of all clusters. It is the lowest in acousticness and thus, a lot of the songs contain electronic sound sources.</p><p>You can view your cluster’s songs in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. The bubble chart explanation. Click the circles on the right to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: A lot of songs in this cluster had iconic humming lines; ‘Viva La Vida’ by Coldplay, ‘Pompeii’ by Bastille, ‘Just The Way You Are’ by Bruno Mars, etc. Sing Alongs are highly recommended.</p></div>", 
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>All About That BASS</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>Resembling the shape of a butterfly, this cluster is relatively high in energy and has the lowest key value. Songs are in general very energetic and lacking in high pitch moments inside an octave. Bands with male vocals, like Nickelback and Kings of Leon, dominate this cluster, with a few female artists like Lady Gaga. </p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: Despacito, a song pretty hard to take seriously now, is in this cluster, has memes as its genre. Guess Spotify is all about the meme life.</p>",  
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>All About That Treble</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>If you prefer the sound of higher notes in an octave, you are in the right cluster. This cluster has highest key value, which means an abundance of high pitch moments inside an octave. Songs with high falsettos or emotional highs like ‘Say You Won’t Let Go’ by James Arthur and ‘Royals’ by Lorde made it to this cluster.</p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: Ed Sheeran’s no.1 hit ‘Shape of you’ is actually in cluster ‘All About That BASS’, which has the lowest key value, while his song ‘Perfect’, is here.</p>",  
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Acoustic Life</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>Electronic music took over the pop market these days, but there is always space for acoustics. This cluster is the highest in acousticness and has songs like ‘Take Me To Church’ by Hozier, ‘Love Yourself’ by Justin Bieber and ‘All of Me’ by John Legend.</p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: Many songs in this cluster were simple piano + vocals combinations. For example, 'Stay' by Rihanna and 'Lay Me Down' by Sam Smith<p>",  
+			"<div id = 'textbox'><p class = 'header'>Your cluster is ...</p><h1>Positive Vibes Only</h1><p class = 'colorexp'>The color in the background each represented a cluster, and its opacity grew when you chose a song from it.</p><p>Songs here are overflowing with happy vibes. ‘High Hopes’ by Panic! At The Disco, ‘Cake By The Ocean’ by DNCE, etc. There is even a song named ‘Happier’ by Bastille. This characteristic was explained by the cluster having the highest valence value.</p><p>The bubble chart is made with songs ranked billboard no.1 and were on the chart for 40 weeks+. Check out the number and timeline of mega hits in your cluster! You can view all songs in the cluster in the table below, and their mean feature values on the radar chart. Try hovering over the radar chart to see the shape of other clusters. Click the circles on the right of the bubble chart to view other cluster results.</p><p class = 'funfact'><b>Fun Fact</b>: The song ‘All About That Bass’ by Meghan Trainor, was in this cluster rather its eponymous cluster.</p>"];
+
+
+			function setAnnotation(clusterId) {
+				document.getElementById("annotation").innerHTML = annotations[clusterId];
+				onchange_cluster("cluster_" + String(clusterId));
+			}
+
+			
+			// Set initial page with question result
+			var initCluster = localStorage.getItem("clusterno");
+			// console.log(initCluster);
+			setAnnotation(initCluster);
+
+			
+			  })
+
+
+		</script>
+	</body>
+</html>
