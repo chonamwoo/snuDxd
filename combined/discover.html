@@ -521,35 +521,35 @@ body {
 }
 
 .button rect {
-  stroke: #999faa; /* navy 40% */
-  stroke-width: 0.5px;
+  stroke: black; /* navy 40% */
+  stroke-width: 0.8px;
 }
 
 .button rect.pressed {
-  fill: #4B4B4B; /* navy 100% */
+  fill: #C4C4C4; /* navy 100% */
 }
 
 .button #gradient-start {
-  stop-color: #C4C4C4; /* navy 40% */
+  stop-color: white; /* navy 40% */
   stop-opacity: 1;
 }
 
 .button #gradient-stop {
-  stop-color: #4B4B4B; /* navy 70% */
+  stop-color: white; /* navy 70% */
   stop-opacity: 1;
 }
 
 .button #gradient-start.active, .button #gradient-start.pressed {
-  stop-color: #4d576b; /* navy 70% */
+  stop-color: #C4C4C4; /* navy 70% */
 }
 
 .button #gradient-stop.active, .button #gradient-stop.pressed {
-  stop-color: #4B4B4B; /* navy 100% */
+  stop-color: #C4C4C4; /* navy 100% */
 }
 
 .button text {
   font-size: 14px;
-  fill: #eee;
+  fill: black;
   pointer-events: none;
   text-anchor: middle;
   -moz-user-select: none;
@@ -564,11 +564,11 @@ d3.button = function() {
 
 var dispatch = d3.dispatch('press', 'release');
 
-var padding = 3,
-    radius = 10,
-    stdDeviation = 5,
-    offsetX = 2,
-    offsetY = 4;
+var padding = 5,
+    radius = 5,
+    stdDeviation = 0,
+    offsetX = 0,
+    offsetY = 0;
 
 function my(selection) {
   selection.each(function(d, i) {
@@ -627,7 +627,7 @@ function addShadow(d, i) {
 
   shadow.append('feGaussianBlur')
       .attr('in', 'SourceAlpha')
-      .attr('stdDeviation', 5)
+      .attr('stdDeviation', 0)
 
   shadow.append('feOffset')
       .attr('dx', offsetX)
@@ -727,11 +727,11 @@ return my;
         .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
     
     
-    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "purple", x: -260, y: -430},
-                        {label: "💃 Danceability", csv_label: "Danceability", color: "orange", x: -110, y: -430},
-                        {label: "⚡ Energy", csv_label: "Energy", color: "skyblue", x: 20, y: -430},
-                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#8597d0", x: 130, y: -430},
-                        {label: "😢 Valence", csv_label: "Valence", color: "blue", x: 240, y: -430}
+    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "purple", x: -260, y: -450},
+                        {label: "💃 Danceability", csv_label: "Danceability", color: "orange", x: -110, y: -450},
+                        {label:  "⚡ Energy", csv_label: "Energy", color: "skyblue", x: 20, y: -450},
+                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#8597d0", x: 130, y: -450},
+                        {label: "😢 Valence", csv_label: "Valence", color: "blue", x: 240, y: -450}
                         ];
 
     var sort_button_data = [{label: "🎸 Acousticness", csv_label: "Acousticness", x: -340, y: -430},
