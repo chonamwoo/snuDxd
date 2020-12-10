@@ -709,11 +709,11 @@ return my;
   }
     // set the dimensions and margins of the graph
     var margin = {top: 0, right: 0, bottom: 0, left: 300},
-        width = 1500 - margin.left - margin.right,
-        height = 900 - margin.top - margin.bottom,
+        width = 1700 - margin.left - margin.right,
+        height = 1000 - margin.top - margin.bottom,
         innerRadius = 200,
         // outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
-        outerRadius = 250;
+        outerRadius = 350;
 
     
 
@@ -727,11 +727,11 @@ return my;
         .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
     
     
-    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "purple", x: -260, y: -380},
-                        {label: "💃 Danceability", csv_label: "Danceability", color: "orange", x: -110, y: -380},
-                        {label: "⚡ Energy", csv_label: "Energy", color: "skyblue", x: 20, y: -380},
-                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#8597d0", x: 130, y: -380},
-                        {label: "😢 Valence", csv_label: "Valence", color: "blue", x: 240, y: -380}
+    var button_data = [{label: "🎻 Acousticness", csv_label: "Acousticness", color: "purple", x: -260, y: -430},
+                        {label: "💃 Danceability", csv_label: "Danceability", color: "orange", x: -110, y: -430},
+                        {label: "⚡ Energy", csv_label: "Energy", color: "skyblue", x: 20, y: -430},
+                        {label: "⌛ Tempo", csv_label: "Tempo", color: "#8597d0", x: 130, y: -430},
+                        {label: "😢 Valence", csv_label: "Valence", color: "blue", x: 240, y: -430}
                         ];
 
     var sort_button_data = [{label: "🎸 Acousticness", csv_label: "Acousticness", x: -340, y: -430},
@@ -856,8 +856,8 @@ return my;
                            .style("position", "absolute")
                            .style("visibility", "visible")
                            .style("top", -10+"px")
-                           .style("left",650+"px")
-                          .html("<p class='annotation'>" + "Which feature do you want to see?"
+                           .style("left",780+"px")
+                          .html("<span class='annotation'>" + "Which feature do you want to see?</span>"
                             )
                             .style("font-size", "27px")
                         .style("font-family", "Candara")
@@ -870,9 +870,9 @@ return my;
                            .style("position", "absolute")
                            .style("visibility", "visible")
                            .style("top", 82+"px")
-                           .style("left",600+"px")
-                           .html("<p id='p_sorting_buttons' class='annotation' style='display: inline-block'>"
-                           +"Which feature do you want to sort by?&emsp;</p>"                             )
+                           .style("left",750+"px")
+                           .html("<span id='p_sorting_buttons' class='annotation' style='display: inline-block'>"
+                           +"Which feature do you want to sort by?&emsp;</span>"                             )
                             .style("font-size", "20px")
                         .style("font-family", "Candara")
                         .style("text-align", "center")
