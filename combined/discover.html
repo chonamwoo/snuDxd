@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+<head>
 <meta charset="utf-8">
 
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v4.js"></script>
+		<!-- D3.js -->
+		<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+		<script src="https://d3js.org/d3-path.v1.min.js" charset="utf-8"></script>
+		<script src="radarChart.js" charset="utf-8"></script>
 
 <!-- Function for radial charts -->
 <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+<script type="text/javascript" src="javascripts/radar-chart.js"></script>
+<link rel="stylesheet" href="stylesheets/radar-chart.css">
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
@@ -13,13 +18,14 @@
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
 <!-- <div id = "my_chosen"style = "position:absolute; left:1460px; top: 650px; background-color:black;"></div>
- --><div id = "my_radar"style = "position:absolute; left:1420px; top: 500px; background-color:black;"></div>
-
-<!-- //<button onclick="window.location='http://www.example.com';">Visit Page Now</button>
+</head>
  -->
 
+  </style>
+		<div id="radarChart2" style = "position:absolute; left:1640px; top: 620px; border:1px solid black;"></div>
+		
 
-   <!-- add div of top 5 songs -->
+  <!-- add div of top 5 songs -->
    <div class="l-song-index-content--side">
     <table class="song-index-table tabItems">
       <thead>
@@ -315,57 +321,6 @@
 </div>
 
 
-<!-- <script>
-  function visitPage(){
-      window.location='./question/Question.html';
-  }
-</script>
-<button class="button" onclick="visitPage();">🎶 Take Survey to Find Your Cluster!</button>
-<style> -->
-<!-- 
-.button{
- display:inline-block;
- padding:0.35em 1.2em;
- border:0.1em solid #FFFFFF;
- margin:0 0.3em 0.3em 0;
- border-radius:0.12em;
- box-sizing: border-box;
- text-decoration:none;
- font-family:'Roboto',sans-serif;
- font-weight:300;
- text-align:center;
- transition: all 0.2s;
- background-color: #C4C4C4;
- color: black;
- padding: 15px 32px;
- font-size: 16px;
- margin: 4px 2px;
- cursor: pointer;
-}
-.button:hover{
- color:#000000;
- background-color:#FFFFFF;
-}
-@media all and (max-width:30em){
-.button{
-  display:block;
-  margin:0.4em auto;
-}
-/*   .button {
-    background-color: #4B4B4B;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-  } */}
-</style> -->
-
-
 
 <!-- style of top 5 songs -->
 <style>
@@ -488,6 +443,10 @@
   .song-index-table__name {
       color: black;
   }
+
+
+
+
   /* small, div, p, span, button {
       font-family: Helvetica,"Malgun Gothic","Apple SD Gothic Neo",AppleGothic,Dotum,Arial,Tahoma;
   } */
@@ -502,6 +461,11 @@
       -ms-text-size-adjust: 100%;
   }
   
+
+
+
+
+
   /* rgb(233, 239, 244) */
   /*  #e9eff4 */
   .l-song-index-content--side {
@@ -528,7 +492,7 @@
       border-image-outset: initial;
       border-image-repeat: initial;
       box-sizing: border-box;
-      margin-top: -1000px;
+      margin-top: -1200px;
       font-family: 'Open Sans';
       text-align: center;
       font-weight: bold;
@@ -536,6 +500,22 @@
   }
   
   </style>
+
+
+
+<style>
+        #tooltip-cards-main {
+            display: block;
+            margin: auto;
+            width: 90%;
+        }
+#tooltip-radar-chart {
+            border: solid;
+            border-width: 2px;
+            border-radius: 4px 4px 4px 4px;
+            background-color: white;
+        }
+</style>
 
 
 <style>
@@ -589,6 +569,8 @@ body {
   </style>
 
 <script>
+
+
 d3.button = function() {
 
 var dispatch = d3.dispatch('press', 'release');
@@ -732,21 +714,17 @@ return my;
 
 
 
+
 <script>
-//  function visitPage(){
-//       window.location='./question/Question.html';
-//   }
+
     // set the dimensions and margins of the graph
     var margin = {top: 0, right: 0, bottom: 0, left: 300},
         width = 1950 - margin.left - margin.right,
         height = 1250 - margin.top - margin.bottom,
         innerRadius = 200,
-        // outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
         outerRadius = 350;
 
-    
-
-    // append the svg object
+        // append the svg object
     var svg = d3.select("#my_dataviz")
       .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -769,10 +747,7 @@ return my;
                         {label: "⏱️ Tempo", csv_label: "Tempo", x: 48, y: -430},
                         {label: "😃 Valence", csv_label: "Valence", x: 150, y: -430},
                         ];
- 
-   //var move_button_data = [{label: "🎶 Take Survey to Find Your Cluster!", x: -800, y: 260}];
-                        
-    
+
 
     var button = d3.button()
         .on('press', function(d, i) { clearAll(); })
@@ -782,9 +757,7 @@ return my;
           .each(function(d, i) { button.clear.call(this, d, i) });
     }
 
-    //var sort_button = d3.button();
     var buttons = d3.button();
-    //var move_button = d3.button();
 
 
     var buttons = svg.selectAll(".button")
@@ -794,26 +767,6 @@ return my;
         .attr("class", "button")
         .style("fill", "#eee")
         .call(button)
-        
-       
-
-/* 
-    var move_button = svg.selectAll(".move_button")
-        .data(move_button_data)
-        .enter()
-        .append("g")
-        .append("a")
-            .attr("xlink:href", "./question/Question.html")
-        .attr("class", "move_button_data")
-        .style("fill", "white")
-        .call(move_button)
-        
-        move_button.on("click", function() {
-          console.log('i was clicked');
-        }) */
-
-       
-
 
       //Annotation 더하기 
       const annotation = d3.select('#my_dataviz')
@@ -828,7 +781,7 @@ return my;
                            .style("height", '900px')
                           .html("<p class='annotation'>"+"<strong><big><big>An Interactive Visualization of Billboard Song Clusters</big></big></strong>"
                             +"<br>By Team M&L from SNU"
-                            +"<br><br><br><br>When our team first met, we realized we were all music enthusiasts. So we tried searching for music related data, and found a dataset with numerical audio features (provided by Spotify) on songs from the Billboard (1999 - 2019). (Data Links: <a href = 'https://www.kaggle.com/danield2255/data-on-songs-from-billboard-19992019' target = '_blank'>Billboard</a>, <a href = 'https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks?select=data_by_year.csv' target = '_blank'>Spotify</a>)"
+                            +"<br><br><br><br>When our team first met, we realized we were all music enthusiasts. So we tried searching for music related data, and found a dataset with numerical audio features (provided by Spotify) on songs from the Billboard (1999 - 2019). You can find the data <a href = 'https://www.kaggle.com/danield2255/data-on-songs-from-billboard-19992019' target = '_blank'>here.</a>"
 
                             +"<br><br>With the dataset, we wanted to explore topics like trends and clustering. Thus, we used the audio feature values to form unique vectors for each song and performed k-means clustering to produce 5 clusters. Since we wondered if people with different tastes would fit in different clusters, we used the data to create a survey that leads to visualizations of a billboard song cluster that best defines a person."
                             +"<br><br>Before the survery, a circular bar chart of the no.1 billboard songs is shown for an understanding of the features, their relations, and possible trends. The bar lengths represent each song’s feature value ratio to the max feature value in the dataset, and you can check the exact ratios by hovering. Try to pick a song you know, imagine the features the song may have, and compare with the actual data! You can choose which feature to see and how to sort it on the top. Here is an explanation of each feature."
@@ -845,7 +798,7 @@ return my;
                             +"<br>"+"<strong><u>"+"Valence"+"</strong></u>"+': Musical positiveness conveyed by a track'
                             +"</big><br><br>To discover relations between features, try sorting features with other features "
                             +"<br>(ex. Whether more acoustics songs are slower). "
-                            +"<br><br>To discover trends, view the features without sorting (sorted with year by default)"
+                            +"<br><br>To discover trends, try to sort each feature by year "
                             +"<br>(ex. If overall valence changes over time)."
                             +"<br><br>Now, click the button below to discover your music cluster! "
                             +"<em>"+"<br>P.S. Pay attention to the background colors as you answer the questions " +"</em>"+" 😊"  
@@ -917,39 +870,16 @@ return my;
         //var move_button = d3.select("#page_move_button")
         //.append('select') 
     //TOOLTIP 더하기
-/* 
-    const rectTooltip = d3.select('#my_space')
-                            .append("div")
-                            .attr("class", "tooltip")   
-                            .style("position", "absolute")
-                            .style("visibility", "hidden");
 
-      */
      
+      window.songname = ""
+          window.acousticness = 0
+          window.danceability = 0
+          window.energy = 0
+          window.tempo=0
+          window.valence = 0      
      
-     
-/*     var move_button = svg.selectAll(".move_button_data")
-        .data(move_button_data)
-        .enter()
-        .append("g")
-        .append("a")
-            .attr("xlink:href", "./question/Question.html")
-        .attr("class", "move_button_data")
-        .style("fill", "#F2D7D5")
-        
-        .call(button)
-        .on("mouseover", function() {
-          d3.select(this)
-            .style("fill", "skyblue");
-            
-        })
-        .on("mouseout", function() {
-          d3.select(this)
-            .style("fill", "#F2D7D5");
-        })
-        
-    
- */
+
     // 시작점 끝점 표시
     svg
       .append('rect')
@@ -1017,13 +947,16 @@ return my;
                 .startAngle(function(d) { return x(d.Title) - 0.5 * x.bandwidth(); })
                 .endAngle(function(d) { return x(d.Title) + 1.5 * x.bandwidth(); })
                 .padAngle(0.01)
-                .padRadius(innerRadius));
+                .padRadius(innerRadius))
+
+                ;
               
             const percentage = 100 * d['Tempo']
 
             const title = d.Title
             const artist = d['Artist']
             const year = d['Year'];
+
 
             centerlabel
                 .style("visibility", null)
@@ -1056,10 +989,11 @@ return my;
 
             centerlabel
                 .style("visibility", "hidden");
+
           })
           
-
       // Add the labels
+
       var songlabels = svg.append("g")
           .selectAll("g")
           .data(data)
@@ -1076,16 +1010,29 @@ return my;
               % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
             .style("font-size", "9px")
             .attr("alignment-baseline", "middle")
+     
+     
+      var div = d3.select("body")
+                        .append("div")
+                        .attr("id", "tooltip-table")
+                        .style("visibility", "hidden");
 
+      
+      
+      var divCards = div.append("div")
+                        .attr("id", "tooltip-cards-div")
+                        .style("display", "none");
 
-            ////////////////////////////////////
+      var svgCards = divCards.append("svg")
+                        .attr("id", "tooltip-cards-main");
+   ////////////////////////////////////
           //////// sorting_buttons 시작 ///////
           ////////////////////////////////////
 
-         var selected = "Year";          
           sorting_buttons
           .on("change", function(selectedOption) {
-				     var selectedOption = d3.select(this).property("value")
+
+             var selectedOption = d3.select(this).property("value")
              selected = selectedOption;
             //  d3.selectAll(".chosen").remove();
               bars.exit().remove();
@@ -1097,24 +1044,24 @@ return my;
 
               });
 
-
-
               var sorting = selectedOption.toString()
               d3.select(this)
                 .style("fill", "red");
+              var tempo = 0
 
               // data 업데이트 - sorting한 data로 chart 그리기
           // Scales
             x
             .domain(data.map(function(d) { return d.Title; })); // The domain of the X axis is the list of states.
-            
-          bars
+         
+             bars
             .data(data)
             .enter()
             .append("path")
             .on('mouseover', function (d,i) {
               bars
                 .style("fill-opacity", 0.5);
+              
 
               d3.select(this)
                 .style("fill", "red")
@@ -1126,11 +1073,11 @@ return my;
                 .endAngle(function(d) { return x(d.Title) + 1.5 * x.bandwidth(); })
                 .padAngle(0.01)
                 .padRadius(innerRadius));
-              
               const percentage = 100 * d['Tempo']
               const title = d.Title
               const artist = d['Artist']
               const year = d['Year']; 
+
 
               centerlabel
                 .style("visibility", null)
@@ -1138,15 +1085,15 @@ return my;
                 .text(percentage.toFixed(2) + "%");
               centerlabel
                 .select(".title")
-                .text("\"" + title + "\"");
+                .text("\"" + tempo + "\"");
               centerlabel
                 .select(".year")
-                .text("in " + year);
+                .text("in " + valence);
               centerlabel
                 .select(".artist")
-                  .text("by " + artist);
+                  .text("by " + energy);
             })
-          
+
           // bars mouseout
           bars
           .on('mouseout', function() {
@@ -1167,7 +1114,6 @@ return my;
             centerlabel
                 .style("visibility", "hidden");
           })
-          
           // bars transition
           bars
             .transition().duration(1500)
@@ -1210,8 +1156,10 @@ return my;
       //////////// 버튼 클릭 시 변화 시작 ///////////////
       //////////////////////////////////////////////
 
-      console.log(selected)
-
+      console.log(data)
+     
+          
+          var selected = "Year"; 
 
       buttons
         .on("click", function(button_d, button_i) {
@@ -1229,11 +1177,6 @@ return my;
           d3.select(".song-trend-Valence")
             .style("display", "none");
 
-/*             return rectTooltip.style("visibility", "visible").style("top"+80+"px").style("left"+620+"px")
-            .html("<p class='tooltip'>"  +"Max excluding outlier:"                  
-            ).style("font-size", "12px").style("background", "white").style("border", "1px solid black").style("padding", "2px")
-            .style("box-shadow", "2px 2px 2px 0px black").style("font-family", "verdana"); 
-           */
 
           bars
             .on('mouseover', function (d,i) {
@@ -1250,11 +1193,60 @@ return my;
                 .endAngle(function(d) { return x(d.Title) + 1.5 * x.bandwidth(); })
                 .padAngle(0.01)
                 .padRadius(innerRadius));
-              
               const percentage = 100 * d[button_d.csv_label]
               const title = d.Title
               const artist = d['Artist']
               const year = d['Year'];
+              songname =d['Title'];
+              acousticness = d['Acousticness']
+              danceability = d['Danceability']
+              energy = d['Energy']
+              tempo = d['Tempo']
+              valence = d['Valence']
+
+           //   outside()
+           var margin = { top: 50, right: 80, bottom: 50, left: 80 },
+              width = Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
+              height = Math.min(width, window.innerHeight - margin.top - margin.bottom);
+
+  var radarChartOptions2 = {
+    w: 235,
+    h: 250,
+    margin: margin,
+    maxValue: 1,
+    levels: 5,
+    roundStrokes: true,
+    color: d3.scaleOrdinal().range(["coral", "orange"]),
+    format: '.0f',
+    legend: { title: "Song's Audio Feature", translateX: 100, translateY: 35 }
+  };
+
+  //////////////////////////////////////////////////////////////
+  ////////////////////////// Data //////////////////////////////
+  //////////////////////////////////////////////////////////////
+
+  var data = [
+    { name: songname ,
+      axes: [
+        {axis: 'Valence', value: valence},
+        {axis: 'Acousticness', value: acousticness },
+        {axis: 'Danceability', value: danceability},
+        {axis: 'Energy', value: energy},
+        {axis: 'Tempo', value: tempo}
+      ]
+    }
+  ];
+console.log(data)
+  //////////////////////////////////////////////////////////////
+  ////// First example /////////////////////////////////////////
+  ///// (not so much options) //////////////////////////////////
+  //////////////////////////////////////////////////////////////
+
+
+
+  // Draw the chart, get a reference the created svg element :
+  let svg_radar2 = RadarChart("#radarChart2", data, radarChartOptions2);
+
 
               centerlabel
                 .style("visibility", null)
@@ -1269,8 +1261,10 @@ return my;
               centerlabel
                 .select(".artist")
                   .text("by " + artist);
+
             })
-          
+
+
           // bars mouseout
           bars
           .on('mouseout', function() {
@@ -1351,7 +1345,6 @@ return my;
           // Scales
             x
             .domain(data.map(function(d) { return d.Title; })); // The domain of the X axis is the list of states.
-            
           bars
             
             .data(data)
@@ -1448,84 +1441,25 @@ return my;
             var sorting = selectedOption
             var color = button_d.color.toString()
 
-            console.log(attrib)
+/*             console.log(attrib)
             console.log(selectedOption)
             console.log(color)
+ */
 
+
+
+            
             ////////////////////////////
             // Add chosen table //
             ////////////////////////////
-/* 
-            var anno2 = d3.select('#my_chosen')
-                           .append("div")
-                           .attr("class", "chosen")   
-                           .style("position", "absolute")
-                           .style("visibility", "visible")
-                           .style("top", 20+"px")
-                           .style("left",0+"px")
-                           .style("width", 420 +"px")
-                           .style("height", 120 +"px")
-                           .style("background-color", color)
-
-                          .html("<p class='annotation'>"+"Feature Name : " +"<br><strong><big><big>"+attrib+ "</big></big></strong>" 
-                            +"<br>Sort by : "+"<br><strong><big><big>"+ sorting+ "</big></big></strong>" 
-                            +"<br><br><br><br>"
-
-                            
-                            )
-                            .style("font-size", "13.5px")
-                            .style("border", "3px solid black")
-                            .style("padding", "3px")
-                        //.style("box-shadow", "2px 2px 2px 0px black")
-                        .style("font-family", "Candara")
-                        .style("text-align", "center")
- */
 
             ////////////////////////////
             // Add radar //
             ////////////////////////////
-            var radarTooltip = d3.select('body').append("div").attr("id", "tooltip-radar-chart")
-                .style("position", "absolute").style("z-index", "10").style("visibility", "hidden")
-                .style("top", 0).style("left", 0)
 
             ////////////////////////////
             // Add Top 10 songs table //
             ////////////////////////////
-             
-             var htmls = d3.select("#my_table")
-             .append("div")
-             .attr("w3-include-html","song.html")
-/*              
-              var tabulate = function (data,columns) {
-                var table = d3.select("#my_table")
-                              .append('table')
-                              .attr("class", "top10table")
-                              
-	              var thead = table.append('thead')
-	              var tbody = table.append('tbody')
-              thead.append('tr')
-                .selectAll('th')
-                .data(columns)
-                .enter()
-                .append('th')
-                .text(function (d) { return d })
-               var rows = tbody.selectAll('tr')
-                   .data(data)
-                   .enter()
-                   .append('tr')
-                var cells = rows.selectAll('td')
-                    .data(function(row) {
-                	    return columns.map(function (column) {
-                		    return { column: column, value: row[column] }
-                        })
-                      })
-                      .enter()
-                      .append('td')
-                      .text(function (d) { return d.value })
-                    
-                      return table;
-              } */
-
 
               ////////////////////////////////
               // Add Top 10 songs table end //
@@ -1541,9 +1475,8 @@ return my;
         ///////////////////////////////////////////////
         //////////// 버튼 클릭 시 변화 끝 /////////////////
         //////////////////////////////////////////////
-        
 
-      // center text
+// center text
       const centerlabel = svg
         .append("text")
         .attr("text-anchor", "middle")
@@ -1586,9 +1519,31 @@ return my;
         .attr("font-size", "2em")
         .text("");
 
-      
-    })
+  
+  function outside(){
+    a= songname
+              console.log(songname)
+              console.log(valence)
+              console.log(danceability)
+              console.log(energy)
+              console.log(acousticness)
+              console.log(tempo)
+            }
 
+        }
+    )
 
-    </script>
-    
+outside()
+console.log(a)
+ 
+
+</script>
+
+<script>
+  //////////////////////////////////////////////////////////////
+  //////////////////////// Set-Up //////////////////////////////
+  //////////////////////////////////////////////////////////////
+
+</script>
+
+</html>
