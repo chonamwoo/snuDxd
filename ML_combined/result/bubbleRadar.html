@@ -125,7 +125,7 @@
 		
 		<div class="radarChart right"></div>
 		
-		<h2>List of songs included in your cluster</h2>
+		
 		<table id="example" class="display" style="width: 100%">
 			<thead>
 				<tr>
@@ -703,10 +703,11 @@
 	d3.select(id).select("svg").remove();
 	
 	//Initiate the radar chart SVG
-	var svg = d3.select(id).html("<h2>You can also check the mean feature values of your cluster</h2>").append("svg")
+	var svg = d3.select(id).html('<h2 style="color:white">You can also check the mean feature values of your cluster</h2>').append("svg")
 			.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
 			.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
-			.attr("class", "radar"+id);
+			.attr("class", "radar"+id)
+			.html('<text x="250" y="20" font-size="13pt" font-weight="bold" text-anchor="middle" alignment-baseline="middle">You can also check the mean feature values of your cluster</text>')
 	//Append a g element		
 	var g = svg.append("g")
 			.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
@@ -1055,10 +1056,11 @@
 
 			// append the svg object to the body of the page
 			var svg = d3.select("#my_dataviz")
-			.html("<h2>Check out the number and timeline of mega hits in your cluster</h2>")
+			.html('<h2 style="color:white">Check out the number and timeline of mega hits in your cluster</h2>')
 			  .append("svg")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
+			  .html('<text x="400" y="20" font-size="13pt" font-weight="bold" text-anchor="middle" alignment-baseline="middle">Check out the number and timeline of mega hits in your cluster</text>')
 			  .append("g")
 				.attr("transform",
 					  "translate(" + margin.left + "," + margin.top + ")");
@@ -1098,6 +1100,8 @@
 			  // -1- Create a tooltip div that is hidden by default:
 			  var tooltip = d3.select("#my_dataviz")
 				.append("div")
+				  .style("width", "400px")
+				  .style("display", "inline-block")
 				  .style("opacity", 0)
 				  .attr("class", "tooltip")
 				  .style("background-color", "black")
@@ -1282,7 +1286,8 @@
 			
 			  })
 
-
+		original_html_for_list_header = document.getElementById("example_length").innerHTML
+		document.getElementById("example_length").innerHTML = original_html_for_list_header + '<h2 style="display:inline-block">&nbsp; &nbsp; List of songs included in your cluster</h2>'
 		</script>
 	</body>
 </html>
